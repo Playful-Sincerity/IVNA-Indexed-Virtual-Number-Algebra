@@ -1271,4 +1271,33 @@ implementation and test harness. The 28 core tests cover:
 To run: \texttt{python3 code/ivna.py}. Expected output:
 \texttt{28 passed, 0 failed}.
 
+\subsection{SymPy Symbolic Verification}
+
+Three independent SymPy verification layers test overlapping but distinct
+properties:
+
+\begin{itemize}
+\item \textbf{NSA embedding} (37 checks, \texttt{verify\_nsa\_embedding.py}):
+  verifies that each IVNA axiom holds under the hyperreal mapping
+  $\vz{x} = x\varepsilon_0$, $\vi{x} = x/\varepsilon_0$, using symbolic
+  simplification to confirm equality.
+\item \textbf{Calculus suite} (115 checks, \texttt{verify-calculus.py}):
+  step-by-step verification of IVNA derivatives (polynomial, rational,
+  trigonometric, exponential, logarithmic), the Fundamental Theorem of
+  Calculus in both directions, power series convergence, and the exponential
+  axiom.
+\item \textbf{SymPy MCP} (69 checks, \texttt{verify-ivna-sympy-comprehensive.py}):
+  an independent re-verification using SymPy's \texttt{sympy-mcp} tooling,
+  covering all 11 core axioms, D-INDEX-ZERO, A-EXP (four derivation methods),
+  A-VT for four transcendental functions, seven IVNA derivatives, FTC via
+  Riemann sums, L'H\^opital elimination, and NSA consistency.
+\end{itemize}
+
+\subsection{Wolfram Verification}
+
+The Wolfram Language verification (27 checks) independently confirmed
+derivative computations, the Fundamental Theorem of Calculus, and
+the exponential axiom using step-by-step symbolic derivation---a
+different symbolic engine from SymPy, providing cross-tool validation.
+
 \end{document}
