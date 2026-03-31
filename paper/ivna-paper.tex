@@ -36,9 +36,9 @@ and Indeterminate Forms}
 
 \author{Wisdom Patience Happy\thanks{Playful Sincerity Research. Correspondence: Wisdom@PlayfulSincerity.org. \\
 Playful Sincerity is a multidisciplinary innovation ecosystem combining rigorous inquiry with accessible exposition. This is its first research publication. \\[0.5em]
-\textit{Methodology:} Developed using the Playful Sincerity Digital Core---an AI-assisted research methodology system built on Claude Code (Anthropic), incorporating formal verification (Lean~4), symbolic algebra (SymPy), satisfiability checking (Z3), and step-by-step derivation verification (Wolfram). All mathematical claims were verified across four independent tool chains totaling 489 automated checks with zero failures. The complete verification suite is publicly available and independently reproducible at \url{https://github.com/Playful-Sincerity/PS-Research-IVNA}.}}
+\textit{Methodology:} Developed using the Playful Sincerity Digital Core---an AI-assisted research methodology system built on Claude Code (Anthropic), incorporating formal verification (Lean~4), symbolic algebra (SymPy), satisfiability checking (Z3), and step-by-step derivation verification (Wolfram). All mathematical claims were verified across five independent tool chains (Python, SymPy, Z3, Lean~4, Wolfram) totaling 489 automated checks with zero failures. The complete verification suite is publicly available and independently reproducible at \url{https://github.com/Playful-Sincerity/PS-Research-IVNA}.}}
 
-\date{\today}
+\date{March 2026}
 
 \begin{document}
 
@@ -71,7 +71,7 @@ We demonstrate applications in limit-free calculus (derivatives of polynomial,
 rational, trigonometric, exponential, and logarithmic functions without
 $\varepsilon$-$\delta$ arguments), elimination of L'H\^opital's rule,
 proportional infinite set sizes, and a ``VEX mode'' for computer arithmetic
-that eliminates approximately 80\% of IEEE~754 NaN cases. The exponential
+that resolves IEEE~754 NaN propagation when operand indices are tracked. The exponential
 constant $e$ receives a direct algebraic definition:
 $e = (1 + \vz{1})^{\vi{1}}$, revealing the structure of continuous growth
 as a scaling symmetry between step size and repetition count.
@@ -83,6 +83,7 @@ as a scaling symmetry between step size and repetition count.
 % ============================================================
 
 \subsection{The Problem}
+\label{subsec:problem}
 
 Consider the function $f(x) = 1/x$. As $x$ approaches zero from the right,
 $f(x)$ grows without bound. As $x$ approaches zero from the left, $f(x)$
@@ -176,7 +177,7 @@ denominator. Crucially, the operation is \emph{reversible}:
 Multiply the indexed infinity by the indexed zero and you recover
 the original value. No information is lost.
 
-The $1/x$ problem from Section~1.1 resolves cleanly. Approaching zero
+The $1/x$ problem from Section~\ref{subsec:problem} resolves cleanly. Approaching zero
 from the right means $x = \vz{1}$ (positive index); approaching from
 the left means $x = \vz{-1}$ (negative index):
 \[
@@ -210,14 +211,16 @@ The contributions of this paper are:
   of Calculus reduces to an algebraic identity.
 
 \item \textbf{Elimination of L'H\^opital's rule}
-  (Section~\ref{sec:calculus}): all four standard indeterminate forms
-  ($0/0$, $\infty/\infty$, $0 \cdot \infty$, $\infty - \infty$)
-  resolved directly by index arithmetic.
+  (Section~\ref{sec:calculus}): the standard indeterminate forms
+  $0/0$, $\infty/\infty$, $0 \cdot \infty$, and $\infty - \infty$
+  resolved directly by index arithmetic, with $1^\infty$ handled
+  by the Exponential Axiom (A-EXP).
 
 \item \textbf{Applications to physics and computer science}
   (Sections~\ref{sec:physics}--\ref{sec:cs}): singularity
   classification in general relativity, and a ``VEX mode'' for
-  computer arithmetic that eliminates NaN propagation.
+  computer arithmetic that resolves NaN propagation when operand
+  indices are tracked.
 
 \item \textbf{Honest positioning} (Section~\ref{sec:literature}):
   IVNA is a structured notational interface to a specific fragment of
@@ -239,7 +242,7 @@ suite (28 core tests, 145 comprehensive checks), and a VEX calculator
 demo are available at:
 
 \begin{center}
-\texttt{[GitHub repository URL]}
+\url{https://github.com/Playful-Sincerity/PS-Research-IVNA}
 \end{center}
 
 \noindent
@@ -402,6 +405,14 @@ degenerate index.
 $(\vz{x})^n = \vzn{n}{x^n}$, \quad $(\vi{x})^n = \vin{n}{x^n}$
 \end{axiom}
 
+\begin{remark}
+Virtual Powers and D-INDEX-ZERO are structural rules that follow
+naturally from the algebraic framework. The 11 core axioms formalized
+in Lean~4 comprise the nine multiplication and division rules above,
+plus the two addition rules (one for indexed zeros, one for indexed
+infinities---stated as a single axiom here but formalized separately).
+\end{remark}
+
 \subsection{The Collapse Operator}
 
 \begin{definition}[Collapse ($\ceq$)]
@@ -440,10 +451,6 @@ $\R$.
 \section{Extended Axioms}
 \label{sec:extended}
 % ============================================================
-
-% 3.1 Virtual Taylor Axiom (A-VT)
-% 3.2 Exponential Axiom (A-EXP) as corollary
-% 3.3 Scope: analytic functions only
 
 \subsection{The Virtual Taylor Axiom}
 
@@ -544,10 +551,10 @@ y\omega_0(x\varepsilon_0 - x^2\varepsilon_0^2/2 + \cdots) = xy +
 $\mathrm{st}(e^{xy + \text{inf.}}) = e^{xy}$. $\checkmark$
 
 All remaining axioms are verified analogously.
-The full verification is automated: 69 SymPy symbolic checks,
-31 Z3 satisfiability checks, and 27 Wolfram verifications---489
-total checks with zero failures (Appendix~\ref{app:verification}).
-The Lean~4 formalization provides a machine-checked proof.
+The full verification is automated across five independent tool
+chains---Python, SymPy, Z3, Lean~4, and Wolfram---totaling 489
+checks with zero failures (Appendix~\ref{app:verification}).
+The Lean~4 formalization provides a machine-checked consistency proof.
 \end{proof}
 
 \subsection{What IVNA Is}
@@ -599,10 +606,6 @@ no consistency proof, and no applications. IVNA provides all three.
 \label{sec:calculus}
 % ============================================================
 
-% 5.1 Polynomial derivatives
-% 5.2 Rational function derivatives
-% 5.3 Transcendental function derivatives
-% 5.4 L'Hopital elimination
 \subsection{Polynomial Derivatives}
 
 The IVNA derivative of $f(x) = x^n$ uses the binomial theorem with
@@ -750,7 +753,7 @@ and the \emph{index} encodes the physical parameters:
 \midrule
 Coulomb ($r \to 0$) & $F \to \infty$ & $F = \vin{2}{kq_1q_2/x^2}$ \\
 Newton gravity & $\phi \to -\infty$ & $\phi = -\vi{GM/x}$ \\
-Schwarzschild ($r \to 0$) & $K \to \infty$ & $K = \vin{6}{\cdots}$ \\
+Schwarzschild ($r \to 0$) & $K \to \infty$ & $K = \vin{6}{\frac{48G^2M^2}{x^6}}$ \\
 Point charge self-energy & $U \to \infty$ & $U = \vi{kq^2/x}$ \\
 \bottomrule
 \end{tabular}
@@ -810,8 +813,8 @@ $\vz{1}$ recovers $5$. No information is lost.
 \end{center}
 
 A working VEX calculator prototype is included in the supplementary
-repository. In our tests, VEX mode resolves every case where IEEE~754
-produces \texttt{NaN}, provided the operand indices are tracked.
+repository. In our tests, VEX mode resolves each of the standard NaN-producing
+operations in IEEE~754, provided the operand indices are tracked.
 
 Fog~\cite{fog2019} has proposed encoding exception metadata in NaN
 payloads for the ForwardCom architecture. VEX differs: Fog's payloads
@@ -832,15 +835,16 @@ Six established frameworks address overlapping concerns:
 
 \begin{enumerate}
 \item \textbf{Non-Standard Analysis} (Robinson, 1966)~\cite{robinson1966}:
-  infinitesimals via hyperreals. Division by zero remains undefined;
+  infinitesimals via hyperreals. Keisler~\cite{keisler1976} developed
+  the pedagogical calculus curriculum. Division by zero remains undefined;
   $0 \times \infty$ is indeterminate.
 
-\item \textbf{Grossone} (Sergeyev, 2003)~\cite{sergeyev2003}:
+\item \textbf{Grossone} (Sergeyev, 2003)~\cite{sergeyev2003,sergeyev2017,sergeyev2019}:
   a numeral for $|\mathbb{N}|$, with its reciprocal as infinitesimal.
   No division by zero; no general $0 \times \infty$ resolution.
   Subject to criticism~\cite{gutman2017}.
 
-\item \textbf{Numerosity} (Benci--Di Nasso, 2003)~\cite{benci2003}:
+\item \textbf{Numerosity} (Benci--Di Nasso, 2003)~\cite{benci2003,benci2019}:
   proportional sizes of infinite sets. No division by zero or calculus.
 
 \item \textbf{Wheel algebra} (Carlstr\"om, 2004)~\cite{carlstrom2004}:
@@ -854,6 +858,13 @@ Six established frameworks address overlapping concerns:
   nilsquare $\varepsilon$ with $\varepsilon^2 = 0$. Requires
   intuitionistic logic.
 \end{enumerate}
+
+Additional approaches include meadows~\cite{bergstra2009}, which
+formalize division-by-zero via equational specifications;
+Saitoh's generalized division framework~\cite{saitoh2014}; and
+Bergstra's survey~\cite{bergstra2019} of the design space.
+Wenmackers~\cite{wenmackers2024} provides a philosophical comparison
+of methods for comparing infinite quantities.
 
 \subsection{Comparison}
 
@@ -1085,7 +1096,7 @@ S.~Saitoh, ``Generalized inversions of Hadamard and tensor products for
 matrices,'' \emph{Advances in Linear Algebra \& Matrix Theory}, vol.~4,
 no.~2, pp.~87--95, 2014.
 
-\bibitem{bergstra2015}
+\bibitem{bergstra2009}
 J.~A.~Bergstra, Y.~Hirshfeld, and J.~V.~Tucker, ``Meadows and the
 equational specification of division,'' \emph{Theoretical Computer Science},
 vol.~410, no.~12--13, pp.~1261--1271, 2009.
@@ -1145,12 +1156,12 @@ SymPy MCP            & sympy-mcp (40+ tools)     & 69  & 69/69 pass \\
 Z3 MCP               & mcp-solver                & 31  & 31/31 pass \\
 Wolfram MCP          & Wolfram Language           & 27  & 27/27 pass \\
 \midrule
-\textbf{Total}       & \textbf{4 independent chains} & \textbf{489} & \textbf{0 failures} \\
+\textbf{Total}       & \textbf{5 independent chains} & \textbf{489} & \textbf{0 failures} \\
 \bottomrule
 \end{tabular}
 \caption{Verification summary. \textsuperscript{*}3 warnings are framing
-recommendations (divergent series, residues, nonlinear ODEs), not
-mathematical errors.}
+recommendations (divergent series~\cite{tao2010}, residues, nonlinear ODEs),
+not mathematical errors.}
 \label{tab:verification}
 \end{table}
 
