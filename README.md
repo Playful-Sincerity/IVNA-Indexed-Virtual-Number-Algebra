@@ -27,7 +27,24 @@ python3 code/ivna.py
 cd lean-ivna && lake build
 ```
 
-A successful `lake build` means every proof has been machine-checked. A successful `python3 code/ivna.py` runs the full algebraic test suite including roundtrip verification, scalar operations, transcendental derivatives, and set cardinality.
+For the full 489-check verification suite (requires SymPy, Z3, and Wolfram access):
+
+```bash
+# SymPy symbolic verification — NSA embedding (37 checks) + comprehensive (69 checks)
+pip install sympy && python3 code/verify_nsa_embedding.py
+python3 code/verify-ivna-sympy-comprehensive.py
+
+# Z3 satisfiability — axiom consistency (31 checks)
+pip install z3-solver && python3 code/verify_z3_comprehensive.py
+
+# Calculus suite — derivatives, integrals, FTC (115 checks)
+python3 code/verify-calculus.py
+
+# Comprehensive — extended algebraic checks (148 checks)
+python3 code/verify-comprehensive.py
+```
+
+A successful `lake build` means every proof has been machine-checked. A successful `python3 code/ivna.py` runs the core algebraic test suite. The additional verification scripts reproduce the full 489-check result reported in the paper.
 
 ## What's Here
 
@@ -49,7 +66,7 @@ A successful `lake build` means every proof has been machine-checked. A successf
 │   └── ...                     # Additional verification scripts and demos
 │
 ├── vex-web/
-│   └── index.html              # Interactive VEX calculator demo
+│   └── index.html              # Interactive VEA calculator demo
 │
 └── research/
     └── findings/               # Verification logs and exploration results
@@ -71,16 +88,21 @@ The indices carry the contextual information that makes each expression determin
 
 ## Verification Summary
 
-The paper's claims are verified across four independent tool chains:
+The paper's claims are verified across five independent tool chains totaling **489 checks with 0 failures**:
 
-| Tool | Checks | Result |
-|------|--------|--------|
-| Python (algebraic tests) | 28 | All pass |
-| SymPy (symbolic verification) | 69 | All pass |
-| Z3 (satisfiability) | 31 | All satisfiable |
-| Wolfram (derivatives, FTC) | 27 | All verified |
-| Lean 4 (formal proofs) | 11 axioms + 12 theorems | All compile |
-| **Total** | **489 checks** | **0 failures** |
+| Layer | Tool | Checks | Result |
+|-------|------|--------|--------|
+| Core axiom tests | Python (ivna.py) | 28 | 28/28 pass |
+| NSA embedding | SymPy symbolic | 37 | 37/37 pass |
+| Axiom satisfiability | Z3 SMT solver | 11 | 11/11 pass |
+| Formal proofs | Lean 4.16 | 23 | Compiles |
+| Calculus suite | SymPy | 115 | 115/115 pass |
+| Comprehensive | SymPy + Z3 | 148 | 145/0/3* |
+| SymPy MCP | sympy-mcp | 69 | 69/69 pass |
+| Z3 MCP | mcp-solver | 31 | 31/31 pass |
+| Wolfram MCP | Wolfram Language | 27 | 27/27 pass |
+
+*3 warnings are framing recommendations (divergent series, residues, nonlinear ODEs), not mathematical errors.
 
 ## The 11 Axioms
 
@@ -100,7 +122,7 @@ The paper's claims are verified across four independent tool chains:
 
 ## Interactive Demo
 
-Open `vex-web/index.html` in a browser for a live VEX (Virtual Expression) calculator. Type expressions like `5/0` and see IVNA in action.
+Open `vex-web/index.html` in a browser for a live VEA (Virtual Expression Arithmetic) calculator. Type expressions like `5/0` and see IVNA in action.
 
 ## Author
 

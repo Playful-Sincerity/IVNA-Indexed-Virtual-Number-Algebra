@@ -36,7 +36,7 @@ and Indeterminate Forms}
 
 \author{Wisdom Patience Happy\thanks{Playful Sincerity Research. Correspondence: Wisdom@PlayfulSincerity.org. \\
 Playful Sincerity is a multidisciplinary innovation ecosystem combining rigorous inquiry with accessible exposition. This is its first research publication. \\[0.5em]
-\textit{Methodology:} Developed using the Playful Sincerity Digital Core---an AI-assisted research methodology system built on Claude Code (Anthropic), incorporating formal verification (Lean~4), symbolic algebra (SymPy), satisfiability checking (Z3), and step-by-step derivation verification (Wolfram). All mathematical claims were verified across five independent tool chains (Python, SymPy, Z3, Lean~4, Wolfram) totaling 489 automated checks with zero failures. The complete verification suite is publicly available and independently reproducible at \url{https://github.com/Playful-Sincerity/PS-Research-IVNA}.}}
+\textit{Methodology:} Developed using the Playful Sincerity Digital Core---an AI-assisted research methodology system built on Claude Code (Anthropic). The Digital Core enforces a Generate--Verify--Revise loop: every mathematical claim is first generated from reasoning, then verified by at least one independent computational tool, and revised if verification fails. The system orchestrates hierarchical planning (recursive decomposition of research questions), parallel agent-based exploration (literature search, symbolic verification, and formal proof running concurrently), and book/paper research integration. Five independent verification tool chains---Python, SymPy, Z3, Lean~4, and Wolfram---produced 489 automated checks with zero failures. The complete verification suite is publicly available and independently reproducible at \url{https://github.com/Playful-Sincerity/PS-Research-IVNA}.}}
 
 \date{March 2026}
 
@@ -70,7 +70,7 @@ multiplication rule.
 We demonstrate applications in limit-free calculus (derivatives of polynomial,
 rational, trigonometric, exponential, and logarithmic functions without
 $\varepsilon$-$\delta$ arguments), elimination of L'H\^opital's rule,
-proportional infinite set sizes, and a ``VEX mode'' for computer arithmetic
+proportional infinite set sizes, and a ``VEA mode'' for computer arithmetic
 that resolves IEEE~754 NaN propagation when operand indices are tracked. The exponential
 constant $e$ receives a direct algebraic definition:
 $e = (1 + \vz{1})^{\vi{1}}$, revealing the structure of continuous growth
@@ -124,7 +124,7 @@ inherits the \texttt{NaN}, silently corrupting the computation.
 This situation has a historical parallel. Before the sixteenth century,
 $\sqrt{-1}$ was considered impossible---an operation without a legitimate
 result. Cardano (1545) encountered it in his cubic formula and called such
-quantities ``as refined as they are useless''~\cite{carlstrom2004}.
+quantities ``as refined as they are useless'' (as quoted in~\cite{carlstrom2004}).
 
 Bombelli (1572) took a different approach. He defined consistent rules
 for manipulating $\sqrt{-1}$ without knowing what it ``was.'' The rules
@@ -218,7 +218,7 @@ The contributions of this paper are:
 
 \item \textbf{Applications to physics and computer science}
   (Sections~\ref{sec:physics}--\ref{sec:cs}): singularity
-  classification in general relativity, and a ``VEX mode'' for
+  classification in general relativity, and a ``VEA mode'' for
   computer arithmetic that resolves NaN propagation when operand
   indices are tracked.
 
@@ -238,7 +238,7 @@ The contributions of this paper are:
 
 Before proceeding, we note that every axiom and theorem in this section
 is machine-verified. The complete Lean~4 formalization, a Python test
-suite (28 core tests, 145 comprehensive checks), and a VEX calculator
+suite (28 core tests, 145 comprehensive checks), and a VEAcalculator
 demo are available at:
 
 \begin{center}
@@ -303,8 +303,10 @@ $\vz{x} \cdot \vi{y} = xy$
 
 This is the core of IVNA. The product of an indexed zero and an
 indexed infinity is the product of their indices---a finite,
-non-virtual number. The indices carry the information that makes
-the otherwise indeterminate product $0 \cdot \infty$ determinate.
+non-virtual number. By commutativity (formalized in the Lean~4
+development), $\vi{y} \cdot \vz{x} = xy$ as well. The indices carry
+the information that makes the otherwise indeterminate product
+$0 \cdot \infty$ determinate.
 
 \begin{axiom}[Zero--Zero Product]
 \label{ax:zz}
@@ -386,6 +388,15 @@ $\vz{x} + \vz{y} = \vz{x+y}$, \quad $\vi{x} + \vi{y} = \vi{x+y}$
 
 This is consistent with the scalar rule: $\vz{x} + \vz{y} = \vz{x+y}$
 agrees with $1 \cdot \vz{x} + 1 \cdot \vz{y} = \vz{x} + \vz{y}$.
+
+\begin{remark}[Mixed addition]
+The sum of a finite number and a virtual number is defined by the
+embedding: $n + \vi{x} = \vi{x}$ and $n + \vz{x} = n$ (up to the
+collapse operator). A finite quantity is infinitesimal relative to any
+indexed infinity and infinite relative to any indexed zero. In the
+hyperreal model, this is the standard fact that $r + x\omega_0 \sim
+x\omega_0$ for finite~$r$.
+\end{remark}
 
 \begin{axiom}[Index Zero Rule (D-INDEX-ZERO)]
 \label{ax:indexzero}
@@ -656,9 +667,9 @@ In IVNA: $\sin(\vz{1})/\vz{1}$. By A-VT, $\sin(\vz{1}) = \vz{1}$
 \medskip
 \noindent\textbf{The form $\infty/\infty$:}
 $\displaystyle\lim_{x \to \infty} \frac{2x+1}{3x+5}$.
-In IVNA: $(2\vi{1} + 1)/(3\vi{1} + 5) \approx \vi{2}/\vi{3} = 2/3$.
-The finite terms are dominated by the indexed infinities, and the
-index ratio gives the answer directly.
+In IVNA: $(2\vi{1} + 1)/(3\vi{1} + 5) = \vi{2}/\vi{3} = 2/3$.
+The finite terms vanish relative to the indexed infinities (by the
+mixed addition remark), and the index ratio gives the answer directly.
 
 \medskip
 \noindent\textbf{The form $0 \cdot \infty$:}
@@ -683,10 +694,13 @@ For $f(x) = x$:
 \sum_{i=0}^{\vi{1}} (i \cdot \vz{1}) \cdot \vz{1}
 &= \vzn{2}{1} \cdot \sum_{i=0}^{\vi{1}} i
 = \vzn{2}{1} \cdot \frac{\vi{1}(\vi{1}+1)}{2} \\
-&\approx \vzn{2}{1} \cdot \frac{\vin{2}{1}}{2}
+&= \vzn{2}{1} \cdot \frac{\vin{2}{1}}{2}
 = \frac{1}{2}. \quad\checkmark
 \end{align*}
-The key step: $\vzn{2}{1} \cdot \vin{2}{1} = 1$ by order cancellation.
+The key steps: $\vi{1}(\vi{1}+1) = \vin{2}{1}$ because $\vi{1} + 1 = \vi{1}$
+(a finite number is negligible relative to an indexed infinity, as justified
+by the mixed addition remark in Section~\ref{sec:core}), and
+$\vzn{2}{1} \cdot \vin{2}{1} = 1$ by order cancellation.
 We have verified $\int_0^1 x^n\,dx = 1/(n+1)$ for $n = 0, 1, 2, 3, 4, 5$.
 
 The Fundamental Theorem of Calculus reduces to an algebraic identity:
@@ -721,7 +735,9 @@ this becomes: $(1 + \vz{\text{rate}})^{\vi{\text{time}}} =
 e^{\text{rate} \times \text{time}}$. The indices carry the physical
 dimensions.
 
-Euler's formula extends naturally:
+Euler's formula extends naturally once the index domain is widened
+from $\R \setminus \{0\}$ to $\mathbb{C} \setminus \{0\}$ (a natural
+extension not formally developed here):
 \[
 e^{i\theta} = (1 + \vz{i})^{\vi{\theta}} = \cos\theta + i\sin\theta.
 \]
@@ -729,6 +745,23 @@ The zero index $i$ gives the step \emph{direction} (imaginary axis);
 the infinity index $\theta$ gives the \emph{angle}. Rotation is
 iterated infinitesimal translation---the Lie group/algebra relationship
 made algebraically transparent.
+
+
+\subsection{Proportional Infinite Set Sizes}
+
+In standard set theory, $|\mathbb{N}| = |\mathbb{E}|$ where $\mathbb{E}$
+is the even numbers, because a bijection exists. IVNA offers a complementary
+perspective: $|\mathbb{N}| = \vi{1}$ and $|\mathbb{E}| = \vi{1/2}$, giving
+the ratio $|\mathbb{E}|/|\mathbb{N}| = \vi{1/2}/\vi{1} = 1/2$ by
+Axiom~A9 ($\vi{x}/\vi{y} = x/y$).
+
+More generally, for any arithmetic progression with common difference $d$,
+the subset has cardinality $\vi{1/d}$, and its ratio to $|\mathbb{N}|$
+equals $1/d$---matching the natural density. IVNA does not contradict
+Cantor's equipollence; it supplements it with a proportional measure
+that distinguishes sets Cantor identifies. This is the same distinction
+made by Benci and Di~Nasso's numerosity theory~\cite{benci2003,benci2019},
+arrived at through different machinery.
 
 
 % ============================================================
@@ -786,22 +819,22 @@ algebraic.
 \label{sec:cs}
 % ============================================================
 
-\subsection{VEX Mode}
+\subsection{VEAMode}
 
 In IEEE~754 floating-point arithmetic~\cite{ieee754}, division by zero
 produces \texttt{Inf}, and \texttt{Inf * 0} produces \texttt{NaN}. Once
 a \texttt{NaN} appears, it propagates through every subsequent operation,
 silently corrupting the computation.
 
-IVNA suggests an alternative we call \textbf{VEX mode} (Virtual EXtended
-arithmetic). In VEX mode, \texttt{5.0 / 0.0} returns $\vi{5}$---an
+IVNA suggests an alternative we call \textbf{VEA mode} (Virtual EXtended
+arithmetic). In VEA mode, \texttt{5.0 / 0.0} returns $\vi{5}$---an
 indexed infinity that remembers its origin. Multiplying $\vi{5}$ by
 $\vz{1}$ recovers $5$. No information is lost.
 
 \begin{center}
 \begin{tabular}{lll}
 \toprule
-\textbf{Expression} & \textbf{IEEE 754} & \textbf{VEX (IVNA)} \\
+\textbf{Expression} & \textbf{IEEE 754} & \textbf{VEA(IVNA)} \\
 \midrule
 \texttt{5 / 0}      & \texttt{Inf}  & $\vi{5}$ \\
 \texttt{-3 / 0}     & \texttt{-Inf} & $\vi{-3}$ \\
@@ -812,15 +845,15 @@ $\vz{1}$ recovers $5$. No information is lost.
 \end{tabular}
 \end{center}
 
-A working VEX calculator prototype is included in the supplementary
-repository. In our tests, VEX mode resolves each of the standard NaN-producing
+A working VEAcalculator prototype is included in the supplementary
+repository. In our tests, VEA mode resolves each of the standard NaN-producing
 operations in IEEE~754, provided the operand indices are tracked.
 
 Fog~\cite{fog2019} has proposed encoding exception metadata in NaN
-payloads for the ForwardCom architecture. VEX differs: Fog's payloads
+payloads for the ForwardCom architecture. VEAdiffers: Fog's payloads
 track \emph{where} the exception occurred (code address), while IVNA's
 indices track \emph{what} the mathematical provenance is (numerator,
-denominator). VEX indices are algebraically operable; Fog's payloads
+denominator). VEAindices are algebraically operable; Fog's payloads
 are not.
 
 
@@ -993,7 +1026,7 @@ between zero and infinity.
 
 \begin{enumerate}
 \item \textbf{Integration formalization} in Lean~4.
-\item \textbf{VEX implementation} in a production language with IEEE~754
+\item \textbf{VEAimplementation} in a production language with IEEE~754
   benchmarks.
 \item \textbf{Complex indices}: systematic treatment of directional
   singularities where the index encodes approach direction.
@@ -1028,7 +1061,7 @@ A.~Robinson, \emph{Non-Standard Analysis}, North-Holland, Amsterdam, 1966.
 \bibitem{keisler1976}
 H.~J.~Keisler, \emph{Elementary Calculus: An Infinitesimal Approach},
 Prindle, Weber \& Schmidt, 1976.
-Available free at \texttt{https://people.math.wisc.edu/\~{}hkeisler/calc.html}.
+Available free at \url{https://people.math.wisc.edu/~hkeisler/calc.html}.
 
 \bibitem{carlstrom2004}
 J.~Carlstr\"om, ``Wheels---On division by zero,''
@@ -1106,7 +1139,7 @@ vol.~410, no.~12--13, pp.~1261--1271, 2009.
 \bibitem{tao2010}
 T.~Tao, ``The Euler--Maclaurin formula, Bernoulli numbers, the zeta function,
 and real-variable analytic continuation,'' blog post, April 10, 2010.
-\texttt{https://terrytao.wordpress.com/2010/04/10/}
+Available at \texttt{terrytao.wordpress.com}.
 
 % === Computer arithmetic ===
 

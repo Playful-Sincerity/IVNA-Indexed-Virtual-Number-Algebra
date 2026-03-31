@@ -1,13 +1,13 @@
 """
-VEX Calculator — Virtual EXtended Arithmetic
+VEA Calculator — Virtual EXtended Arithmetic
 =============================================
 
 A calculator that uses IVNA (Indexed Virtual Number Algebra) instead of
 raising division-by-zero errors. Where a standard calculator says "ERROR,"
-VEX produces indexed virtual numbers that you can keep computing with.
+VEA produces indexed virtual numbers that you can keep computing with.
 
 Standard:  5 / 0  →  ERROR
-VEX:       5 / 0  →  ∞_5  (and you can keep going)
+VEA:       5 / 0  →  ∞_5  (and you can keep going)
 
 This is the tangible demonstration of IVNA's core insight: zeros and
 infinities carry information (their index), and preserving that information
@@ -32,7 +32,7 @@ class VexCalc:
     """A calculator that uses IVNA instead of raising division-by-zero errors.
 
     Standard mode: 5 / 0  → ERROR
-    VEX mode:      5 / 0  → ∞_5 (and you can keep computing with it)
+    VEA mode:      5 / 0  → ∞_5 (and you can keep computing with it)
 
     Usage:
         calc = VexCalc()
@@ -221,7 +221,7 @@ class VexCalc:
             return a * b
 
     def _div(self, a, b):
-        """Division logic — the heart of VEX.
+        """Division logic — the heart of VEA.
 
         When b is 0 (plain zero), we need to convert it to an indexed zero.
         Convention: plain 0 → 0_1 (the "standard" zero with index 1).
@@ -315,7 +315,7 @@ if __name__ == '__main__':
     calc = VexCalc()
 
     print("=" * 68)
-    print("  VEX Calculator — Virtual EXtended Arithmetic")
+    print("  VEA Calculator — Virtual EXtended Arithmetic")
     print("  Powered by IVNA (Indexed Virtual Number Algebra)")
     print("=" * 68)
     print()
@@ -337,7 +337,7 @@ if __name__ == '__main__':
 
     result = calc.div(5, 0)
     print(f"  Standard calculator:   5 / 0 = ERROR")
-    print(f"  VEX calculator:        5 / 0 = {calc.display(result)}")
+    print(f"  VEA calculator:        5 / 0 = {calc.display(result)}")
     print()
     print(f"  The ∞_5 means: \"infinity that remembers it came from 5.\"")
     print(f"  The subscript 5 is the index — it tracks the numerator.")
@@ -345,7 +345,7 @@ if __name__ == '__main__':
 
     result2 = calc.div(-3, 0)
     print(f"  Standard calculator:  -3 / 0 = ERROR")
-    print(f"  VEX calculator:       -3 / 0 = {calc.display(result2)}")
+    print(f"  VEA calculator:       -3 / 0 = {calc.display(result2)}")
     print()
     print(f"  Different numerator, different index. The infinity knows its origin.")
     print()
@@ -406,7 +406,7 @@ if __name__ == '__main__':
     z2 = Z(3)
     result_0over0 = calc.div(z1, z2)
     print(f"  Standard math:  0 / 0  = INDETERMINATE")
-    print(f"  VEX calculator: 0_6 / 0_3 = {calc.display(result_0over0)}")
+    print(f"  VEA calculator: 0_6 / 0_3 = {calc.display(result_0over0)}")
     print()
     print(f"  When both zeros carry indices, 0_x / 0_y = x/y.")
     print(f"  The \"indeterminate\" form 0/0 is only indeterminate because")
@@ -418,7 +418,7 @@ if __name__ == '__main__':
     i2 = I(5)
     result_infoverinf = calc.div(i1, i2)
     print(f"  Standard math:  ∞ / ∞  = INDETERMINATE")
-    print(f"  VEX calculator: ∞_10 / ∞_5 = {calc.display(result_infoverinf)}")
+    print(f"  VEA calculator: ∞_10 / ∞_5 = {calc.display(result_infoverinf)}")
     print()
     print(f"  Same principle: ∞_x / ∞_y = x/y. Indices resolve the ambiguity.")
     print()
@@ -504,14 +504,14 @@ if __name__ == '__main__':
     # IEEE 754 Comparison
     # ============================================================
     print("=" * 68)
-    print("  IEEE 754 vs VEX: How VEX eliminates NaN")
+    print("  IEEE 754 vs VEA: How VEA eliminates NaN")
     print("=" * 68)
     print()
     print("  IEEE 754 is the standard for floating-point arithmetic in every")
     print("  computer. It introduced +Inf, -Inf, and NaN. But NaN is a black")
     print("  hole — once you have NaN, it infects every subsequent calculation.")
     print()
-    print("  VEX (IVNA) eliminates most NaN cases by preserving index information.")
+    print("  VEA (IVNA) eliminates most NaN cases by preserving index information.")
     print()
 
     # Build comparison table
@@ -527,39 +527,39 @@ if __name__ == '__main__':
     ]
 
     # Header
-    print(f"  {'Expression':<18} {'IEEE 754':<12} {'VEX (IVNA)':<18} {'Verdict'}")
+    print(f"  {'Expression':<18} {'IEEE 754':<12} {'VEA (IVNA)':<18} {'Verdict'}")
     print(f"  {'─' * 18} {'─' * 12} {'─' * 18} {'─' * 18}")
 
     nan_count_ieee = 0
-    nan_count_vex = 0
+    nan_count_vea = 0
 
-    for label, a_str, b_str, op, vex_fn in comparisons:
+    for label, a_str, b_str, op, vea_fn in comparisons:
         ieee = ieee754_result(a_str, b_str, op)
-        vex_result = vex_fn()
-        vex_str = calc.display(vex_result)
+        vea_result = vea_fn()
+        vea_str = calc.display(vea_result)
 
         if ieee == 'NaN':
             nan_count_ieee += 1
 
-        # Check if VEX result is meaningful (not NaN-equivalent)
-        vex_is_nan = isinstance(vex_result, float) and vex_result != vex_result
+        # Check if VEA result is meaningful (not NaN-equivalent)
+        vea_is_nan = isinstance(vea_result, float) and vea_result != vea_result
 
-        if vex_is_nan:
-            nan_count_vex += 1
+        if vea_is_nan:
+            nan_count_vea += 1
             verdict = "both undefined"
         elif ieee == 'NaN':
-            verdict = "VEX resolves!"
+            verdict = "VEA resolves!"
         elif ieee in ('+Inf', '-Inf'):
-            verdict = "VEX adds index"
+            verdict = "VEA adds index"
         else:
             verdict = ""
 
-        print(f"  {label:<18} {ieee:<12} {vex_str:<18} {verdict}")
+        print(f"  {label:<18} {ieee:<12} {vea_str:<18} {verdict}")
 
     print()
     print(f"  IEEE 754 NaN results:  {nan_count_ieee}")
-    print(f"  VEX NaN results:       {nan_count_vex}")
-    nan_eliminated = nan_count_ieee - nan_count_vex
+    print(f"  VEA NaN results:       {nan_count_vea}")
+    nan_eliminated = nan_count_ieee - nan_count_vea
     if nan_count_ieee > 0:
         pct = (nan_eliminated / nan_count_ieee) * 100
         print(f"  NaN cases eliminated:  {nan_eliminated}/{nan_count_ieee} ({pct:.0f}%)")
@@ -569,7 +569,7 @@ if __name__ == '__main__':
     # Summary
     # ----------------------------------------------------------
     print("=" * 68)
-    print("  Summary: What VEX (IVNA) Does Differently")
+    print("  Summary: What VEA (IVNA) Does Differently")
     print("=" * 68)
     print()
     print("  1. DIVISION BY ZERO produces a usable indexed infinity (∞_x)")
@@ -585,7 +585,7 @@ if __name__ == '__main__':
     print("     stripping indices to get conventional 0, ∞, or real values.")
     print()
     print("  5. BACKWARD COMPATIBLE. Every standard arithmetic result is")
-    print("     unchanged. VEX only kicks in where standard math breaks.")
+    print("     unchanged. VEA only kicks in where standard math breaks.")
     print()
     print("  IVNA doesn't replace mathematics. It extends it — the same way")
     print("  complex numbers extended the reals to handle √(-1).")

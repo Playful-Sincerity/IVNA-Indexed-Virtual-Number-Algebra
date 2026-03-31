@@ -38,7 +38,7 @@ IVNA/
 ├── code/                        # Python implementation & tools
 │   ├── ivna.py                  # Core IVNA implementation (28 tests)
 │   ├── verify_nsa_embedding.py  # NSA embedding verification (37+11 checks)
-│   └── vex_calculator.py        # VEX calculator prototype/demo
+│   └── vex_calculator.py        # VEA calculator prototype/demo
 │
 ├── research/                    # Research documents
 │   ├── Indexed_Virtual_Number_Algebra.pdf  # Original paper (source)
@@ -96,7 +96,7 @@ This project falls under `~/Playful Sincerity/PS Research/**`:
 ## Publication Plan
 - **ArXiv first** (math.RA or math.GM) — establishes priority
 - **Target journal**: American Mathematical Monthly or Mathematical Intelligencer
-- **Supplementary**: GitHub repo with code + Lean proofs + VEX calculator
+- **Supplementary**: GitHub repo with code + Lean proofs + VEA calculator
 - **Attribution**: Wisdom as sole author, Playful Sincerity Digital Core in acknowledgments
 
 ## Connection to Other PS Research

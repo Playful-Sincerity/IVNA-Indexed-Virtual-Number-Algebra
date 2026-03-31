@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VEX Calculator — Division by Zero, Solved</title>
+<title>VEA Calculator — Division by Zero, Solved</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 2rem; }
@@ -40,12 +40,12 @@
 </head>
 <body>
 
-<h1>VEX Calculator</h1>
-<p class="subtitle">Virtual EXtended Arithmetic — powered by IVNA</p>
+<h1>VEA Calculator</h1>
+<p class="subtitle">Virtual Expression Arithmetic — powered by IVNA</p>
 
 <div class="calculator">
   <div class="mode-toggle">
-    <button class="mode-btn active" onclick="setMode('vex')">VEX Mode</button>
+    <button class="mode-btn active" onclick="setMode('vea')">VEA Mode</button>
     <button class="mode-btn" onclick="setMode('standard')">Standard Mode</button>
   </div>
 
@@ -244,13 +244,13 @@ function parse(expr) {
 }
 
 // UI
-let mode = 'vex';
+let mode = 'vea';
 let historyItems = [];
 
 function setMode(m) {
   mode = m;
   document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector(`.mode-btn:${m === 'vex' ? 'first' : 'last'}-child`).classList.add('active');
+  document.querySelector(`.mode-btn:${m === 'vea' ? 'first' : 'last'}-child`).classList.add('active');
 }
 
 function compute() {
@@ -279,7 +279,7 @@ function compute() {
       const str = result.toString();
       dispResult.textContent = str;
       dispResult.className = 'display-result' + (result.type !== 'real' ? ' virtual' : '');
-      addHistory(input, str, 'vex');
+      addHistory(input, str, 'vea');
     } catch(e) {
       dispResult.textContent = 'Parse error';
       dispResult.className = 'display-result error';
