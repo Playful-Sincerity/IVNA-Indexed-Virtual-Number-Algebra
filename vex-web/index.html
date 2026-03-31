@@ -167,7 +167,9 @@ function vsub(a, b) {
 function parse(expr) {
   expr = expr.trim()
     .replace(/×/g, '*').replace(/÷/g, '/')
+    .replace(/-∞_?(\d+\.?\d*)/g, 'INF(-$1)')
     .replace(/∞_?(\d+\.?\d*)/g, 'INF($1)')
+    .replace(/-inf_(\d+\.?\d*)/g, 'INF(-$1)')
     .replace(/inf_(\d+\.?\d*)/g, 'INF($1)')
     .replace(/0_(\d+\.?\d*)/g, 'ZERO($1)');
 
@@ -185,14 +187,25 @@ function parse(expr) {
       tokens.push(vZero(parseFloat(expr.slice(i+5, end))));
       i = end + 1;
     } else if ('+-*/'.includes(expr[i])) {
-      tokens.push(expr[i]);
-      i++;
+      // Unary minus: if '-' at start or after an operator, it's part of a number
+      const prev = tokens[tokens.length - 1];
+      if (expr[i] === '-' && (tokens.length === 0 || typeof prev === 'string' && '+-*/('.includes(prev))) {
+        let num = '-';
+        i++;
+        while (i < expr.length && expr[i].match(/[\d.]/)) {
+          num += expr[i]; i++;
+        }
+        tokens.push(vReal(parseFloat(num)));
+      } else {
+        tokens.push(expr[i]);
+        i++;
+      }
     } else if (expr[i] === '(' || expr[i] === ')') {
       tokens.push(expr[i]);
       i++;
     } else {
       let num = '';
-      while (i < expr.length && (expr[i].match(/[\d.\-]/) || (expr[i] === '-' && num === ''))) {
+      while (i < expr.length && expr[i].match(/[\d.]/)) {
         num += expr[i]; i++;
       }
       if (num) tokens.push(vReal(parseFloat(num)));
