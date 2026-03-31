@@ -1,0 +1,115 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║  IVNA Demo 1: N-Body Gravitational Simulation                      ║
+║  Comparing IEEE 754 (with/without softening) vs IVNA               ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+======================================================================
+IVNA ALGEBRA: Division by Zero in Gravity
+======================================================================
+
+  Given: m₁ = 3, m₂ = 2, G = 1
+  Force: F = G·m₁·m₂/r²
+
+  Case 1: r = 0_1
+    r² = 0_1 ** 2 = 0^2_1
+    F = 6 / 0^2_1 = ∞^2_6
+    Roundtrip: F · r² = ∞^2_6 · 0^2_1 = 6
+    ✓ Information preserved: 6 = G·m₁·m₂ = 6
+
+  Case 2: r = 0_2
+    r² = 0^2_4
+    F = 6 / 0^2_4 = ∞^2_3/2
+    Roundtrip: F · r² = 6
+    ✓ Different index encodes different approach — but roundtrip still works
+
+  IEEE 754 comparison:
+    r = 0.0: F = 6/0 = Inf
+    Inf * 0 = NaN  ← information destroyed, can't recover G·m₁·m₂
+    IVNA:    ∞²_6 · 0²_1 = 6  ← information preserved
+======================================================================
+DEMO: What happens when two particles collide?
+======================================================================
+
+           r       IEEE F=Gm₁m₂/r²      IEEE F·0                            IVNA       IVNA index
+-----------------------------------------------------------------------------------------------
+     1.0e+00          1.500000e+00           0.0                    1.500000e+00             real
+     1.0e-01          1.500000e+02           0.0                    1.500000e+02             real
+     1.0e-02          1.500000e+04           0.0                    1.500000e+04             real
+     1.0e-03          1.500000e+06           0.0                    1.500000e+06             real
+     1.0e-06          1.500000e+12           0.0                    1.500000e+12             real
+     1.0e-10          1.500000e+20           0.0                    1.500000e+20             real
+     1.0e-15          1.500000e+30           0.0                    ∞_{1.50e+30}         1.50e+30
+     0.0e+00                   Inf           NaN                         ∞^2_3/2  1.500000 (rt=3/2)
+
+KEY OBSERVATION:
+  IEEE 754: At r=0, F=Inf. Then F·0 = NaN. Information is DESTROYED.
+  IVNA:     At r=0₁, F=∞²_{1.5}. Then F·0²₁ = 1.5. Information PRESERVED.
+  The IVNA index (1.5 = G·m₁·m₂) encodes the PHYSICS of the encounter.
+
+
+======================================================================
+N-BODY SIMULATION COMPARISON: IEEE 754 vs IVNA
+======================================================================
+  Particles: 6
+  Steps: 400
+  Timestep: 0.005
+  Softening (IEEE): 0.01
+  Scenario: Pairs heading toward collision
+
+Running IEEE 754 simulation (with softening ε=0.01)...
+Running IEEE 754 simulation (NO softening, raw)...
+Running IVNA simulation (no softening needed)...
+
+----------------------------------------------------------------------
+RESULTS
+----------------------------------------------------------------------
+
+  IEEE 754 (no softening): Survived 400 steps (no close encounters)
+
+  IEEE 754 (softened, ε=0.01):
+    Minimum distance:     6.544304e-03
+    Maximum force:        5.750890e+03
+    Steps with softening: 2/400
+    Energy drift:         7.075352e+02
+    Problem: Softening corrupts physics at ALL distances
+
+  IVNA (no softening):
+    Minimum distance:     9.081944e-03
+    Maximum force:        1.818585e+04
+    Virtual events:       0
+    Energy drift:         1.187565e+04
+    Advantage: No arbitrary parameter, information preserved
+
+----------------------------------------------------------------------
+SOFTENING SENSITIVITY (IEEE 754)
+----------------------------------------------------------------------
+  Different ε values give DIFFERENT physics — which is 'correct'?
+
+           ε         Min r         Max F     Energy drift
+  -------------------------------------------------------
+      0.1000  2.685844e-02  8.580160e+01     5.173817e-02
+      0.0100  6.544304e-03  5.750890e+03     7.075352e+02
+      0.0010  9.069690e-03  1.790749e+04     1.147523e+04
+      0.0001  9.081826e-03  1.818302e+04     1.187154e+04
+
+  IVNA: No ε needed. The physics is determined by the algebra, not a parameter.
+
+======================================================================
+CONCLUSION
+======================================================================
+
+  Standard IEEE 754 has THREE options at r=0:
+    1. Crash (Inf/NaN propagation)
+    2. Softening hack (arbitrary ε corrupts physics everywhere)
+    3. Skip the timestep (lose data)
+
+  IVNA provides a FOURTH option:
+    4. Track the singularity algebraically (0_x → ∞_{Gm₁m₂/x²})
+       - No arbitrary parameters
+       - Information preserved (roundtrip works)
+       - Index tells you the PHYSICS (masses, approach geometry)
+
+  For paper: This demo shows IVNA as a DIAGNOSTIC tool for singularities
+  in N-body codes, not necessarily a replacement for softening in production
+  simulations (which serve different purposes like modeling finite-size bodies).
+

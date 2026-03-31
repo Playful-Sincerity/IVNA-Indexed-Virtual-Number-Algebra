@@ -1,0 +1,433 @@
+========================================================================
+IVNA NSA EMBEDDING VERIFICATION
+========================================================================
+
+------------------------------------------------------------------------
+CORE AXIOM VERIFICATION
+------------------------------------------------------------------------
+
+A1: Zero * Zero = Higher-Order Zero
+  A1: 0_x * 0_y = 0²_{xy}
+    LHS = epsilon_0**2*x*y
+    RHS = epsilon_0**2*x*y
+    LHS - RHS = 0
+    [PASS]
+    Note: (x*ε₀)(y*ε₀) = xy*ε₀²
+
+A2: Infinity * Infinity = Higher-Order Infinity
+  A2: ∞_x * ∞_y = ∞²_{xy}
+    LHS = x*y/epsilon_0**2
+    RHS = x*y/epsilon_0**2
+    LHS - RHS = 0
+    [PASS]
+    Note: (x/ε₀)(y/ε₀) = xy/ε₀²
+
+A3: Zero * Infinity = Product of Indices
+  A3: 0_x * ∞_y = xy
+    LHS = x*y
+    RHS = x*y
+    LHS - RHS = 0
+    [PASS]
+    Note: (x*ε₀)(y/ε₀) = xy*(ε₀/ε₀) = xy
+
+A4: Scalar * Zero = Zero with Scaled Index
+  A4: n * 0_x = 0_{nx}
+    LHS = epsilon_0*r*x
+    RHS = epsilon_0*r*x
+    LHS - RHS = 0
+    [PASS]
+    Note: r*(x*ε₀) = (rx)*ε₀
+
+A5: Scalar * Infinity = Infinity with Scaled Index
+  A5: n * ∞_x = ∞_{nx}
+    LHS = r*x/epsilon_0
+    RHS = r*x/epsilon_0
+    LHS - RHS = 0
+    [PASS]
+    Note: r*(x/ε₀) = (rx)/ε₀
+
+A6: Real / Zero = Infinity with Quotient Index
+  A6: y / 0_x = ∞_{y/x}
+    LHS = y/(epsilon_0*x)
+    RHS = y/(epsilon_0*x)
+    LHS - RHS = 0
+    [PASS]
+    Note: y/(x*ε₀) = (y/x)/ε₀
+
+A7: Real / Infinity = Zero with Quotient Index
+  A7: y / ∞_x = 0_{y/x}
+    LHS = epsilon_0*y/x
+    RHS = epsilon_0*y/x
+    LHS - RHS = 0
+    [PASS]
+    Note: y/(x/ε₀) = (y/x)*ε₀
+
+A8: Zero + Zero = Zero with Sum Index
+  A8: 0_x + 0_y = 0_{x+y}
+    LHS = epsilon_0*x + epsilon_0*y
+    RHS = epsilon_0*(x + y)
+    LHS - RHS = 0
+    [PASS]
+    Note: x*ε₀ + y*ε₀ = (x+y)*ε₀
+
+A9: Infinity + Infinity = Infinity with Sum Index
+  A9: ∞_x + ∞_y = ∞_{x+y}
+    LHS = x/epsilon_0 + y/epsilon_0
+    RHS = (x + y)/epsilon_0
+    LHS - RHS = 0
+    [PASS]
+    Note: x/ε₀ + y/ε₀ = (x+y)/ε₀
+
+A10: Zero Power = Higher-Order Zero with Powered Index
+  A10(n=2): (0_x)^2 = 0^2_{x^2}
+    LHS = epsilon_0**2*x**2
+    RHS = epsilon_0**2*x**2
+    LHS - RHS = 0
+    [PASS]
+    Note: (x*ε₀)^2 = x^2 * ε₀^2
+
+  A10(n=3): (0_x)^3 = 0^3_{x^3}
+    LHS = epsilon_0**3*x**3
+    RHS = epsilon_0**3*x**3
+    LHS - RHS = 0
+    [PASS]
+    Note: (x*ε₀)^3 = x^3 * ε₀^3
+
+  A10(n=4): (0_x)^4 = 0^4_{x^4}
+    LHS = epsilon_0**4*x**4
+    RHS = epsilon_0**4*x**4
+    LHS - RHS = 0
+    [PASS]
+    Note: (x*ε₀)^4 = x^4 * ε₀^4
+
+A11: Infinity Power = Higher-Order Infinity with Powered Index
+  A11(n=2): (∞_x)^2 = ∞^2_{x^2}
+    LHS = x**2/epsilon_0**2
+    RHS = x**2/epsilon_0**2
+    LHS - RHS = 0
+    [PASS]
+    Note: (x/ε₀)^2 = x^2 / ε₀^2
+
+  A11(n=3): (∞_x)^3 = ∞^3_{x^3}
+    LHS = x**3/epsilon_0**3
+    RHS = x**3/epsilon_0**3
+    LHS - RHS = 0
+    [PASS]
+    Note: (x/ε₀)^3 = x^3 / ε₀^3
+
+  A11(n=4): (∞_x)^4 = ∞^4_{x^4}
+    LHS = x**4/epsilon_0**4
+    RHS = x**4/epsilon_0**4
+    LHS - RHS = 0
+    [PASS]
+    Note: (x/ε₀)^4 = x^4 / ε₀^4
+
+A12: Zero / Zero = Ratio of Indices
+  A12: 0_x / 0_y = x/y
+    LHS = x/y
+    RHS = x/y
+    LHS - RHS = 0
+    [PASS]
+    Note: (x*ε₀)/(y*ε₀) = x/y
+
+A13: Infinity / Infinity = Ratio of Indices
+  A13: ∞_x / ∞_y = x/y
+    LHS = x/y
+    RHS = x/y
+    LHS - RHS = 0
+    [PASS]
+    Note: (x/ε₀)/(y/ε₀) = x/y
+
+------------------------------------------------------------------------
+RESOLVED AXIOM VERIFICATION
+------------------------------------------------------------------------
+
+D-INDEX-ZERO: Subtraction of Equal Zeros Gives Real Zero
+  D-INDEX-ZERO: 0_x - 0_x = 0
+    LHS = 0
+    RHS = 0
+    LHS - RHS = 0
+    [PASS]
+    Note: x*ε₀ - x*ε₀ = 0 (exits virtual system)
+
+A-EXP: (1 + 0_x)^{∞_y} = e^{xy}
+  This is a known result in NSA (Goldblatt 1998, Theorem 5.7.2).
+  Proof sketch:
+    ln((1 + x*ε₀)^{y/ε₀}) = (y/ε₀) * ln(1 + x*ε₀)
+    Using Taylor: ln(1 + h) = h - h²/2 + h³/3 - ...
+    = (y/ε₀) * (x*ε₀ - x²*ε₀²/2 + x³*ε₀³/3 - ...)
+    = xy - x²y*ε₀/2 + x³y*ε₀²/3 - ...
+    st(this) = xy
+    Therefore st((1 + x*ε₀)^{y/ε₀}) = e^{xy}
+
+  Symbolic verification of leading term:
+    (y/ε₀) * ln(1 + x*ε₀) ≈ (y/ε₀) * (x*ε₀ - x²ε₀²/2 + x³ε₀³/3)
+    = x*y*(2*epsilon_0**2*x**2 - 3*epsilon_0*x + 6)/6
+    Polynomial in ε₀: Poly(x**3*y/3*epsilon_0**2 - x**2*y/2*epsilon_0 + x*y, epsilon_0, domain='QQ[x,y]')
+    Constant term (ε₀^0 coefficient): x*y
+    Expected: x*y
+    [PASS] Leading term is xy, higher terms are infinitesimal
+
+A-NEG: Negation of Zero = Zero with Negated Index
+  A-NEG: -(0_x) = 0_{-x}
+    LHS = -epsilon_0*x
+    RHS = -epsilon_0*x
+    LHS - RHS = 0
+    [PASS]
+    Note: -(x*ε₀) = (-x)*ε₀
+
+A-NEG-INF: Negation of Infinity = Infinity with Negated Index
+  A-NEG-INF: -(∞_x) = ∞_{-x}
+    LHS = -x/epsilon_0
+    RHS = -x/epsilon_0
+    LHS - RHS = 0
+    [PASS]
+    Note: -(x/ε₀) = (-x)/ε₀
+
+A-DUAL: Duality — Reciprocal of Zero = Infinity
+  A-DUAL: 1/0_x = ∞_{1/x}
+    LHS = 1/(epsilon_0*x)
+    RHS = 1/(epsilon_0*x)
+    LHS - RHS = 0
+    [PASS]
+    Note: 1/(x*ε₀) = (1/x)/ε₀
+
+GENERAL: 0^m_x * ∞^n_y = 0^{m-n}_{xy} when m > n
+  GEN(m=3,n=1): 0^3_x * ∞^1_y = 0^2_{xy}
+    LHS = epsilon_0**2*x*y
+    RHS = epsilon_0**2*x*y
+    LHS - RHS = 0
+    [PASS]
+    Note: x*ε₀^3 * y*ε₀^{-1} = xy*ε₀^2
+
+  GEN(m=3,n=2): 0^3_x * ∞^2_y = 0^1_{xy}
+    LHS = epsilon_0*x*y
+    RHS = epsilon_0*x*y
+    LHS - RHS = 0
+    [PASS]
+    Note: x*ε₀^3 * y*ε₀^{-2} = xy*ε₀^1
+
+  GEN(m=4,n=1): 0^4_x * ∞^1_y = 0^3_{xy}
+    LHS = epsilon_0**3*x*y
+    RHS = epsilon_0**3*x*y
+    LHS - RHS = 0
+    [PASS]
+    Note: x*ε₀^4 * y*ε₀^{-1} = xy*ε₀^3
+
+  GEN(m=4,n=2): 0^4_x * ∞^2_y = 0^2_{xy}
+    LHS = epsilon_0**2*x*y
+    RHS = epsilon_0**2*x*y
+    LHS - RHS = 0
+    [PASS]
+    Note: x*ε₀^4 * y*ε₀^{-2} = xy*ε₀^2
+
+  GEN(m=4,n=3): 0^4_x * ∞^3_y = 0^1_{xy}
+    LHS = epsilon_0*x*y
+    RHS = epsilon_0*x*y
+    LHS - RHS = 0
+    [PASS]
+    Note: x*ε₀^4 * y*ε₀^{-3} = xy*ε₀^1
+
+GENERAL: 0^m_x * ∞^n_y = ∞^{n-m}_{xy} when n > m
+  GEN(m=1,n=3): 0^1_x * ∞^3_y = ∞^2_{xy}
+    LHS = x*y/epsilon_0**2
+    RHS = x*y/epsilon_0**2
+    LHS - RHS = 0
+    [PASS]
+    Note: x*ε₀^1 * y*ε₀^{-3} = xy*ε₀^{-(3-1)}
+
+  GEN(m=2,n=3): 0^2_x * ∞^3_y = ∞^1_{xy}
+    LHS = x*y/epsilon_0
+    RHS = x*y/epsilon_0
+    LHS - RHS = 0
+    [PASS]
+    Note: x*ε₀^2 * y*ε₀^{-3} = xy*ε₀^{-(3-2)}
+
+  GEN(m=1,n=4): 0^1_x * ∞^4_y = ∞^3_{xy}
+    LHS = x*y/epsilon_0**3
+    RHS = x*y/epsilon_0**3
+    LHS - RHS = 0
+    [PASS]
+    Note: x*ε₀^1 * y*ε₀^{-4} = xy*ε₀^{-(4-1)}
+
+  GEN(m=2,n=4): 0^2_x * ∞^4_y = ∞^2_{xy}
+    LHS = x*y/epsilon_0**2
+    RHS = x*y/epsilon_0**2
+    LHS - RHS = 0
+    [PASS]
+    Note: x*ε₀^2 * y*ε₀^{-4} = xy*ε₀^{-(4-2)}
+
+  GEN(m=3,n=4): 0^3_x * ∞^4_y = ∞^1_{xy}
+    LHS = x*y/epsilon_0
+    RHS = x*y/epsilon_0
+    LHS - RHS = 0
+    [PASS]
+    Note: x*ε₀^3 * y*ε₀^{-4} = xy*ε₀^{-(4-3)}
+
+------------------------------------------------------------------------
+STRUCTURAL PROPERTY VERIFICATION
+------------------------------------------------------------------------
+
+ASSOC-MUL: (0_x * 0_y) * ∞_z = 0_x * (0_y * ∞_z)
+  ASSOC-MUL: (0_x * 0_y) * ∞_z = 0_x * (0_y * ∞_z)
+    LHS = epsilon_0*x*y*z
+    RHS = epsilon_0*x*y*z
+    LHS - RHS = 0
+    [PASS]
+    Note: Both sides = xyz*ε₀
+
+COMM-MUL: 0_x * ∞_y = ∞_y * 0_x
+  COMM-MUL: 0_x * ∞_y = ∞_y * 0_x
+    LHS = x*y
+    RHS = x*y
+    LHS - RHS = 0
+    [PASS]
+    Note: Both sides = xy
+
+DISTRIB: 0_x * (∞_y + ∞_z) = 0_x*∞_y + 0_x*∞_z
+  DISTRIB: 0_x * (∞_y + ∞_z) = 0_x*∞_y + 0_x*∞_z
+    LHS = epsilon_0*x*(y/epsilon_0 + z/epsilon_0)
+    RHS = x*y + x*z
+    LHS - RHS = 0
+    [PASS]
+    Note: Both sides = x(y+z) = xy + xz
+
+ROUNDTRIP: (y / 0_x) * 0_x = y
+  ROUNDTRIP: (y / 0_x) * 0_x = y
+    LHS = y
+    RHS = y
+    LHS - RHS = 0
+    [PASS]
+    Note: Division-by-zero roundtrip preserved
+
+DUALITY: 0_x * (1/0_x) = 1
+  DUALITY: 0_x * (1/0_x) = 1
+    LHS = 1
+    RHS = 1
+    LHS - RHS = 0
+    [PASS]
+    Note: x*ε₀ * 1/(x*ε₀) = 1
+
+========================================================================
+VERIFICATION SUMMARY
+========================================================================
+
+Total checks: 37
+PASSED: 37
+FAILED: 0
+
+VERDICT: ALL AXIOMS VERIFIED
+
+The NSA embedding 0_r = r*ε₀, ∞_r = r/ε₀ provides a consistent
+model for ALL IVNA core axioms. IVNA is consistent, with consistency
+inherited from Non-Standard Analysis (proven relative to ZFC).
+
+IVNA = structured notation for Laurent monomials in ε₀
+     = R[ε₀, ε₀⁻¹] (Laurent polynomial ring, restricted to monomials)
+
+
+========================================================================
+Z3 SATISFIABILITY CHECK
+========================================================================
+
+Encoding IVNA axioms as Z3 constraints...
+Strategy: model virtual numbers as (index, order) pairs where
+  the NSA value is index * ε₀^order
+  Multiplication rule: (a, m) * (b, n) = (a*b, m+n)
+  Addition rule (same order): (a, m) + (b, m) = (a+b, m)
+  Collapse: if order > 0, value → 0; if order < 0, value → ∞
+
+Since ε₀ is a free positive infinitesimal, axiom verification reduces
+to checking that index arithmetic is consistent. We encode this.
+
+--- Check 1: Core Axiom System Satisfiability ---
+
+  SAT-CORE: Core axiom constraints are satisfiable → SAT
+    Example model: a=2, b=3, c=4
+
+--- Check 2: Individual Axiom Identity Checks ---
+
+  A1-UNSAT: Negation of A1 index rule (expect UNSAT) → UNSAT
+  A3-UNSAT: Negation of A3 (0_a * ∞_b = ab) (expect UNSAT) → UNSAT
+  A8-UNSAT: Negation of A8 (0_a + 0_b = 0_{a+b}) (expect UNSAT) → UNSAT
+  A12-UNSAT: Negation of A12 (0_a/0_b = a/b) (expect UNSAT) → UNSAT
+
+--- Check 3: Division-by-Zero Roundtrip ---
+
+  ROUNDTRIP-UNSAT: Negation of roundtrip ((y/0_a)*0_a = y) (expect UNSAT) → UNSAT
+
+--- Check 4: Cross-Axiom Consistency ---
+
+  CROSS-A1-A3-UNSAT: Negation of associativity across A1+A3 (expect UNSAT) → UNSAT
+  CROSS-A6-A7-UNSAT: Negation of A6+A7 consistency (y/(y/0_x)=0_x) (expect UNSAT) → UNSAT
+
+--- Check 5: Global Consistency Check ---
+
+  GLOBAL-SAT: All axioms simultaneously satisfiable (expect SAT) → SAT
+    Example: a=-1/2, b=1, c=1, d=-1/2, e=2, f=3
+    Chain result: f*(a*b*c + d)/e = -1.5
+
+--- Check 6: Rejected Axiom Inconsistency ---
+
+  REJECT-2PI: A3 + '0_1*∞_1=2π' → contradiction (expect UNSAT) → UNSAT
+
+--- Check 7: 0_0 ≠ 0²_1 Verification ---
+
+  In NSA embedding:
+    0_0 = 0 * ε₀ = 0  (the real number zero)
+    0²_1 = 1 * ε₀² = ε₀²  (a positive infinitesimal)
+    These are categorically different objects.
+    [PASS] The paper's claim that 0_0 = 0²_1 is REFUTED by the model.
+
+========================================================================
+Z3 VERIFICATION SUMMARY
+========================================================================
+
+  SAT-CORE: SAT
+  A1-UNSAT: UNSAT (negation is unsatisfiable → axiom is a tautology)
+  A3-UNSAT: UNSAT (negation is unsatisfiable → axiom is a tautology)
+  A8-UNSAT: UNSAT (negation is unsatisfiable → axiom is a tautology)
+  A12-UNSAT: UNSAT (negation is unsatisfiable → axiom is a tautology)
+  ROUNDTRIP-UNSAT: UNSAT (negation is unsatisfiable → axiom is a tautology)
+  CROSS-A1-A3-UNSAT: UNSAT (negation is unsatisfiable → axiom is a tautology)
+  CROSS-A6-A7-UNSAT: UNSAT (negation is unsatisfiable → axiom is a tautology)
+  GLOBAL-SAT: SAT (system has models → consistent)
+  REJECT-2PI: UNSAT (negation is unsatisfiable → axiom is a tautology)
+  0_0≠0²_1: VERIFIED
+
+Z3 checks passed: 11/11
+
+Z3 VERDICT: All axioms are satisfiable. No contradictions found.
+The IVNA axiom system is consistent in the Z3-checked domain.
+
+========================================================================
+FINAL COMBINED VERDICT
+========================================================================
+
+SymPy symbolic verification: 37/37 PASSED
+Z3 satisfiability checks:    11/11 PASSED
+
+========================================================================
+CONCLUSION: IVNA IS CONSISTENT
+========================================================================
+
+The NSA embedding (0_r = r*ε₀, ∞_r = r/ε₀) provides a model in which
+ALL IVNA axioms hold. Consistency is inherited from Non-Standard Analysis,
+which is itself consistent relative to ZFC (Zermelo-Fraenkel set theory
+with the Axiom of Choice).
+
+Algebraic characterization:
+  IVNA ≅ R[ε₀, ε₀⁻¹] (Laurent monomials in a formal infinitesimal)
+  with the standard part function st() serving as the =; operator.
+
+This means IVNA is a structured notational system for a well-understood
+fragment of hyperreal arithmetic — analogous to how a+bi is structured
+notation for R² with a specific multiplication rule.
+
+Value proposition: IVNA makes infinitesimal/infinite arithmetic
+accessible without requiring model theory, ultrafilters, or the
+transfer principle. The indexed provenance tracking (which zero?
+which infinity?) is a genuine contribution with no precedent in
+existing frameworks.
+
+Verification complete.

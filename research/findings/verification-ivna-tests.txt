@@ -1,0 +1,36 @@
+============================================================
+IVNA COMPUTATIONAL CONSISTENCY AUDIT
+============================================================
+
+  ✓ test_multiplication_basics: PASS
+  ✓ test_multiplication_associativity: PASS
+  ✓ test_multiplication_commutativity: PASS
+  ✓ test_division_basics: PASS
+  ✓ test_division_inverse_of_multiplication: PASS
+  ✓ test_addition_basics: PASS
+  ✓ test_subtraction_basics: PASS
+  ✓ test_power_basics: PASS
+  ✓ test_distributivity: PASS
+  ✓ test_zero_infinity_duality: PASS
+  ✓ test_derivative_x_squared: PASS
+  ✓ test_derivative_x_cubed: PASS
+  ✓ test_collapse_operator: PASS
+  ✓ test_subtraction_index_zero: PASS
+  ✓ test_negation_consistency: PASS
+  ✓ test_higher_order_interactions: PASS
+  ✓ test_associativity_mixed_triple: PASS
+  ✓ test_exponential_axiom: PASS
+  ✓ test_2pi_rejected: PASS
+  ✓ test_index_zero_exits: PASS
+  ✓ test_division_by_zero_roundtrip: PASS
+  ✓ test_derivative_x_to_n: PASS
+  ✓ test_rational_function_derivative: PASS
+  ✓ test_trig_derivative: PASS
+  ✓ test_exp_derivative: PASS
+  ✓ test_ln_derivative: PASS
+  ✓ test_infinite_series_sum: PASS
+  ✓ test_set_cardinality: PASS
+
+Results: 28 passed, 0 failed out of 28 tests
+
+ALL TESTS PASSED — no contradictions detected in tested rules

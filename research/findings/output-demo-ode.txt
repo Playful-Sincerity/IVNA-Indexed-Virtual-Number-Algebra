@@ -1,0 +1,155 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║  IVNA Demo 4: Numerical ODE Solver at Singularities               ║
+║  dy/dx = 1/x and dy/dx = 1/x² crossing through x=0               ║
+╚══════════════════════════════════════════════════════════════════════╝
+======================================================================
+ODE 1: dy/dx = 1/x (logarithmic singularity at x=0)
+       Exact solution: y = ln|x| + C
+======================================================================
+
+  Domain: [-1.0, 1.0], crossing singularity at x=0
+  Initial condition: y(-1.0) = 0.0
+  Steps: 200
+
+--- IEEE 754 (Euler's method) ---
+  Completed without NaN/Inf (singularity missed by stepping)
+  Final y at x=1: 13282505813442.923828 (exact: 0.000000)
+
+--- IEEE 754 (RK4) ---
+  Completed without NaN/Inf
+  Final y at x=1: 4427501937814.322266
+
+--- IVNA (Euler's method with indexed singularity handling) ---
+  Completed: 201 points
+  Final y at x=1: 30.207469 (exact: 0.000000 = 0)
+  IVNA events: 20
+
+  IVNA singularity events (first 5):
+    Step 90: x=-1.000000e-01, TRANSITION: adaptive sub-stepping near singularity
+    Step 91: x=-9.000000e-02, TRANSITION: adaptive sub-stepping near singularity
+    Step 92: x=-8.000000e-02, TRANSITION: adaptive sub-stepping near singularity
+    Step 93: x=-7.000000e-02, TRANSITION: adaptive sub-stepping near singularity
+    Step 94: x=-6.000000e-02, TRANSITION: adaptive sub-stepping near singularity
+
+  COMPARISON at selected points:
+           x       Exact y    IEEE Euler      IEEE RK4          IVNA
+  -----------------------------------------------------------------
+      -0.800     -0.223144     -0.221898     -0.223144     -0.221898
+      -0.500     -0.693147     -0.688172     -0.693147     -0.688172
+      -0.100     -2.302585     -2.258409     -2.302585     -2.258409
+      -0.010     -4.605170     -4.187378     -4.606582     -4.187378
+       0.010     -4.605170  13282505813437.750000  4427501937809.706055     25.030091
+       0.100     -2.302585  13282505813440.578125  4427501937812.011719     27.859060
+       0.500     -0.693147  13282505813442.226562  4427501937813.627930     29.509297
+       0.800     -0.223144  13282505813442.701172  4427501937814.098633     29.983071
+
+======================================================================
+ODE 2: dy/dx = 1/x² (algebraic singularity at x=0)
+       Exact solution: y = -1/x + C
+======================================================================
+
+  Domain: [0.001, 1.0]
+  y(0.001) = -1000.0
+
+  IEEE Euler max error: 4.248667e+03
+  IEEE final y(1) = 4247.667442 (exact: -1.000000)
+
+  Behavior approaching x=0 from the right:
+             x       Exact 1/x²      IEEE result                       IVNA
+  ----------------------------------------------------------------------
+       1.0e-01         1.00e+02         1.00e+02            1.00e+02 (real)
+       1.0e-02         1.00e+04         1.00e+04            1.00e+04 (real)
+       1.0e-03         1.00e+06         1.00e+06            1.00e+06 (real)
+       1.0e-06         1.00e+12         1.00e+12            1.00e+12 (real)
+       1.0e-10         1.00e+20         1.00e+20            1.00e+20 (real)
+       1.0e-15         1.00e+30         1.00e+30            1.00e+30 (real)
+       0.0e+00                ∞   Inf (then NaN)                      ∞^2_1
+
+======================================================================
+IVNA ODE ALGEBRA: Stepping Through x=0
+======================================================================
+
+  Consider Euler's method: y_{n+1} = y_n + h · f(x_n)
+
+  At x_n = 0 with f(x) = 1/x:
+
+  IEEE 754:
+    slope = 1/0 = Inf
+    y_{n+1} = y_n + h · Inf = Inf
+    y_{n+2} = Inf + h · f(next_x) = Inf + finite = Inf
+    → Solution is permanently corrupted
+
+  IVNA (x_n = 0_ε where ε encodes approach direction):
+    slope = 1/0_ε = ∞_{1/ε}
+    y_{n+1} = y_n + h · ∞_{1/ε}
+
+    Now h · ∞_{1/ε} = ∞_{h/ε} — this is an indexed infinity.
+
+    The INDEX h/ε tells us:
+    - If h >> ε: step is much larger than singularity resolution → refine h
+    - If h << ε: step is much smaller → safe to proceed
+    - If h ≈ ε: step matches singularity scale → this is the critical regime
+
+    IVNA doesn't magically solve the ODE — it provides INFORMATION
+    that guides adaptive step-size control near singularities.
+
+  CONCRETE EXAMPLE:
+  Step size h = 0.01
+
+     ε (approach dist)         slope = 1/0_ε   h·slope = ∞_{{h/ε}}     h/ε ratio                Action
+  ----------------------------------------------------------------------------------------------------
+               1.0e-01                  ∞_10  ∞_28823037615171175/288230376151711744       1.0e-01         Safe: proceed
+               1.0e-02                 ∞_100  ∞_144115188075855875/144115188075855872       1.0e+00      Caution: monitor
+               1.0e-03                ∞_1000  ∞_720575940379279375/72057594037927936       1.0e+01      Caution: monitor
+               1.0e-06             ∞_1000000  ∞_90071992547409921875/9007199254740992       1.0e+04      Refine: reduce h
+               1.0e-10         ∞_10000000000  ∞_56294995342131201171875/562949953421312       1.0e+08      Refine: reduce h
+
+  KEY: Ratio of virtual slopes is a real number:
+  ∞_{1000} / ∞_{100} = 1/10
+  → The singularity is 10× stronger at ε=0.001 than at ε=0.01
+  → IEEE 754: Inf / Inf = NaN (can't compare singularity strengths)
+
+======================================================================
+ODE 3: Approaching x=0 from the right (dy/dx = 1/x)
+======================================================================
+
+             x   Exact ln|x|    IEEE Euler         Error
+  -------------------------------------------------------
+        0.5000     -0.693147     -0.687188  5.959638e-03
+        0.1000     -2.302585     -2.249924  5.266142e-02
+        0.0500     -2.995732     -2.887052  1.086807e-01
+        0.0100     -4.605170     -4.125761  4.794095e-01
+        0.0050     -5.298317     -5.034769  2.635485e-01
+        0.0010     -6.907755     -5.034769  1.872986e+00
+
+  As x → 0, the exact solution y = ln|x| → -∞
+  IEEE Euler tracks this (since we never hit x=0 exactly)
+  But the ERROR grows because the slope 1/x gets huge near 0
+  IVNA: the indexed infinity ∞_{1/x} would signal step refinement needed
+
+======================================================================
+CONCLUSION
+======================================================================
+
+  Standard ODE solvers have THREE strategies at singularities:
+    1. Crash (IEEE 754 Inf/NaN propagation poisons all subsequent values)
+    2. Avoid (split domain to never cross the singularity)
+    3. Regularize (modify the ODE to remove the singularity — changes physics)
+
+  IVNA provides a FOURTH strategy:
+    4. Track (singularity becomes ∞_x where x carries diagnostic information)
+       - The INDEX reveals the singularity's strength and approach rate
+       - Ratios of indexed infinities are real numbers (∞_x / ∞_y = x/y)
+       - This enables INFORMED adaptive step-size control
+       - No arbitrary regularization parameters needed
+
+  HONEST ASSESSMENT:
+    - IVNA doesn't "solve" the underlying mathematical singularity
+    - The ODE dy/dx = 1/x genuinely has no continuous solution through x=0
+    - What IVNA provides is DIAGNOSTIC INFORMATION at the singularity:
+      * The index tells you the singularity type and strength
+      * Ratios between indexed infinities are computable (vs NaN in IEEE)
+      * Step-size adaptation can use the index as a signal
+    - This is most valuable for UNEXPECTED singularities in complex ODE systems
+      where the physicist may not know in advance where singularities occur
+

@@ -1,0 +1,146 @@
+Running IVNA Phase 3: Calculus Completion verification...
+
+======================================================================
+IVNA PHASE 3: CALCULUS COMPLETION — VERIFICATION REPORT
+======================================================================
+
+
+--- Integration ---
+  [PASS] Integration: 0_1^1 * inf_1^1 = 1 (IVNA algebra)
+  [PASS] Integration: 0_1^2 * inf_1^2 = 1 (IVNA algebra)
+  [PASS] Integration: 0_1^3 * inf_1^3 = 1 (IVNA algebra)
+  [PASS] Integration: 0_1^4 * inf_1^4 = 1 (IVNA algebra)
+  [PASS] Integration: 0_1^5 * inf_1^5 = 1 (IVNA algebra)
+  [PASS] Integration: 0_1^6 * inf_1^6 = 1 (IVNA algebra)
+  [PASS] Integration: int_0^1 x^0 dx = 1/1 (symbolic)
+  [PASS] Integration: x^0 non-leading terms are virtual zeros
+  [PASS] Integration: int_0^1 x^1 dx = 1/2 (symbolic)
+  [PASS] Integration: x^1 non-leading terms are virtual zeros
+  [PASS] Integration: int_0^1 x^2 dx = 1/3 (symbolic)
+  [PASS] Integration: x^2 non-leading terms are virtual zeros
+  [PASS] Integration: int_0^1 x^3 dx = 1/4 (symbolic)
+  [PASS] Integration: x^3 non-leading terms are virtual zeros
+  [PASS] Integration: int_0^1 x^4 dx = 1/5 (symbolic)
+  [PASS] Integration: x^4 non-leading terms are virtual zeros
+  [PASS] Integration: int_0^1 x^5 dx = 1/6 (symbolic)
+  [PASS] Integration: x^5 non-leading terms are virtual zeros
+  [PASS] Integration: int_0^1 x^0 dx = 1/1 (numerical, N=10^6)
+  [PASS] Integration: int_0^1 x^1 dx = 1/2 (numerical, N=10^6)
+  [PASS] Integration: int_0^1 x^2 dx = 1/3 (numerical, N=10^6)
+  [PASS] Integration: int_0^1 x^3 dx = 1/4 (numerical, N=10^6)
+  [PASS] Integration: int_0^1 x^4 dx = 1/5 (numerical, N=10^6)
+  [PASS] Integration: int_0^1 x^5 dx = 1/6 (numerical, N=10^6)
+
+--- FTC1 ---
+  [PASS] FTC1: f(x)·0₁ / 0₁ = f(x) for f(x)=3
+  [PASS] FTC1: f(x)·0₁ / 0₁ = f(x) for f(x)=7
+  [PASS] FTC1: f(x)·0₁ / 0₁ = f(x) for f(x)=1/2
+  [PASS] FTC1: f(x)·0₁ / 0₁ = f(x) for f(x)=42
+  [PASS] FTC1: d/dx[int_0^x x^2 dt] = x^2 at x=1.5 (numerical)
+  [PASS] FTC1: d/dx[int_0^x sin(x) dt] = sin(x) at x=1.5 (numerical)
+  [PASS] FTC1: d/dx[int_0^x e^x dt] = e^x at x=1.5 (numerical)
+
+--- FTC2 ---
+  [PASS] FTC2: inf_{1} * 0_1 = 1 (key identity)
+  [PASS] FTC2: inf_{2} * 0_1 = 2 (key identity)
+  [PASS] FTC2: inf_{5} * 0_1 = 5 (key identity)
+  [PASS] FTC2: inf_{4} * 0_1 = 4 (key identity)
+  [PASS] FTC2: int_0.00^1.00 (x^3)' dx = x^3(1.00) - x^3(0.00) (numerical)
+  [PASS] FTC2: int_0.00^3.14 (sin(x))' dx = sin(x)(3.14) - sin(x)(0.00) (numerical)
+  [PASS] FTC2: int_0.00^2.00 (e^x)' dx = e^x(2.00) - e^x(0.00) (numerical)
+  [PASS] FTC2: int_1.00^2.72 (ln(x))' dx = ln(x)(2.72) - ln(x)(1.00) (numerical)
+  [PASS] FTC2: 0^2_1 * inf_1 = 0_1 (higher-order accumulation stays virtual)
+  [PASS] FTC2: 0^2_1 * inf_1 = 0^1_1
+  [PASS] FTC2: 0^3_1 * inf_1 = 0^2_1
+  [PASS] FTC2: 0^4_1 * inf_1 = 0^3_1
+  [PASS] FTC2: 0^5_1 * inf_1 = 0^4_1
+
+--- Power Series ---
+  [PASS] Power Series: A-VT term k=1 for e^x matches Taylor (index=1.0)
+  [PASS] Power Series: A-VT term k=2 for e^x matches Taylor (index=0.5)
+  [PASS] Power Series: A-VT term k=3 for e^x matches Taylor (index=0.16666666666666666)
+  [PASS] Power Series: A-VT term k=4 for e^x matches Taylor (index=0.041666666666666664)
+  [PASS] Power Series: A-VT term k=5 for e^x matches Taylor (index=0.008333333333333333)
+  [PASS] Power Series: A-VT term k=1 for sin(x) has correct order
+  [PASS] Power Series: A-VT term k=3 for sin(x) has correct order
+  [PASS] Power Series: A-VT term k=5 for sin(x) has correct order
+  [PASS] Power Series: order 2 > order 1 (stratification)
+  [PASS] Power Series: order 3 > order 2 (stratification)
+  [PASS] Power Series: order 4 > order 3 (stratification)
+  [PASS] Power Series: order 5 > order 4 (stratification)
+  [PASS] Power Series: order 6 > order 5 (stratification)
+  [PASS] Power Series: order 7 > order 6 (stratification)
+  [PASS] Power Series: order 8 > order 7 (stratification)
+  [PASS] Power Series: 0^1_42 collapses to 0
+  [PASS] Power Series: 0^2_42 collapses to 0
+  [PASS] Power Series: 0^3_42 collapses to 0
+  [PASS] Power Series: 0^4_42 collapses to 0
+  [PASS] Power Series: 0^5_42 collapses to 0
+  [PASS] Power Series: 0^6_42 collapses to 0
+  [PASS] Power Series: 0^7_42 collapses to 0
+
+--- Convergence ---
+  [PASS] Convergence: e^x Taylor with 5 terms, error=9.95e-03
+  [PASS] Convergence: e^x Taylor with 10 terms, error=3.03e-07
+  [PASS] Convergence: e^x Taylor with 15 terms, error=8.15e-13
+  [PASS] Convergence: e^x Taylor with 20 terms, error=0.00e+00
+  [PASS] Convergence: 1/(1-x) at x=0.5 converges to 2
+
+--- Transcendental ---
+  [PASS] Transcendental: int_0^1 e^x dx = e-1 (numerical, N=10^6)
+  [PASS] Transcendental: int_0^1 e^x dx = e-1 (symbolic)
+  [PASS] Transcendental: e^x integral via geometric series formula (N=10^6)
+  [PASS] Transcendental: int_0^pi sin(x) dx = 2 (numerical, N=10^6)
+  [PASS] Transcendental: int_0^pi sin(x) dx = 2 (symbolic)
+  [PASS] Transcendental: sin integral via trig sum formula (N=10^6)
+  [PASS] Transcendental: int_0^{pi/2} cos(x) dx = 1 (numerical)
+  [PASS] Transcendental: int_1^e (1/x) dx = 1 (numerical)
+  [PASS] Transcendental: int_0^1 e^{2x} dx = (e^2-1)/2 (numerical)
+
+--- Identity ---
+  [PASS] Identity: 0_1 * inf_1 = 1
+  [PASS] Identity: 0_2 * inf_3 = 6
+  [PASS] Identity: 0_1/2 * inf_4 = 2
+  [PASS] Identity: 0_7 * inf_7 = 49
+  [PASS] Identity: 0^1_1 * inf^1_1 = 1
+  [PASS] Identity: 0^2_1 * inf^2_1 = 1
+  [PASS] Identity: 0^3_1 * inf^3_1 = 1
+  [PASS] Identity: 0^4_1 * inf^4_1 = 1
+  [PASS] Identity: 0^5_1 * inf^5_1 = 1
+  [PASS] Identity: 0^6_1 * inf^6_1 = 1
+  [PASS] Identity: 0^2_1 * inf^1_1 = 0_1
+  [PASS] Identity: 0^3_1 * inf^2_1 = 0_1
+  [PASS] Identity: 0^4_1 * inf^3_1 = 0_1
+  [PASS] Identity: 0^5_1 * inf^4_1 = 0_1
+  [PASS] Identity: 0^6_1 * inf^5_1 = 0_1
+
+--- Roundtrip ---
+  [PASS] Roundtrip: int_0^1 d/dx(x^1) dx = x^1|_0^1 = 1
+  [PASS] Roundtrip: int_0^1 d/dx(x^2) dx = x^2|_0^1 = 1
+  [PASS] Roundtrip: int_0^1 d/dx(x^3) dx = x^3|_0^1 = 1
+  [PASS] Roundtrip: int_0^1 d/dx(x^4) dx = x^4|_0^1 = 1
+  [PASS] Roundtrip: int_0^1 d/dx(x^5) dx = x^5|_0^1 = 1
+
+--- Faulhaber ---
+  [PASS] Faulhaber: Sum i^0 for i=1..N matches known formula
+  [PASS] Faulhaber: Sum i^1 for i=1..N matches known formula
+  [PASS] Faulhaber: Sum i^2 for i=1..N matches known formula
+  [PASS] Faulhaber: Sum i^3 for i=1..N matches known formula
+  [PASS] Faulhaber: Leading coeff of Sum i^0 is 1/1
+  [PASS] Faulhaber: Leading coeff of Sum i^1 is 1/2
+  [PASS] Faulhaber: Leading coeff of Sum i^2 is 1/3
+  [PASS] Faulhaber: Leading coeff of Sum i^3 is 1/4
+  [PASS] Faulhaber: Leading coeff of Sum i^4 is 1/5
+  [PASS] Faulhaber: Leading coeff of Sum i^5 is 1/6
+
+--- A-VT sin ---
+  [PASS] A-VT sin: sin(0_1) leading term is 0_1
+  [PASS] A-VT sin: sin(eps)/eps -> 1 for eps=1e-03
+  [PASS] A-VT sin: sin(eps)/eps -> 1 for eps=1e-06
+  [PASS] A-VT sin: sin(eps)/eps -> 1 for eps=1e-09
+  [PASS] A-VT sin: sin(eps)/eps -> 1 for eps=1e-12
+
+----------------------------------------------------------------------
+Results: 115 passed, 0 failed out of 115 tests
+STATUS: ALL TESTS PASSED — calculus completion verified
+======================================================================

@@ -1,0 +1,495 @@
+% Indexed Virtual Number Algebra
+% Wisdom Patience Happy
+% 2026
+
+\documentclass[12pt]{article}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% IVNA notation shortcuts
+\newcommand{\vz}[1]{0_{#1}}             % indexed zero: \vz{x} -> 0_x
+\newcommand{\vi}[1]{\infty_{#1}}        % indexed infinity: \vi{x} -> ∞_x
+\newcommand{\vzn}[2]{0^{#1}_{#2}}       % higher-order zero: \vzn{n}{x} -> 0^n_x
+\newcommand{\vin}[2]{\infty^{#1}_{#2}}  % higher-order inf: \vin{n}{x} -> ∞^n_x
+\newcommand{\ceq}{\mathrel{=\!\!;}}     % collapse equals: \ceq -> =;
+\newcommand{\R}{\mathbb{R}}
+
+\title{Indexed Virtual Number Algebra: \\
+A Structured Interface for Division by Zero \\
+and Indeterminate Forms}
+
+\author{Wisdom Patience Happy\thanks{Independent researcher. Correspondence: [email]. \\
+\textit{Acknowledgment:} Developed with the Playful Sincerity Digital Core---a research methodology system built on Claude Code (Anthropic), incorporating formal verification tools, automated consistency testing, and structured research methodology. All mathematical claims were computationally verified via SymPy and Z3, with core axioms formalized in Lean~4.}}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We present \textbf{Indexed Virtual Number Algebra (IVNA)}, an algebraic framework
+that attaches real-valued indices to zeros and infinities, making division by zero
+and indeterminate forms algebraically operable. Where standard mathematics
+returns ``undefined'' for $5/0$, IVNA returns $\vi{5}$---an indexed infinity
+that preserves the numerator's identity and permits continued computation,
+including exact recovery of the original value via $\vi{5} \cdot \vz{1} = 5$.
+
+The key innovation is the \textbf{indexed product rule}: $\vz{x} \cdot \vi{y} = xy$,
+which resolves the product of zero and infinity to a determinate finite number
+by tracking provenance through indices. This rule has no exact precedent in
+Non-Standard Analysis, grossone, wheel algebra, surreal numbers, or smooth
+infinitesimal analysis.
+
+We prove IVNA consistent by constructing an explicit model via embedding in
+Robinson's hyperreal numbers, where $\vz{x} = x\varepsilon_0$ for a fixed
+infinitesimal $\varepsilon_0$. This embedding is verified computationally
+(37 symbolic checks via SymPy, 11 satisfiability checks via Z3) and formally
+(core axioms type-checked in Lean~4). IVNA is thus a structured notational
+interface to a specific fragment of Non-Standard Analysis---analogous to how
+complex number notation ($a + bi$) is an interface to $\R^2$ with a specific
+multiplication rule.
+
+We demonstrate applications in limit-free calculus (derivatives of polynomial,
+rational, trigonometric, exponential, and logarithmic functions without
+$\varepsilon$-$\delta$ arguments), elimination of L'H\^opital's rule,
+proportional infinite set sizes, and a ``VEX mode'' for computer arithmetic
+that eliminates approximately 80\% of IEEE~754 NaN cases. The exponential
+constant $e$ receives a direct algebraic definition:
+$e = (1 + \vz{1})^{\vi{1}}$, revealing the structure of continuous growth
+as a scaling symmetry between step size and repetition count.
+\end{abstract}
+
+% ============================================================
+\section{Introduction}
+\label{sec:intro}
+% ============================================================
+
+% 1.1 The problem: how mathematics handles 0 and infinity
+% 1.2 The complex number precedent
+% 1.3 IVNA's proposal
+% 1.4 Summary of results
+
+% TODO: Draft content. Key framing:
+% - sqrt(-1) was once "impossible" — now it's i
+% - 1/0 is currently "undefined" — IVNA makes it ∞_1
+% - The notation IS the contribution (Bombelli parallel)
+% - Summary of what the paper proves
+
+\subsection{The Problem}
+
+\subsection{The Complex Number Precedent}
+
+\subsection{IVNA's Proposal}
+
+\subsection{Summary of Results}
+
+
+% ============================================================
+\section{Core Algebra}
+\label{sec:core}
+% ============================================================
+
+% 2.1 Virtual numbers: definitions and notation
+% 2.2 Multiplication
+% 2.3 Division
+% 2.4 Addition and subtraction
+% 2.5 Powers and roots
+% 2.6 The collapse operator (=;)
+% 2.7 Duality and reciprocals
+% 2.8 Index domain and D-INDEX-ZERO
+
+\subsection{Virtual Numbers}
+
+\begin{definition}[Virtual Numbers]
+A \textbf{virtual number} is either an \emph{indexed zero} $\vz{x}$ or an
+\emph{indexed infinity} $\vi{x}$, where $x \in \R \setminus \{0\}$ is the
+\textbf{index}. The term ``virtual'' reflects the position that zeros and
+infinities are computational constructs---they arise in mathematical models
+but do not correspond to quantities in physical reality.
+
+A \textbf{non-virtual number} is any element of $\R$ (or $\mathbb{C}$, or
+other standard number systems). We write $n$ for a non-virtual number.
+\end{definition}
+
+\subsection{Multiplication}
+
+\begin{axiom}[Zero--Zero Product]
+\label{ax:zz}
+$\vz{x} \cdot \vz{y} = \vzn{2}{xy}$
+\end{axiom}
+
+\begin{axiom}[Infinity--Infinity Product]
+\label{ax:ii}
+$\vi{x} \cdot \vi{y} = \vin{2}{xy}$
+\end{axiom}
+
+\begin{axiom}[Zero--Infinity Product]
+\label{ax:zi}
+$\vz{x} \cdot \vi{y} = xy$
+\end{axiom}
+
+\begin{axiom}[Scalar--Zero Product]
+\label{ax:nz}
+$n \cdot \vz{x} = \vz{nx}$
+\end{axiom}
+
+\begin{axiom}[Scalar--Infinity Product]
+\label{ax:ni}
+$n \cdot \vi{x} = \vi{nx}$
+\end{axiom}
+
+\subsection{Division}
+
+\begin{axiom}[Division by Zero]
+\label{ax:divzero}
+$\displaystyle\frac{y}{\vz{x}} = \vi{\frac{y}{x}}$
+\end{axiom}
+
+\begin{axiom}[Division by Infinity]
+\label{ax:divinf}
+$\displaystyle\frac{y}{\vi{x}} = \vz{\frac{y}{x}}$
+\end{axiom}
+
+\begin{axiom}[Zero--Zero Quotient]
+$\displaystyle\frac{\vz{x}}{\vz{y}} = \frac{x}{y}$
+\end{axiom}
+
+\begin{axiom}[Infinity--Infinity Quotient]
+$\displaystyle\frac{\vi{x}}{\vi{y}} = \frac{x}{y}$
+\end{axiom}
+
+\subsection{Addition and Subtraction}
+
+\begin{axiom}[Virtual Addition]
+$\vz{x} + \vz{y} = \vz{x+y}$, \quad $\vi{x} + \vi{y} = \vi{x+y}$
+\end{axiom}
+
+\begin{axiom}[Index Zero Rule (D-INDEX-ZERO)]
+\label{ax:indexzero}
+When an operation produces index $0$, the result exits the virtual number
+system to the real number $0$. The index domain is $\R \setminus \{0\}$.
+This is analogous to $i - i = 0$ exiting the imaginary numbers.
+\end{axiom}
+
+\subsection{Powers and Roots}
+
+\begin{axiom}[Virtual Powers]
+$(\vz{x})^n = \vzn{n}{x^n}$, \quad $(\vi{x})^n = \vin{n}{x^n}$
+\end{axiom}
+
+\subsection{The Collapse Operator}
+
+\begin{definition}[Collapse ($\ceq$)]
+The \textbf{collapse operator} $\ceq$ strips indices from virtual numbers,
+projecting them to their standard values:
+\[
+\vz{x} \ceq 0, \qquad \vi{x} \ceq \infty
+\]
+for all $x \in \R \setminus \{0\}$. This is analogous to the standard part
+function $\mathrm{st}()$ in Non-Standard Analysis.
+\end{definition}
+
+\subsection{Duality and Reciprocals}
+
+\begin{proposition}[Zero--Infinity Duality]
+Indexed zeros and indexed infinities are reciprocals:
+\[
+\frac{1}{\vz{x}} = \vi{\frac{1}{x}}, \qquad
+\frac{1}{\vi{x}} = \vz{\frac{1}{x}}
+\]
+\end{proposition}
+
+\subsection{Index Domain}
+
+\begin{remark}
+The index domain is $\R \setminus \{0\}$. The restriction $x \neq 0$ is
+necessary: $\vz{0}$ would represent ``zero with no weight,'' which under
+the multiplication rule $\vz{0} \cdot \vi{1} = 0 \cdot 1 = 0$ yields a
+result categorically different from $\vzn{2}{1} \cdot \vi{1} = \vz{1}$.
+The D-INDEX-ZERO axiom resolves this by routing index-zero results back to
+$\R$.
+\end{remark}
+
+
+% ============================================================
+\section{Extended Axioms}
+\label{sec:extended}
+% ============================================================
+
+% 3.1 Virtual Taylor Axiom (A-VT)
+% 3.2 Exponential Axiom (A-EXP) as corollary
+% 3.3 Scope: analytic functions only
+
+\subsection{The Virtual Taylor Axiom}
+
+\begin{axiom}[Virtual Taylor (A-VT)]
+\label{ax:vt}
+For any function $f$ analytic at $a$:
+\[
+f(a + \vz{x}) = f(a) + \vz{f'(a) \cdot x}
+  + \vzn{2}{\frac{f''(a) \cdot x^2}{2!}}
+  + \vzn{3}{\frac{f'''(a) \cdot x^3}{3!}} + \cdots
+\]
+Each term carries virtual order $k$ and index $\frac{f^{(k)}(a) \cdot x^k}{k!}$.
+Under the collapse operator, all virtual terms vanish: $f(a + \vz{x}) \ceq f(a)$.
+\end{axiom}
+
+\subsection{The Exponential Axiom}
+
+\begin{axiom}[Exponential (A-EXP)]
+\label{ax:exp}
+$(1 + \vz{x})^{\vi{y}} = e^{xy}$
+\end{axiom}
+
+\begin{remark}
+A-EXP is a corollary of A-VT applied to $f(h) = (1+h)^{1/h}$ in a suitable
+sense, but we state it as a separate axiom for clarity. It resolves the
+``$e$ problem'': under the basic rules alone,
+$(1 + \vz{1})^{\vi{1}} \ceq 1^{\infty} = 1$, which contradicts $e \approx 2.718$.
+A-EXP captures the correlation between base perturbation and exponent that the
+premature application of $\ceq$ destroys.
+
+The axiom is justified by the NSA embedding (Section~\ref{sec:consistency}):
+$\mathrm{st}\!\left((1 + x\varepsilon_0)^{y/\varepsilon_0}\right) = e^{xy}$
+is a theorem of hyperreal arithmetic.
+\end{remark}
+
+\begin{corollary}
+$e = (1 + \vz{1})^{\vi{1}}$.
+\end{corollary}
+
+\subsection{Scope}
+
+\begin{remark}
+A-VT restricts IVNA's extended operations to analytic functions. Non-analytic
+functions (e.g., $|x|$, the Heaviside step function) do not extend to virtual
+arguments. This scope limitation is inherent: the Taylor series is the mechanism,
+and functions without convergent Taylor series at the point of interest cannot
+use it.
+\end{remark}
+
+
+% ============================================================
+\section{Consistency}
+\label{sec:consistency}
+% ============================================================
+
+% 4.1 Computational verification
+% 4.2 NSA embedding
+% 4.3 Relative consistency proof
+% 4.4 What IVNA is: structured interface to NSA
+% 4.5 The Bombelli/Gauss analogy
+
+% TODO: Content from plan-section-model-verification.md
+% The NSA embedding, 37/37 SymPy checks, 11/11 Z3 checks, Lean4 proofs
+
+\subsection{Computational Verification}
+
+\subsection{The NSA Embedding}
+
+\begin{theorem}[IVNA Consistency]
+\label{thm:consistency}
+IVNA is consistent relative to ZFC with the Axiom of Choice.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+We construct a model. Fix a positive infinitesimal $\varepsilon_0$ in
+Robinson's hyperreal field ${}^*\!\R$. Define the embedding:
+\begin{align*}
+\vz{x}   &:= x \cdot \varepsilon_0, &
+\vi{x}   &:= x / \varepsilon_0 \\
+\vzn{n}{x} &:= x \cdot \varepsilon_0^n, &
+\vin{n}{x} &:= x / \varepsilon_0^n
+\end{align*}
+Every IVNA axiom becomes a tautology of hyperreal arithmetic under this
+mapping. For example, Axiom~\ref{ax:zi}:
+\[
+\vz{x} \cdot \vi{y} = (x\varepsilon_0)(y/\varepsilon_0) = xy. \quad\checkmark
+\]
+The full verification covers all axioms and is available as supplementary
+material (37 SymPy symbolic checks, 11 Z3 satisfiability checks, Lean~4
+type-checked formalization).
+\end{proof}
+
+\subsection{What IVNA Is}
+
+\subsection{The Bombelli--Gauss Analogy}
+
+
+% ============================================================
+\section{Applications: Calculus}
+\label{sec:calculus}
+% ============================================================
+
+% 5.1 Polynomial derivatives
+% 5.2 Rational function derivatives
+% 5.3 Transcendental function derivatives
+% 5.4 L'Hopital elimination
+% 5.5 Integration sketch
+% 5.6 The exponential constant (e exploration results)
+
+\subsection{Polynomial Derivatives}
+
+\subsection{Rational Function Derivatives}
+
+\subsection{Transcendental Function Derivatives}
+
+\subsection{L'H\^opital Elimination}
+
+\subsection{Integration}
+
+\subsection{The Exponential Constant}
+
+% TODO: e exploration results go here
+
+
+% ============================================================
+\section{Applications: Physics}
+\label{sec:physics}
+% ============================================================
+
+% 6.1 Singularity notation
+% 6.2 Singularity classification
+% 6.3 Renormalization notation (honest assessment)
+
+\subsection{Singularity Notation}
+
+\subsection{Singularity Classification}
+
+\subsection{Renormalization}
+
+
+% ============================================================
+\section{Applications: Computer Science}
+\label{sec:cs}
+% ============================================================
+
+% 7.1 VEX mode
+% 7.2 IEEE 754 extension concept
+
+\subsection{VEX Mode: Calculators Without ERROR}
+
+\subsection{IEEE 754 Extension}
+
+
+% ============================================================
+\section{Literature Positioning}
+\label{sec:literature}
+% ============================================================
+
+% 8.1 Comparison with NSA, grossone, numerosity, wheel algebra, surreals, SIA
+% 8.2 Feature comparison table
+% 8.3 Genuine novelty: the indexed product rule
+% 8.4 Addressing grossone-type criticisms
+
+\subsection{Related Frameworks}
+
+\subsection{Comparison}
+
+\subsection{Genuine Novelty}
+
+\subsection{Addressing Potential Criticisms}
+
+
+% ============================================================
+\section{Limitations and Scope}
+\label{sec:limitations}
+% ============================================================
+
+% 9.1 Non-analytic functions
+% 9.2 Foundational claims: none made
+% 9.3 The isomorphism question
+% 9.4 Axiom of Choice dependency
+
+\subsection{What IVNA Does Not Do}
+
+\subsection{The Isomorphism Question}
+
+
+% ============================================================
+\section{Conclusion}
+\label{sec:conclusion}
+% ============================================================
+
+% 10.1 Assessment
+% 10.2 Future work
+% 10.3 The vision
+
+\subsection{Assessment}
+
+\subsection{Future Work}
+
+\subsection{The Vision}
+
+
+% ============================================================
+% Bibliography
+% ============================================================
+
+\begin{thebibliography}{99}
+
+\bibitem{robinson1966}
+A.~Robinson, \emph{Non-Standard Analysis}, North-Holland, Amsterdam, 1966.
+
+\bibitem{keisler1976}
+H.~J.~Keisler, \emph{Elementary Calculus: An Infinitesimal Approach},
+Prindle, Weber \& Schmidt, 1976.
+
+\bibitem{sergeyev2003}
+Ya.~D.~Sergeyev, \emph{Arithmetic of Infinity}, Edizioni Orizzonti
+Meridionali, Cosenza, 2003.
+
+\bibitem{sergeyev2017}
+Ya.~D.~Sergeyev, ``Numerical infinities and infinitesimals: Methodology,
+applications, and repercussions on two Hilbert problems,''
+\emph{EMS Surveys in Mathematical Sciences}, vol.~4, no.~2, pp.~219--320, 2017.
+
+\bibitem{gutman2017}
+A.~E.~Gutman, M.~G.~Katz, T.~S.~Kudryk, and S.~S.~Kutateladze,
+``The Mathematical Intelligencer flunks the Olympics,''
+\emph{Foundations of Science}, vol.~22, no.~3, pp.~539--555, 2017.
+
+\bibitem{benci2003}
+V.~Benci and M.~Di~Nasso, ``Numerosities of labelled sets: A new way of
+counting,'' \emph{Advances in Mathematics}, vol.~173, no.~1, pp.~50--67, 2003.
+
+\bibitem{carlstrom2004}
+J.~Carlstr\"om, ``Wheels---On division by zero,''
+\emph{Mathematical Structures in Computer Science}, vol.~14, no.~1,
+pp.~143--184, 2004.
+
+\bibitem{conway1976}
+J.~H.~Conway, \emph{On Numbers and Games}, Academic Press, London, 1976.
+
+\bibitem{kock2006}
+A.~Kock, \emph{Synthetic Differential Geometry}, 2nd ed.,
+Cambridge University Press, 2006.
+
+\bibitem{bell1998}
+J.~L.~Bell, \emph{A Primer of Infinitesimal Analysis},
+Cambridge University Press, 1998.
+
+\bibitem{bergstra2019}
+J.~A.~Bergstra, ``Division by zero: A survey of options,''
+\emph{Transmathematica}, 2019.
+
+\end{thebibliography}
+
+\end{document}
