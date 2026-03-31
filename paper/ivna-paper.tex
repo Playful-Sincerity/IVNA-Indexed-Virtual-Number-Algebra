@@ -48,9 +48,11 @@ Playful Sincerity Research}
 We present \textbf{Indexed Virtual Number Algebra (IVNA)}, an algebraic framework
 that attaches real-valued indices to zeros and infinities, making division by zero
 and indeterminate forms algebraically operable. Where standard mathematics
-returns ``undefined'' for $5/0$, IVNA returns $\vi{5}$---an indexed infinity
-that preserves the numerator's identity and permits continued computation,
-including exact recovery of the original value via $\vi{5} \cdot \vz{1} = 5$.
+returns ``undefined'' for expressions like $5/0$, IVNA returns $\vi{5}$---an
+indexed infinity that preserves the numerator's identity and permits continued
+computation, including exact recovery of the original value via
+$\vi{5} \cdot \vz{1} = 5$. More generally, $y / \vz{x} = \vi{y/x}$ for any
+real $y$ and index $x$.
 
 The key innovation is the \textbf{indexed product rule}: $\vz{x} \cdot \vi{y} = xy$,
 which resolves the product of zero and infinity to a determinate finite number
@@ -416,6 +418,15 @@ degenerate index.
 $(\vz{x})^n = \vzn{n}{x^n}$, \quad $(\vi{x})^n = \vin{n}{x^n}$
 \end{axiom}
 
+\begin{remark}[Notation: order vs.\ index]
+The superscript in $\vzn{n}{x}$ denotes the \emph{order}---the number
+of infinitesimal factors---not an exponent applied to the index. Thus
+$(\vz{x})^2 = \vzn{2}{x^2}$: the order becomes~$2$ and the index
+becomes~$x^2$. These are related (raising a virtual number to the
+$n$th power produces order~$n$ with index~$x^n$) but conceptually
+distinct: the order tracks depth, the index tracks provenance.
+\end{remark}
+
 \begin{remark}
 Virtual Powers and D-INDEX-ZERO are structural rules that follow
 naturally from the algebraic framework. The 11 core axioms formalized
@@ -503,12 +514,24 @@ $e = (1 + \vz{1})^{\vi{1}}$.
 
 \subsection{Scope}
 
-\begin{remark}
+\begin{remark}[Scope and generalization]
 A-VT restricts IVNA's extended operations to analytic functions. Non-analytic
-functions (e.g., $|x|$, the Heaviside step function) do not extend to virtual
-arguments. This scope limitation is inherent: the Taylor series is the mechanism,
-and functions without convergent Taylor series at the point of interest cannot
-use it.
+functions (e.g., $|x|$, the Heaviside step function, smooth but non-analytic
+functions like $e^{-1/x^2}$) do not extend to virtual arguments via this
+mechanism. This covers essentially all functions encountered in single-variable
+calculus but excludes distributions, $L^p$ functions, and smooth non-analytic
+functions.
+
+The natural generalization is the full transfer principle of Non-Standard
+Analysis, which extends \emph{all} first-order definable functions to the
+hyperreals. An IVNA-native transfer axiom---stating that any first-order
+property of $\R$ holds for virtual numbers under the NSA
+embedding---would remove the analyticity restriction entirely. We defer
+this to future work: the transfer principle requires model-theoretic
+machinery (ultrafilters, {\L}o\'s's theorem) that would undermine
+IVNA's design goal of accessibility without model theory. The
+restriction to analytic functions is a deliberate trade-off between
+generality and usability.
 \end{remark}
 
 
@@ -958,7 +981,8 @@ We anticipate five objections:
 
 \item \emph{``A-VT is ad hoc.''} It is the IVNA translation of Taylor
   expansion in ${}^*\!\R$. Scope explicitly restricted to analytic
-  functions.
+  functions; generalization via the transfer principle is identified
+  as future work (Section~\ref{sec:extended}).
 \end{enumerate}
 
 
@@ -1032,6 +1056,11 @@ between zero and infinity.
   singularities where the index encodes approach direction.
 \item \textbf{Pedagogical testing}: controlled comparison of IVNA-based
   vs.\ standard calculus instruction.
+\item \textbf{Transfer principle generalization}: replace the analyticity
+  restriction of A-VT with a full IVNA-native transfer axiom, extending
+  virtual arguments to all first-order definable functions. This requires
+  engaging with model-theoretic foundations (ultrafilters, \L o\'s's theorem)
+  while preserving IVNA's notational accessibility.
 \end{enumerate}
 
 \subsection{The Vision}
