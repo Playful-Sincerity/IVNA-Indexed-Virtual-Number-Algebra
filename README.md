@@ -1,13 +1,13 @@
 # IVNA — Indexed Virtual Number Algebra
 
-**What if `5 / 0` gave you `∞₅` instead of ERROR — and you could multiply back to get `5`?**
+**What if `x / 0` gave you `∞ₓ` instead of ERROR — and you could multiply back to get `x`?**
 
 IVNA is a consistent algebraic framework that attaches indices to zeros and infinities, making division by zero and indeterminate forms algebraically operable. Information that standard arithmetic discards as "undefined" is preserved and recoverable.
 
 ```
-5 / 0₁  =  ∞₅         (division by zero yields an indexed infinity)
-∞₅ × 0₁ =  5          (multiply back — information preserved)
-0₃ / 0₅  =  3/5        (zero divided by zero is well-defined)
+x / 0₁  =  ∞ₓ         (division by zero yields an indexed infinity)
+∞ₓ × 0₁ =  x          (multiply back — information preserved)
+0ₓ / 0ᵧ  =  x/y        (zero divided by zero is well-defined)
 e  =  (1 + 0₁)^{∞₁}   (Euler's number as a direct algebraic expression)
 ```
 
@@ -74,14 +74,14 @@ A successful `lake build` means every proof has been machine-checked. A successf
 
 ## Core Idea
 
-Standard arithmetic maps `5 / 0` to "undefined" — a black hole that destroys information. IVNA recovers it:
+Standard arithmetic maps `x / 0` to "undefined" — a black hole that destroys information. IVNA recovers it:
 
 | Standard Math | IVNA |
 |--------------|------|
-| `5 / 0` = undefined | `5 / 0₁` = `∞₅` |
-| `0 / 0` = indeterminate | `0₃ / 0₅` = `3/5` |
-| `∞ × 0` = indeterminate | `∞₃ × 0₅` = `15` |
-| `∞ / ∞` = indeterminate | `∞₆ / ∞₂` = `3` |
+| `x / 0` = undefined | `x / 0₁` = `∞ₓ` |
+| `0 / 0` = indeterminate | `0ₓ / 0ᵧ` = `x/y` |
+| `∞ × 0` = indeterminate | `∞ₓ × 0ᵧ` = `xy` |
+| `∞ / ∞` = indeterminate | `∞ₓ / ∞ᵧ` = `x/y` |
 | `(1 + 0)^∞` = indeterminate | `(1 + 0₁)^{∞₁}` = `e` |
 
 The indices carry the contextual information that makes each expression deterministic.
