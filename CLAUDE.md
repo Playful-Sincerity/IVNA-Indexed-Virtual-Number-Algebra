@@ -93,11 +93,15 @@ This project falls under `~/Playful Sincerity/PS Research/**`:
 2. Verify with computation tools (SymPy, Wolfram, Z3) before presenting
 3. Revise if verification reveals errors
 
+## Future Work: Transfer Principle Generalization
+A-VT currently restricts IVNA's function extension to analytic functions (those with convergent Taylor series). The natural next step is an IVNA-native transfer axiom based on NSA's full transfer principle, which would extend virtual arguments to ALL first-order definable functions — removing the analyticity restriction. This is identified in the paper (Section 3 scope remark + Future Work item 5). The challenge: the transfer principle requires model-theoretic machinery (ultrafilters, Łoś's theorem) that could undermine IVNA's accessibility goal. Finding the right balance is the research problem.
+
 ## Publication Plan
 - **ArXiv first** (math.RA or math.GM) — establishes priority
 - **Target journal**: American Mathematical Monthly or Mathematical Intelligencer
 - **Supplementary**: GitHub repo with code + Lean proofs + VEA calculator
 - **Attribution**: Wisdom as sole author, Playful Sincerity Digital Core in acknowledgments
+- **Methodology cites**: Aletheia (arXiv:2602.10177) for GVR loop inspiration
 
 ## Connection to Other PS Research
 - **Gravitationalism**: IVNA notation for field singularities
