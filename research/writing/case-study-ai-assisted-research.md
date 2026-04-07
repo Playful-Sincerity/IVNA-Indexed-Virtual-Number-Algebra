@@ -11,12 +11,12 @@
 | Human thinking (core idea, indexed zeros/infinities, product rule) | 2017-2026 (~9 years) |
 | AI-assisted execution (formalization, verification, paper, distribution) | ~12 hours |
 | Literature survey: 12+ frameworks, 20+ sources | ~2 hours (parallel agents) |
-| Computational verification: 489 checks, 5 tool chains, 0 failures | ~3 hours |
+| Computational verification: 403 checks, 6 tool chains, 0 failures | ~3 hours (initial) + ~4 hours (re-verification audit) |
 | Lean 4 formalization: 11 axioms, 12 theorems, consistency proof | ~2 hours |
 | Paper: 1300+ lines LaTeX, 10 sections, triple-audited | ~4 hours |
 | Distribution system: 4,692 researchers discovered, outreach pipeline built | ~3 hours |
 
-**Total verification density:** 489 automated checks across Python, SymPy, Z3, Lean 4, and Wolfram. Zero failures. This level of verification would take a solo researcher weeks to months.
+**Total verification density:** 403 automated checks across Python, SymPy, Z3, Lean 4, Wolfram, and a meta-verification layer. Zero failures. Honestly categorized after a re-verification audit found the original suite inflated its count with classical-math checks. The audit itself is a methodological contribution — see below.
 
 ---
 
@@ -44,7 +44,7 @@ The Playful Sincerity Digital Core (PSDC) — a Claude Code-based research metho
 - **Parallel agent exploration**: Literature search, symbolic verification, and formal proof running concurrently
 - **5 tool chains**: Python (core algebra), SymPy (symbolic math), Z3 (satisfiability), Lean 4 (formal proofs), Wolfram (step-by-step verification)
 - **Contradiction discovery and resolution**: Found the e-problem (0₁·∞₁ = 1 vs. 2π), resolved it with the A-EXP axiom
-- **489 checks, 0 failures**: This is the credibility foundation
+- **403 checks across 6 tools, 0 failures**: This is the credibility foundation
 
 ### Phase 2: Literature Survey (~2 hours)
 - **12+ frameworks surveyed**: Grossone, meadows, wheels, transreal, SIA, NSA, Colombeau, surreals, S-Extension, Saitoh, IEEE 754, divergent series
@@ -95,7 +95,7 @@ A single person with the right ideas, the right tools, and the judgment to use t
 The GVR loop + parallel agents + formal verification is a replicable pattern. It's not specific to IVNA — it could work for any mathematical framework where computational verification is possible.
 
 ### For the credibility question
-The 489 verification checks and Lean 4 proofs do more for credibility than any institutional affiliation. When the math is machine-checked, it doesn't matter who you are. The work speaks.
+The 403 verification checks, Lean 4 proofs, and the honest re-verification audit do more for credibility than any institutional affiliation. When the math is machine-checked and the verification itself has been audited, the work speaks.
 
 ### For Playful Sincerity
 IVNA is proof-of-concept for the PS Research model: deep human thinking + AI-assisted execution + radical transparency (open source, public verification, honest limitations). If this works for mathematics, the same methodology applies to the other PS Research projects.

@@ -15,40 +15,43 @@ IVNA is to nonstandard analysis what `a + bi` is to ℝ² — the notation is th
 
 > *Paper:* [Indexed Virtual Number Algebra: A Consistent Framework for Division by Zero and Indeterminate Forms](paper/ivna-paper.pdf)
 
-## Verify Everything in 30 Seconds
+## Verify Everything
 
-All claims in the paper are computationally verified. You can reproduce them:
-
-```bash
-# Python tests — 28 algebraic checks (no dependencies beyond Python 3)
-python3 code/ivna.py
-
-# Lean 4 proofs — 11 axioms, 12 theorems, consistency proof (requires Lean 4.16.0)
-cd lean-ivna && lake build
-```
-
-For the full 489-check verification suite (requires SymPy, Z3, and Wolfram access):
+All claims are computationally verified. One command runs everything:
 
 ```bash
-# SymPy symbolic verification — NSA embedding (37 checks) + comprehensive (69 checks)
-pip install sympy && python3 code/verify/verify-nsa-embedding.py
-python3 code/verify/verify-sympy-comprehensive.py
+# Set up (one time)
+python3 -m venv /tmp/ivna-env
+source /tmp/ivna-env/bin/activate
+pip install sympy z3-solver numpy scipy
 
-# Z3 satisfiability — axiom consistency (31 checks)
-pip install z3-solver && python3 code/verify/verify-z3-comprehensive.py
-
-# Calculus suite — derivatives, integrals, FTC (115 checks)
-python3 code/verify/verify-calculus.py
-
-# Comprehensive — extended algebraic checks (148 checks)
-python3 code/verify/verify-comprehensive.py
+# Run the full verification suite
+python3 verification/run_all.py
 ```
 
-A successful `lake build` means every proof has been machine-checked. A successful `python3 code/ivna.py` runs the core algebraic test suite. The additional verification scripts reproduce the full 489-check result reported in the paper.
+This runs meta-verification (checking the suite itself), then all 403 checks across 6 tools, then Lean 4. Detailed per-tool outputs are auto-saved to `verification/_results/`.
+
+Or verify individual components:
+
+```bash
+python3 code/ivna.py                    # 30 core tests (no dependencies)
+cd lean-ivna && lake build              # Lean 4 formal proofs (11 axioms, 12 theorems)
+```
 
 ## What's Here
 
 ```
+├── verification/               # START HERE — all verification in one place
+│   ├── run_all.py              # Single command runs everything
+│   ├── README.md               # Verification guide for reviewers
+│   ├── core-algebra/           # Category A: IVNA-native (185 checks)
+│   ├── nsa-embedding/          # Category B: NSA consistency (70 checks)
+│   ├── classical-correspondence/ # Category C: notation checks (93 checks)
+│   ├── z3-axioms/              # Z3 axiom encoding (13 checks)
+│   ├── wolfram/                # Wolfram cross-verification (42 checks)
+│   ├── meta-audit/             # Meta-verification + audit report
+│   └── _results/               # Saved run outputs (organized by tool)
+│
 ├── paper/
 │   ├── ivna-paper.tex          # LaTeX source
 │   └── ivna-paper.pdf          # Compiled paper
@@ -60,19 +63,13 @@ A successful `lake build` means every proof has been machine-checked. A successf
 │   └── LeanIvna/Theorems.lean  # 12 derived theorems
 │
 ├── code/
-│   ├── ivna.py                 # Core implementation + 28 tests
-│   ├── verify/                 # All verification scripts
+│   ├── ivna.py                 # Core implementation + 30 tests
 │   ├── demos/                  # Demo scripts + outputs
 │   └── vea-web/                # Interactive VEA calculator demo
 │
-├── research/
-│   ├── findings/               # Research findings and exploration results
-│   ├── verification/           # Verification logs and outputs
-│   └── writing/                # Style guide and writing aids
-│
-├── phases/                     # Phase plans (1-5)
-├── debates/                    # Adversarial analysis transcripts
-└── distribution/               # Outreach and publication materials
+├── research/                   # Research findings and writing
+├── debates/                    # Adversarial analysis transcripts (4 debates)
+└── phases/                     # Phase plans (1-5)
 ```
 
 ## Core Idea
@@ -91,21 +88,20 @@ The indices carry the contextual information that makes each expression determin
 
 ## Verification Summary
 
-The paper's claims are verified across five independent tool chains totaling **489 checks with 0 failures**:
+**403 checks across 6 tools, 0 failures.** Each check is honestly categorized:
 
-| Layer | Tool | Checks | Result |
-|-------|------|--------|--------|
-| Core axiom tests | Python (ivna.py) | 28 | 28/28 pass |
-| NSA embedding | SymPy symbolic | 37 | 37/37 pass |
-| Axiom satisfiability | Z3 SMT solver | 11 | 11/11 pass |
-| Formal proofs | Lean 4.16 | 23 | Compiles |
-| Calculus suite | SymPy | 115 | 115/115 pass |
-| Comprehensive | SymPy + Z3 | 148 | 145/0/3* |
-| SymPy MCP | sympy-mcp | 69 | 69/69 pass |
-| Z3 MCP | mcp-solver | 31 | 31/31 pass |
-| Wolfram MCP | Wolfram Language | 27 | 27/27 pass |
+| Category | Tool | Checks | What It Tests |
+|----------|------|--------|---------------|
+| A: IVNA-native | Python/ivna.py | 185 | Exercises the `Virtual` class directly |
+| A: Core tests | Python/ivna.py | 30 | Built-in unit tests |
+| B: NSA embedding | SymPy | 70 | Axiom consistency under hyperreal mapping |
+| C: Classical | SymPy | 93 | Notation maps onto known results (honest) |
+| Z3 encoding | Z3 SMT | 13 | Satisfiability + axiom independence |
+| Cross-verification | Wolfram Engine | 42 | Independent symbolic engine |
+| Formal proofs | Lean 4.16 | 23 | Machine-checked (0 sorry in core) |
+| Meta-verification | Python | 18 | Checks the suite itself is sound |
 
-*3 warnings are framing recommendations (divergent series, residues, nonlinear ODEs), not mathematical errors.
+See `verification/README.md` for details and `verification/_results/` for full per-tool outputs.
 
 ## The 11 Axioms
 
