@@ -276,9 +276,9 @@ The full ODE solver comparison is supplementary material at best. Don't overclai
 
 | Demo | Script | Output |
 |------|--------|--------|
-| N-Body | `code/demo-nbody.py` | `research/findings/output-demo-nbody.txt` |
-| Gradient | `code/demo-gradient.py` | `research/findings/output-demo-gradient.txt` |
-| IEEE 754 | `code/demo-ieee754.py` | `research/findings/output-demo-ieee754.txt` |
-| ODE Solver | `code/demo-ode-singular.py` | `research/findings/output-demo-ode.txt` |
+| N-Body | `code/demos/nbody.py` | `code/demos/output-demo-nbody.txt` |
+| Gradient | `code/demos/gradient.py` | `code/demos/output-demo-gradient.txt` |
+| IEEE 754 | `code/demos/ieee754.py` | `code/demos/output-demo-ieee754.txt` |
+| ODE Solver | `code/demos/ode-singular.py` | `code/demos/output-demo-ode.txt` |
 
-All demos run with: `source /tmp/ivna-env/bin/activate && python3 code/<demo>.py`
+All demos run with: `source /tmp/ivna-env/bin/activate && python3 code/demos/<demo>.py`

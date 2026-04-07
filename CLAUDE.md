@@ -4,15 +4,34 @@
 A consistent algebraic framework that attaches indices to zeros and infinities, making division by zero and indeterminate forms algebraically operable. Proven consistent via NSA embedding (37/37 SymPy + 11/11 Z3 checks). Lean4 formalization complete (11 axioms, 12 theorems, consistency proof).
 
 ## Status
-**Phase 2: Paper drafting.** Validation complete (272 total checks: 145 comprehensive + 127 MCP verification, 0 failures). Lean4 proofs compile. e exploration done. LaTeX scaffold ready. Impact/adoption/community document written. Next: fill in paper sections, then ArXiv submission.
+**Phase 2: Paper drafting.** Re-verification complete (2026-04-06 audit + new suite). Lean4 proofs compile. LaTeX scaffold ready. Next: fill in paper sections, then ArXiv submission.
+
+## Verification Status (post-audit, 2026-04-06)
+
+Run `python3 verification/run_all.py` — single command runs everything.
+
+| Tool | Category | Checks | Failures |
+|------|----------|--------|----------|
+| Python/ivna.py | A: IVNA-Native | 185 | 0 |
+| SymPy | B: NSA Embedding | 70 | 0 |
+| SymPy | C: Classical Correspondence | 93 | 0 |
+| Z3 | Axiom Encoding | 13 | 0 |
+| Wolfram | Cross-Verification | 42 | 0 |
+| Lean 4 | Formal Proofs | 11 axioms, 12 theorems | 0 sorry |
+| Python | Meta-Verification | 18 | 0 |
+| Python/ivna.py | Core Unit Tests | 30 | 0 |
+| **Total** | | **403 + Lean4** | **0** |
+
+- See `verification/meta-audit/meta-audit-2026-04-06.md` for the audit that prompted this revision.
+- Prior "427 checks" count was inflated with ~270 classical-math checks; corrected suite isolates genuine IVNA-native verification.
 
 ## Key Results
-- **28/28 Python tests pass** — core algebra + resolved contradictions + transcendental derivatives
-- **IVNA is consistent** — NSA embedding provides concrete model
+- **IVNA is consistent** — NSA embedding provides concrete model, Lean4 machine-checked
 - **e = (1 + 0₁)^{∞₁}** — direct algebraic definition, not a limit
-- **All standard calculus derivatives work** — polynomial, rational, trig, exponential, logarithmic
+- **Derivatives verified via A-VT + A8 pipeline** — polynomial, rational, trig, exponential, logarithmic
 - **Division-by-zero roundtrip** — 5/0₁ = ∞₅, ∞₅ · 0₁ = 5 (information preserved)
 - **IVNA is to NSA what a+bi is to R²** — the notation is the contribution
+- **Unification across 9 domains** — Bayes, Dirac delta, residues, blow-ups, etc. share a common algebraic structure
 
 ## Project Structure
 
@@ -37,34 +56,32 @@ IVNA/
 │
 ├── code/                        # Python implementation & tools
 │   ├── ivna.py                  # Core IVNA implementation (28 tests)
-│   ├── verify_nsa_embedding.py  # NSA embedding verification (37+11 checks)
-│   └── vex_calculator.py        # VEA calculator prototype/demo
+│   ├── vea_calculator.py        # VEA calculator prototype/demo
+│   ├── verify/                  # Verification scripts (7 original + 10 phase4)
+│   ├── demos/                   # Demo scripts + outputs
+│   └── vea-web/                 # Interactive web calculator
 │
-├── research/                    # Research documents
-│   ├── Indexed_Virtual_Number_Algebra.pdf  # Original paper (source)
-│   ├── findings/
-│   │   ├── e-exploration.md         # Deep e consequences (5 HIGH-rated)
-│   │   ├── applications-physics.md  # Physics apps + L'Hôpital elimination
-│   │   ├── value-assessment.md      # Final verdict + revised paper outline
-│   │   ├── writing-style-guide.md   # Wisdom's voice for paper drafting
-│   │   ├── impact-and-adoption.md   # Real-world impact trajectory + community vision
-│   │   ├── verification-mcp-sympy.txt    # 69/69 SymPy symbolic checks
-│   │   ├── verification-mcp-z3.txt       # 31/31 Z3 satisfiability checks
-│   │   ├── verification-mcp-wolfram.txt  # 27/27 step-by-step derivative/FTC checks
-│   │   └── verification-mcp-literature.txt # 20-source literature comparison
-│   └── plans/
-│       ├── plan.md                        # Phase 1 master plan (complete)
-│       ├── plan-phase2.md                 # Phase 2 plan (paper + publication)
-│       ├── next-steps.md                  # Development + publication roadmap
-│       ├── plan-section-consistency.md    # Audit results
-│       ├── plan-section-literature.md     # Literature positioning
-│       ├── plan-section-contradiction-resolution.md
-│       ├── plan-section-model-construction.md
-│       ├── plan-section-model-verification.md
-│       └── plan-section-applications.md
+├── research/                    # Research process & findings
+│   ├── findings/                # Research findings (markdown)
+│   │   ├── deep-dive-unification.md  # Cross-domain unification (9 domains)
+│   │   ├── algebraic-characterization.md  # IVNA ≅ K* × Z
+│   │   ├── blow-up-comparison.md     # Blow-up correspondence
+│   │   ├── literature-phase4/        # Prior art assessments
+│   │   └── abandoned/                # Dead-end explorations
+│   ├── verification/            # Verification logs & outputs
+│   │   ├── deep-dive-unification/    # Wolfram verification of unification claims
+│   │   └── phase4/                   # Phase 4 claim verifications (9 files)
+│   ├── agent-outputs/           # Raw agent outputs (traceability)
+│   └── writing/                 # Style guide, writing aids
 │
-└── sessions/                    # Session logs
-    └── 2026-03-31-session-validation-and-deep-plan.md
+├── phases/                      # Phase plans (1-5)
+│   └── phase4/plan.md           # CURRENT: Unification thesis pivot
+│
+├── debates/                     # Adversarial analysis transcripts
+├── distribution/                # Outreach & publication
+├── sessions/                    # Session logs
+├── chronicle/                   # Semantic logging
+└── archive/                     # Superseded files
 ```
 
 ## Core Axioms (resolved)

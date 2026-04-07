@@ -77,7 +77,7 @@ A *common meadow* adds an error element `a` (analogous to wheel's bottom, IEEE 7
 
 **What Saitoh's framework does.** Proposes 1/0 = 0 (and more generally z/0 = 0 for all z). This is justified via the theory of reproducing kernels, where certain natural limiting processes yield the value 0 at the singularity. The framework redefines many classical results: Laurent series around poles, derivatives, and differential equations are re-examined with the convention z/0 = 0.
 
-**What Saitoh's framework does NOT do:** This is the polar opposite of IVNA. Instead of preserving numerator information in an indexed infinity, Saitoh discards it entirely (everything maps to 0). 5/0 = 7/0 = 0/0 = 0. No parameterized family. No roundtrip. No VEX-style information preservation. The framework is nonstandard in a different sense — it is primarily a notation system built on top of a specific limit-taking convention, justified by reproducing kernel theory.
+**What Saitoh's framework does NOT do:** This is the polar opposite of IVNA. Instead of preserving numerator information in an indexed infinity, Saitoh discards it entirely (everything maps to 0). 5/0 = 7/0 = 0/0 = 0. No parameterized family. No roundtrip. No VEA-style information preservation. The framework is nonstandard in a different sense — it is primarily a notation system built on top of a specific limit-taking convention, justified by reproducing kernel theory.
 
 **Reception:** Published largely in Saitoh's own dedicated journal (*International Journal of Division by Zero Calculus*, Roman Science Publications) and in a self-published book. Not widely adopted in mainstream mathematics. The claim that 1/0 = 0 contradicts standard algebraic conventions and has not been embraced by the broader community.
 
@@ -99,7 +99,7 @@ A *common meadow* adds an error element `a` (analogous to wheel's bottom, IEEE 7
 - Was published on arXiv in math.GM (general mathematics) — not peer-reviewed in a major journal.
 - Has received no significant citations or follow-up.
 
-**Relevance to IVNA:** This is the most structurally similar prior work found. It shares IVNA's intuition that x/0 should yield a unique result per numerator. However, it is underdeveloped (abstract only, no full arithmetic, no consistency proof, no applications) and the presentation makes no connection to NSA or to a computational/pedagogical framework. IVNA's contribution is the full algebraic system: explicit index arithmetic, NSA embedding for consistency, the product rule as a theorem (not just an axiom), and the VEX/calculus applications.
+**Relevance to IVNA:** This is the most structurally similar prior work found. It shares IVNA's intuition that x/0 should yield a unique result per numerator. However, it is underdeveloped (abstract only, no full arithmetic, no consistency proof, no applications) and the presentation makes no connection to NSA or to a computational/pedagogical framework. IVNA's contribution is the full algebraic system: explicit index arithmetic, NSA embedding for consistency, the product rule as a theorem (not just an axiom), and the VEA/calculus applications.
 
 **Must acknowledge in paper.** A sentence or two noting this work, explaining that IVNA shares its intuition but provides a complete, consistent, and applicable algebraic system that Santangelo's abstract sketch does not.
 
@@ -244,7 +244,7 @@ A *common meadow* adds an error element `a` (analogous to wheel's bottom, IEEE 7
 2. Transfer principle: IVNA claims no transfer principle. The scope is explicitly restricted to what the NSA embedding justifies.
 3. Subsumption: IVNA honestly acknowledges that it is a notational interface to NSA. This is a strength, not a weakness.
 4. Comparison undecidability: IVNA comparisons are well-defined (0_x < 0_y iff x, y have the same sign and |x| < |y|, etc.).
-5. Implementation: VEX mode is implementable now (Python library, simple arithmetic rules).
+5. Implementation: VEA mode is implementable now (Python library, simple arithmetic rules).
 
 Must cite: Gutman et al. 2017 (the criticism) and Sergeyev 2019 (the response), and note how IVNA avoids the circularity and transfer-principle problems that plague grossone.
 
@@ -284,10 +284,10 @@ Must cite: Gutman et al. 2017 (the criticism) and Sergeyev 2019 (the response), 
 
 **What this does.** Proposes encoding exception type and instruction address in the NaN payload, so that NaN results carry information about their origin. An "infinity loss" exception type tracks when infinite results arise. This is essentially an engineering implementation of provenance-tracking for exceptional floating-point values.
 
-**Relevance to IVNA.** The Agner Fog proposal is the closest existing engineering approach to IVNA's VEX mode. Key differences:
+**Relevance to IVNA.** The Agner Fog proposal is the closest existing engineering approach to IVNA's VEA mode. Key differences:
 - Fog's system tracks where an exception *occurred* (address), not what the *mathematical provenance* is (the numerator that was divided by zero).
 - Fog's system does not enable arithmetic on NaN payloads (you cannot multiply two NaN results and get a meaningful NaN result). IVNA's inf_5 * 0_1 = 5 is not possible in Fog's framework.
-- IVNA's VEX mode is mathematically principled (follows from the algebraic rules), not just an engineering convention.
+- IVNA's VEA mode is mathematically principled (follows from the algebraic rules), not just an engineering convention.
 
 **Must cite** in the CS applications section: IEEE 754-2008 (NaN payloads), Fog's proposal (provenance tracking motivation), and position IVNA as a mathematically principled alternative.
 
@@ -336,7 +336,7 @@ No reviewed framework establishes the complete package that IVNA provides:
 1. Explicit continuous index parameterization for both zeros and infinities.
 2. Full arithmetic (all four operations + powers) between indexed virtuals and reals.
 3. NSA embedding providing a proven model.
-4. Applications: calculus (derivatives, L'Hopital elimination), physics notation, VEX computer arithmetic.
+4. Applications: calculus (derivatives, L'Hopital elimination), physics notation, VEA computer arithmetic.
 
 The indexed product rule 0_x * ∞_y = xy, as a theorem following from explicit arithmetic axioms with a concrete NSA model, has no precedent in the reviewed literature.
 
@@ -377,8 +377,8 @@ NSA requires st() at the end. SIA avoids it (nilsquare automatically kills the e
 12. **Santangelo, B.** "A New Algebraic Structure That Extends Fields And Allows For A True Division By Zero." arXiv:1611.06838, 2016. (Closest structural prior art — must acknowledge and explain how IVNA goes further.)
 13. **Anderson, J.A.D.W.** Transreal arithmetic papers, 2006+. (Prior division-by-zero attempt with different approach; contrast is instructive.)
 14. **Saitoh, S.** *Introduction to the Division by Zero Calculus*. SCIRP, 2021. (z/0 = 0 approach — opposite pole from IVNA, helps frame the space of options.)
-15. **IEEE 754-2008/2019.** Standard for Floating-Point Arithmetic. (For VEX mode context.)
-16. **Fog, A.** "Parallel Floating Point Exception Tracking and NaN Propagation." 2019. (For VEX mode engineering context.)
+15. **IEEE 754-2008/2019.** Standard for Floating-Point Arithmetic. (For VEA mode context.)
+16. **Fog, A.** "Parallel Floating Point Exception Tracking and NaN Propagation." 2019. (For VEA mode engineering context.)
 17. **Wenmackers, S.** "On the limits of comparing subset sizes within N." *Journal for the Philosophy of Mathematics*, 2024. (Establishes that IVNA's proportional set sizes inherit the ultrafilter non-uniqueness that all such systems face.)
 18. **Katz, M. and Sherry, D.** "Leibniz's Infinitesimals: Their Fictionality, Their Modern Implementations, and Their Foes from Berkeley to Russell and Beyond." *Erkenntnis*, 2013. (Historical context for infinitesimal methods; supports the "notation as contribution" framing.)
 
@@ -396,13 +396,13 @@ NSA requires st() at the end. SIA avoids it (nilsquare automatically kills the e
 
 **The criticism:** The S-Extension (arXiv:1611.06838) already proposes unique elements per division-by-zero operation.
 
-**Preemptive response:** The S-Extension establishes the structural axiom (unique s_x with 0*s_x = x) but: provides no arithmetic for s_x elements (no addition, multiplication, powers), no consistency proof (no model is constructed), no applications (no calculus, no VEX mode), and has received no citations or development in 9 years. IVNA provides the complete package: full arithmetic, proven consistent model in NSA, applications to calculus pedagogy and computer arithmetic. The relationship is similar to Weierstrass establishing that analytic continuation exists vs. Riemann giving the explicit framework with applications.
+**Preemptive response:** The S-Extension establishes the structural axiom (unique s_x with 0*s_x = x) but: provides no arithmetic for s_x elements (no addition, multiplication, powers), no consistency proof (no model is constructed), no applications (no calculus, no VEA mode), and has received no citations or development in 9 years. IVNA provides the complete package: full arithmetic, proven consistent model in NSA, applications to calculus pedagogy and computer arithmetic. The relationship is similar to Weierstrass establishing that analytic continuation exists vs. Riemann giving the explicit framework with applications.
 
 ### C3: "The Axiom of Choice is required — this makes IVNA non-constructive"
 
 **The criticism:** IVNA's NSA embedding requires an ultrafilter, which requires the Axiom of Choice (or the weaker Boolean Prime Ideal theorem). Constructivists will object.
 
-**Preemptive response:** This is true and should be stated explicitly in the Limitations section. However: the Axiom of Choice is accepted in all mainstream mathematical practice. The practical applications of IVNA (VEX calculator, calculus pedagogy) do not require the full generality of the ultrafilter — only the existence of *some* consistent model, which the NSA embedding provides. For an elementary treatment (a la Benci-Di Nasso's alpha-theory), IVNA can be axiomatized without explicit ultrafilter construction, with the ultrafilter needed only for the formal consistency proof.
+**Preemptive response:** This is true and should be stated explicitly in the Limitations section. However: the Axiom of Choice is accepted in all mainstream mathematical practice. The practical applications of IVNA (VEA calculator, calculus pedagogy) do not require the full generality of the ultrafilter — only the existence of *some* consistent model, which the NSA embedding provides. For an elementary treatment (a la Benci-Di Nasso's alpha-theory), IVNA can be axiomatized without explicit ultrafilter construction, with the ultrafilter needed only for the formal consistency proof.
 
 ### C4: "Grossone controversy — will IVNA be grouped with fringe infinity arithmetic?"
 
@@ -413,7 +413,7 @@ NSA requires st() at the end. SIA avoids it (nilsquare automatically kills the e
 - No claimed independence from NSA (IVNA is embedded in NSA by construction).
 - No transfer principle claimed (IVNA's scope is explicitly limited to what the NSA embedding justifies).
 - Comparison is decidable (0_x vs 0_y comparisons follow standard real comparisons of the indices).
-- An implementation exists (Python code, VEX calculator prototype).
+- An implementation exists (Python code, VEA calculator prototype).
 
 The paper should briefly acknowledge the grossone controversy and explicitly note these distinctions.
 
@@ -451,7 +451,7 @@ The following searches returned no results that threaten IVNA's novelty claims:
 
 5. **Any framework with a continuously parameterized zero family {0_x : x ∈ R}** — Not found. The S-Extension has discrete unique elements (one per field element) but no continuous index structure with arithmetic relationships between elements.
 
-6. **Any prior "VEX mode" proposal** — Not found. The idea of a calculator that outputs "inf_5" instead of "ERROR" for 5/0, with full arithmetic on the indexed result, has no prior proposal. Fog's NaN payload proposal is the engineering closest-match but lacks the mathematical structure.
+6. **Any prior "VEA mode" proposal** — Not found. The idea of a calculator that outputs "inf_5" instead of "ERROR" for 5/0, with full arithmetic on the indexed result, has no prior proposal. Fog's NaN payload proposal is the engineering closest-match but lacks the mathematical structure.
 
 ---
 
@@ -468,7 +468,7 @@ IVNA's core claim — that the indexed product rule 0_x * ∞_y = xy is a provab
 - A continuously indexed zero family and infinity family with explicit arithmetic.
 - The product rule as a theorem following from axioms with a concrete NSA model.
 - Calculus applications (L'Hopital elimination, derivative computation without explicit st() call).
-- A VEX mode proposal for information-preserving computer arithmetic.
+- A VEA mode proposal for information-preserving computer arithmetic.
 
 The S-Extension (Santangelo 2016) shares the structural intuition but is an underdeveloped abstract sketch. Semi-structured complex numbers (Siafor 2021) share the three-dimensional geometry intuition but have unclear algebraic laws.
 

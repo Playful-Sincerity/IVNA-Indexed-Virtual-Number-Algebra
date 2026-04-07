@@ -269,43 +269,39 @@ def virtual_taylor(f_derivatives, a, zero_index, n_terms=5):
 def ivna_derivative(f_derivatives_at_x, zero_index=1):
     """Compute IVNA derivative using Virtual Taylor Axiom.
 
-    Given f and its derivatives at x, compute f'(x) via:
-    f'(x) = [f(x + 0_1) - f(x)] / 0_1
-
-    With A-VT:
-    f(x + 0_1) - f(x) = 0_{f'(x)} + 0²_{f''(x)/2} + ...
-    Divide by 0_1:
-    = f'(x) + 0_{f''(x)/2} + ...
-    =; f'(x)
+    Genuine IVNA computation path:
+    1. A-VT: f(x + 0_h) = f(x) + 0_{f'(x)·h} + 0²_{f''(x)·h²/2!} + ...
+    2. Subtract f(x): difference = 0_{f'(x)·h} + 0²_{...} + ...
+    3. A8: divide first term by 0_h: 0_{f'(x)·h} / 0_h = f'(x)
+    4. Higher terms become higher-order zeros (collapse under =;)
 
     Args:
         f_derivatives_at_x: [f(x), f'(x), f''(x), ...] — standard derivatives at x
         zero_index: the index of the virtual zero (default 1)
 
     Returns:
-        The IVNA derivative value (should match f'(x))
+        (result, residuals) where result is f'(x) via A8, residuals are
+        higher-order Virtual zeros confirming they collapse under =;
     """
     if len(f_derivatives_at_x) < 2:
         raise ValueError("Need at least f(x) and f'(x)")
-    return f_derivatives_at_x[1]  # f'(x) — the first virtual term after dividing by 0_1
 
+    h = Z(zero_index)
+    _, virtual_terms = virtual_taylor(f_derivatives_at_x, 0, zero_index)
 
-# --- Derivative helper ---
+    if not virtual_terms:
+        raise ValueError("A-VT produced no virtual terms")
 
-def derivative(f, x_val=None):
-    """Compute IVNA derivative of f.
+    # A8: 0_{f'(x)·h} / 0_h  — same-kind, same-order division gives index ratio
+    result = virtual_terms[0] / h
 
-    f should be a callable that accepts a symbolic expression.
-    Returns f'(x) using the IVNA method: (f(x + 0_1) - f(x)) / 0_1
-    """
-    from sympy import Symbol, expand, Rational
+    # Higher terms: each 0^k_{...} / 0_h gives 0^{k-1}_{...} — still virtual
+    residuals = []
+    for term in virtual_terms[1:]:
+        divided = term / h
+        residuals.append(divided)
 
-    x = Symbol('x')
-    h = Z(1)  # 0_1
-
-    # This is symbolic — we need a different approach
-    # For now, return the function for manual testing
-    pass
+    return result, residuals
 
 
 # ============================================================
@@ -341,6 +337,8 @@ def test_all():
         test_trig_derivative,               # NEW: d/dx(sin x) = cos x
         test_exp_derivative,                # NEW: d/dx(e^x) = e^x
         test_ln_derivative,                 # NEW: d/dx(ln x) = 1/x
+        test_derivative_ivna_machinery,     # NEW: verify A-VT + A8 pipeline
+        test_derivative_residuals_collapse, # NEW: verify residuals are virtual zeros
         test_infinite_series_sum,
         test_set_cardinality,
     ]
@@ -918,12 +916,15 @@ def test_rational_function_derivative():
         # Standard derivatives of 1/x at x=a
         f_derivs = [1/a, -1/a**2, 2/a**3, -6/a**4]
 
-        # IVNA derivative via A-VT
-        result = ivna_derivative(f_derivs)
+        # IVNA derivative via A-VT + A8
+        result, residuals = ivna_derivative(f_derivs)
         expected = -1/a**2
 
-        assert abs(result - expected) < 1e-10, \
+        assert abs(float(result) - expected) < 1e-10, \
             f"d/dx(1/x) at x={a}: IVNA gives {result}, expected {expected}"
+        for r in residuals:
+            assert isinstance(r, Virtual) and r.kind == 'zero', \
+                f"Residual {r} should be a Virtual zero"
 
     return True
 
@@ -939,11 +940,14 @@ def test_trig_derivative():
     for a in [0, math.pi/6, math.pi/4, math.pi/3, 1.0]:
         f_derivs = [math.sin(a), math.cos(a), -math.sin(a), -math.cos(a)]
 
-        result = ivna_derivative(f_derivs)
+        result, residuals = ivna_derivative(f_derivs)
         expected = math.cos(a)
 
-        assert abs(result - expected) < 1e-10, \
+        assert abs(float(result) - expected) < 1e-10, \
             f"d/dx(sin x) at x={a}: IVNA gives {result}, expected {expected}"
+        for r in residuals:
+            assert isinstance(r, Virtual) and r.kind == 'zero', \
+                f"Residual {r} should be a Virtual zero"
 
     return True
 
@@ -959,11 +963,14 @@ def test_exp_derivative():
         ea = math.e ** a
         f_derivs = [ea, ea, ea, ea]  # all derivatives of e^x are e^x
 
-        result = ivna_derivative(f_derivs)
+        result, residuals = ivna_derivative(f_derivs)
         expected = ea
 
-        assert abs(result - expected) < 1e-10, \
+        assert abs(float(result) - expected) < 1e-10, \
             f"d/dx(e^x) at x={a}: IVNA gives {result}, expected {expected}"
+        for r in residuals:
+            assert isinstance(r, Virtual) and r.kind == 'zero', \
+                f"Residual {r} should be a Virtual zero"
 
     return True
 
@@ -977,11 +984,72 @@ def test_ln_derivative():
     for a in [1, 2, math.e, 10]:
         f_derivs = [math.log(a), 1/a, -1/a**2, 2/a**3]
 
-        result = ivna_derivative(f_derivs)
+        result, residuals = ivna_derivative(f_derivs)
         expected = 1/a
 
-        assert abs(result - expected) < 1e-10, \
+        assert abs(float(result) - expected) < 1e-10, \
             f"d/dx(ln x) at x={a}: IVNA gives {result}, expected {expected}"
+        for r in residuals:
+            assert isinstance(r, Virtual) and r.kind == 'zero', \
+                f"Residual {r} should be a Virtual zero"
+
+    return True
+
+
+def test_derivative_ivna_machinery():
+    """Verify the A-VT -> A8 pipeline uses actual IVNA operations.
+
+    For f(x) = x^n, the derivative is n*x^(n-1). This test verifies:
+    1. virtual_taylor() produces Virtual objects (not plain numbers)
+    2. Division by Z(1) uses A8 (same-kind, same-order -> index ratio)
+    3. The result is a Fraction, not a Virtual (it exited the virtual system)
+    """
+    for n, x_val in [(2, 3), (3, 2), (4, 1), (2, 7)]:
+        from math import comb, factorial
+        derivs = []
+        for k in range(n + 1):
+            derivs.append(factorial(n) / factorial(n - k) * x_val**(n - k))
+
+        result, residuals = ivna_derivative(derivs)
+
+        assert isinstance(result, Fraction), \
+            f"x^{n} at x={x_val}: result should be Fraction (exited virtual), got {type(result)}"
+
+        expected = n * x_val**(n-1)
+        assert abs(float(result) - expected) < 1e-10, \
+            f"x^{n} at x={x_val}: got {result}, expected {expected}"
+
+    return True
+
+
+def test_derivative_residuals_collapse():
+    """Verify that ivna_derivative residuals are all Virtual zeros that collapse.
+
+    The residuals from dividing higher-order Taylor terms by Z(1) should be
+    Virtual objects of kind 'zero' (higher-order infinitesimals). Under the
+    collapse operator (=;), they all become 0.
+    """
+    # e^x at x=0: all derivatives are 1
+    f_derivs = [1.0, 1.0, 1.0, 1.0, 1.0]
+    result, residuals = ivna_derivative(f_derivs)
+
+    assert len(residuals) >= 2, f"Expected at least 2 residual terms, got {len(residuals)}"
+
+    for i, r in enumerate(residuals):
+        assert isinstance(r, Virtual), \
+            f"Residual {i} should be Virtual, got {type(r)}"
+        assert r.kind == 'zero', \
+            f"Residual {i} should be kind='zero', got {r.kind}"
+        assert r.collapse() == 0, \
+            f"Residual {i} should collapse to 0, got {r.collapse()}"
+
+    # sin(x) at x=0: derivs = [0, 1, 0, -1, 0]
+    f_derivs_sin = [0, 1, 0, -1, 0]
+    result_sin, residuals_sin = ivna_derivative(f_derivs_sin)
+    assert abs(float(result_sin) - 1.0) < 1e-10, "d/dx(sin x) at 0 should be 1"
+    for r in residuals_sin:
+        assert isinstance(r, Virtual) and r.kind == 'zero', \
+            f"Sin residual should be Virtual zero, got {r}"
 
     return True
 

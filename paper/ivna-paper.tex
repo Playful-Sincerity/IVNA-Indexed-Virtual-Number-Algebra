@@ -36,7 +36,7 @@ A Structured Interface for Division by Zero \\
 and Indeterminate Forms}
 
 \author{Wisdom Happy\thanks{Correspondence: Wisdom@PlayfulSincerity.org. \\[0.5em]
-\textit{Methodology:} The core conceptual framework---indexed zeros and infinities, the product rule $\vz{x} \cdot \vi{y} = xy$, and the applications to calculus and indeterminate forms---was conceived and developed by the author beginning in 2017, well before any AI tooling was involved. The formalization, computational verification, and paper preparation were then carried out using the Playful Sincerity Digital Core---an AI-assisted research methodology system built on Claude Code (Anthropic). The Digital Core enforces a Generate--Verify--Revise (GVR) loop---inspired by the Aletheia architecture~\cite{feng2026aletheia}---in which every mathematical claim is verified by at least one independent computational tool and revised if verification fails. The system orchestrates hierarchical planning, parallel agent-based exploration (literature search, symbolic verification, and formal proof running concurrently), and book/paper research integration. Five independent verification tool chains---Python, SymPy, Z3, Lean~4, and Wolfram---produced 489 automated checks with zero failures. The complete verification suite is publicly available and independently reproducible at \url{https://github.com/Playful-Sincerity/PS-Research-IVNA}.} \\[0.3em]
+\textit{Methodology:} The core conceptual framework---indexed zeros and infinities, the product rule $\vz{x} \cdot \vi{y} = xy$, and the applications to calculus and indeterminate forms---was conceived and developed by the author beginning in 2017, well before any AI tooling was involved. The formalization, computational verification, and paper preparation were then carried out using the Playful Sincerity Digital Core---an AI-assisted research methodology system built on Claude Code (Anthropic). The Digital Core enforces a Generate--Verify--Revise (GVR) loop---inspired by the Aletheia architecture~\cite{feng2026aletheia}---in which every mathematical claim is verified by at least one independent computational tool and revised if verification fails. The system orchestrates hierarchical planning, parallel agent-based exploration (literature search, symbolic verification, and formal proof running concurrently), and book/paper research integration. Six independent verification tool chains---Python, SymPy, Z3, Lean~4, Wolfram, and a meta-verification layer---produced 403 automated checks with zero failures, each honestly categorized by what it tests (see Appendix~\ref{app:verification}). The complete verification suite is publicly available and independently reproducible at \url{https://github.com/Playful-Sincerity/PS-Research-IVNA}.} \\[0.3em]
 Playful Sincerity Research}
 
 \date{March 2026}
@@ -44,6 +44,12 @@ Playful Sincerity Research}
 \begin{document}
 
 \maketitle
+
+\begin{center}
+\textit{``The limit does not exist!''}\\[0.3em]
+--- Cady Heron, \textit{Mean Girls} (2004)
+\end{center}
+\vspace{1em}
 
 \begin{abstract}
 We present \textbf{Indexed Virtual Number Algebra (IVNA)}, an algebraic framework
@@ -64,8 +70,9 @@ infinitesimal analysis.
 We prove IVNA consistent by constructing an explicit model via embedding in
 Robinson's hyperreal numbers, where $\vz{x} = x\varepsilon_0$ for a fixed
 infinitesimal $\varepsilon_0$. This embedding is verified computationally
-(37 symbolic checks via SymPy, 11 satisfiability checks via Z3) and formally
-(core axioms type-checked in Lean~4). IVNA is thus a structured notational
+(70 symbolic checks via SymPy, 13 satisfiability and independence checks via Z3,
+42 cross-checks via Wolfram) and formally
+(core axioms type-checked in Lean~4 with zero proof gaps). IVNA is thus a structured notational
 interface to a specific fragment of Non-Standard Analysis---analogous to how
 complex number notation ($a + bi$) is an interface to $\R^2$ with a specific
 multiplication rule.
@@ -78,6 +85,12 @@ that resolves IEEE~754 NaN propagation when operand indices are tracked. The exp
 constant $e$ receives a direct algebraic definition:
 $e = (1 + \vz{1})^{\vi{1}}$, revealing the structure of continuous growth
 as a scaling symmetry between step size and repetition count.
+Beyond calculus, the product rule $\vz{x} \cdot \vi{y} = xy$ recurs as
+the resolution mechanism in distribution theory (the Dirac delta),
+probability (conditional densities and Bayes' theorem), and algebraic
+geometry (a new correspondence between IVNA's index arithmetic and
+blow-up resolution)---a structural observation suggesting that these
+independently developed techniques share a common algebraic core.
 \end{abstract}
 
 % ============================================================
@@ -102,7 +115,9 @@ the one approached from the right and the one approached from the left.
 This is not an isolated case. The expressions $0/0$, $0 \cdot \infty$,
 $\infty - \infty$, and $\infty/\infty$ are all classified as
 \emph{indeterminate forms}---not because they have no answer, but because
-the answer depends on information that the notation has discarded.
+the answer depends on information that the notation has
+discarded.\footnote{``Undefined'' is mathematics' way of saying the
+question contains more information than the notation can hold.}
 When we write $\lim_{x \to 0} \sin(x)/x = 1$ and
 $\lim_{x \to 0} x^2/x = 0$, both expressions involve the form $0/0$,
 yet they yield different values. The problem is not with zero or infinity.
@@ -200,7 +215,7 @@ The contributions of this paper are:
   in which division by zero produces operable results. Consistency is
   proven via explicit embedding in Robinson's hyperreals
   (Section~\ref{sec:consistency}), verified computationally
-  (489 checks across SymPy, Z3, and Wolfram with zero failures),
+  (403 checks across six tools with zero failures),
   and formalized in Lean~4 (11 axioms, 12 theorems).
 
 \item \textbf{A direct algebraic definition of $e$}
@@ -231,6 +246,13 @@ The contributions of this paper are:
   $\R^2$. The indexed product rule $\vz{x} \cdot \vi{y} = xy$ has no
   exact precedent in the reviewed literature, but the underlying
   mathematics is not new.
+
+\item \textbf{Cross-domain structural observation}
+  (Section~\ref{sec:crossdomain}): the product rule
+  $\vz{x} \cdot \vi{y} = xy$ recurs as the resolution mechanism
+  across calculus, distribution theory, probability, and algebraic
+  geometry---suggesting that these independently developed
+  techniques share a common algebraic core.
 \end{enumerate}
 
 
@@ -241,18 +263,19 @@ The contributions of this paper are:
 
 Before proceeding, we note that every axiom and theorem in this section
 is machine-verified. The complete Lean~4 formalization, a Python test
-suite (28 core tests, 145 comprehensive checks), and a VEA calculator
-demo are available at:
+suite (30 core tests), and the full verification suite (403 checks
+across six tools) are available at:
 
 \begin{center}
 \url{https://github.com/Playful-Sincerity/PS-Research-IVNA}
 \end{center}
 
 \noindent
-To verify independently: clone the repository, run
-\texttt{cd lean-ivna \&\& lake build} (Lean~4.16+ required), or run
-\texttt{python3 code/ivna.py} (Python~3.10+ with no dependencies).
-Both should complete in under 30 seconds with zero failures.
+To verify independently: clone the repository and run
+\texttt{python3 verification/run\_all.py} (requires Python~3.10+,
+SymPy, Z3, and optionally Wolfram Engine). This single command runs
+all verification categories, checks the Lean~4 build, and saves
+detailed per-tool output to \texttt{verification/\_results/}.
 We invite skeptical readers to verify before reading further.
 
 \subsection{Virtual Numbers}
@@ -285,6 +308,19 @@ mathematical models. This is a naming choice, not a claim about
 foundations. The reader may substitute ``indexed'' throughout without
 loss of content.
 \end{definition}
+
+\begin{remark}[Why ``virtual'']
+More nothing will fit into a bigger thing than it would a smaller
+thing, even though it is still nothing. A swimming pool drained of
+water contains more ``nothing'' than a thimble. The index captures
+this: $\vz{5}$ represents the same mathematical zero as $\vz{1}$
+under the collapse operator ($\vz{5} \ceq 0 = \vz{1} \ceq 0$),
+but it is a zero with five times the capacity. In the NSA embedding
+(Section~\ref{sec:consistency}), $\vz{5} = 5\varepsilon_0$ is
+literally five times larger than $\vz{1} = \varepsilon_0$---still
+infinitesimal, but proportionally larger. These zeros are not the
+absence of quantity but the presence of an infinitesimal one.
+\end{remark}
 
 \begin{remark}
 The index domain is $\C \setminus \{0\}$, not $\C$. The excluded case
@@ -595,9 +631,10 @@ y\omega_0(x\varepsilon_0 - x^2\varepsilon_0^2/2 + \cdots) = xy +
 $\mathrm{st}(e^{xy + \text{inf.}}) = e^{xy}$. $\checkmark$
 
 All remaining axioms are verified analogously.
-The full verification is automated across five independent tool
-chains---Python, SymPy, Z3, Lean~4, and Wolfram---totaling 489
-checks with zero failures (Appendix~\ref{app:verification}).
+The full verification is automated across six independent tool
+chains---Python, SymPy, Z3, Lean~4, Wolfram, and a meta-verification
+layer---totaling 403 checks with zero failures
+(Appendix~\ref{app:verification}).
 The Lean~4 formalization provides a machine-checked consistency proof.
 \end{proof}
 
@@ -629,13 +666,18 @@ algebra, which has been studied since Robinson~\cite{robinson1966}.
 
 \subsection{Why This Is Still Valuable}
 
-The complex numbers are ``just'' $\R^2$ with the multiplication rule
-$(a,b)(c,d) = (ac-bd, ad+bc)$. No new mathematics was required to
-define them. Yet the notation $a + bi$ transformed mathematics---it
-made algebraic closure visible, enabled Euler's formula, and became
-indispensable in physics and engineering.
+The complex numbers are ``just'' $\R^2$ with Hamilton's multiplication
+rule $(a,b)(c,d) = (ac-bd, ad+bc)$. The ordered-pair construction
+preceded the $a + bi$ notation. Yet the notation transformed
+mathematics---it made algebraic closure visible, enabled Euler's
+formula, and became indispensable in physics and engineering. (We
+note a disanalogy: complex multiplication introduced field structure
+where $\R^2$ had only vector-space structure, whereas IVNA does not
+add algebraic structure beyond what the Laurent monomials already
+possess. The analogy is to the \emph{notational interface}, not to
+the algebraic enrichment.)
 
-IVNA's contribution is analogous. The indexed product rule
+IVNA's contribution is of a similar kind. The indexed product rule
 $\vz{x} \cdot \vi{y} = xy$ is not a new theorem. It is a new
 \emph{notation} that makes the provenance of zeros and infinities
 algebraically transparent. What this notation enables:
@@ -678,7 +720,11 @@ remaining virtual term. The computation for $x^n$ proceeds identically
 via the binomial theorem: only the $k=1$ term survives after dividing
 by $\vz{1}$, yielding $nx^{n-1}$. All higher-order terms produce
 virtual zeros that collapse. We have verified this computationally
-for $n = 2, 3, 4, 5$ at multiple evaluation points.
+for $n = 2, 3, 4, 5$ at multiple evaluation points. The verification
+exercises the full IVNA pipeline: \texttt{virtual\_taylor()} constructs
+the structured virtual sum, Axiom~\ref{ax:zzdiv} divides the leading
+term by $\vz{1}$ to extract the derivative, and each residual term is
+confirmed to be a higher-order virtual zero that collapses under $\ceq$.
 
 \subsection{Transcendental Derivatives via A-VT}
 
@@ -777,14 +823,32 @@ this becomes: $(1 + \vz{\text{rate}})^{\vi{\text{time}}} =
 e^{\text{rate} \times \text{time}}$. The indices carry the physical
 dimensions.
 
-Euler's formula extends naturally with complex indices:
+Euler's formula extends naturally with complex indices. Setting
+$xy = i\pi$ in A-EXP gives Euler's identity:
 \[
-e^{i\theta} = (1 + \vz{i})^{\vi{\theta}} = \cos\theta + i\sin\theta.
+(1 + \vz{i\pi})^{\vi{1}} = e^{i\pi} = -1.
+\]
+The most celebrated equation in mathematics is a single axiom
+application. The same scaling symmetry from the real case applies:
+any factorization of $i\pi$ into step $\times$ repetitions gives
+the same result:
+\[
+(1 + \vz{i})^{\vi{\pi}} = (1 + \vz{\pi})^{\vi{i}}
+= (1 + \vz{1})^{\vi{i\pi}} = -1.
+\]
+More generally, the entire unit circle is parameterized by varying
+the imaginary index on the infinity:
+\[
+(1 + \vz{1})^{\vi{i\theta}} = e^{i\theta}
+= \cos\theta + i\sin\theta.
 \]
 The zero index $i$ gives the step \emph{direction} (imaginary axis);
-the infinity index $\theta$ gives the \emph{angle}. Rotation is
-iterated infinitesimal translation---the Lie group/algebra relationship
-made algebraically transparent.
+the infinity index $\theta$ gives the \emph{angle}. Euler's formula
+is the statement that an infinitesimal rotation (index~$i$), repeated
+infinitely many times (index~$\theta$/step-size), traces a circle. The
+indices make the geometric content visible---rotation is iterated
+infinitesimal translation, the Lie group/algebra relationship made
+algebraically transparent.
 
 \subsection{Residues and Partial Fractions}
 
@@ -836,6 +900,242 @@ Cantor's equipollence; it supplements it with a proportional measure
 that distinguishes sets Cantor identifies. This is the same distinction
 made by Benci and Di~Nasso's numerosity theory~\cite{benci2003,benci2019},
 arrived at through different machinery.
+
+
+% ============================================================
+\section{The Product Rule Across Domains}
+\label{sec:crossdomain}
+% ============================================================
+
+The indexed product rule $\vz{x} \cdot \vi{y} = xy$
+(Axiom~\ref{ax:zi}) was introduced in Section~\ref{sec:core} as an
+algebraic rule for resolving $0 \cdot \infty$. In
+Section~\ref{sec:calculus}, it appeared as the mechanism behind
+derivatives, integration, residue extraction, and compound growth.
+
+A broader pattern emerges: across several independently developed
+branches of mathematics, the standard resolution of an indeterminate
+form reduces to the same operation---the product (or quotient) of
+indexed zeros and indexed infinities. The following table groups
+these by genuinely distinct mathematical territory.
+
+\begin{center}
+\begin{tabular}{lllll}
+\toprule
+\textbf{Territory} & \textbf{Instance} & \textbf{Standard form} & \textbf{IVNA form} & \textbf{Ref.} \\
+\midrule
+\textbf{Calculus}
+  & Derivatives       & $\lim \frac{f(x+h)-f(x)}{h}$ & $\frac{\vz{f'(x)}}{\vz{1}}$  & \S\ref{sec:calculus} \\
+  & Integration       & $\lim \sum f \Delta x$ & $\sum f \cdot \vz{1}$ over $\vi{1}$ & \S\ref{sec:calculus} \\
+  & Compound growth   & $\lim (1+1/n)^n$   & $(1+\vz{1})^{\vi{1}} = e$  & \S\ref{sec:calculus} \\
+  & Residues          & $\lim_{z\to a}(z\!-\!a)R(z)$  & $\vz{Q'(a)} \cdot \vi{P(a)/Q'(a)}$  & \S\ref{sec:calculus} \\
+  & Removable sing.   & $\lim_{x\to a} f/g$   & $\vz{f'(a)}/\vz{g'(a)}$  & \S\ref{subsec:removable} \\
+\midrule
+\textbf{Distributions}
+  & Dirac delta       & $\lim h \cdot (1/h)$   & $\vz{1} \cdot \vi{1} = 1$  & \S\ref{subsec:dirac} \\
+\midrule
+\textbf{Probability}
+  & Bayes / densities & $f(x,y)/f_X(x)$ & $\vz{f(x,y)}/\vz{f_X(x)}$   & \S\ref{subsec:bayes} \\
+\midrule
+\textbf{Alg.\ geometry}
+  & Blow-up           & Proper transform on $E$ & $(f_a, a)/(g_b, b)$  & \S\ref{subsec:blowup} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+This is a structural observation, not a claim of mathematical
+unification in the sense that group theory unified symmetries or
+complex numbers unified $\R^2$ arithmetic. Those unifications were
+\emph{generative}---they produced new theorems in their target
+domains. IVNA, by its own admission
+(Section~\ref{sec:limitations}), proves no new theorems in any
+individual domain. What we observe is that a single algebraic
+rule---one that falls out of the basic axioms with no additional
+machinery---recurs as the computational core of techniques
+developed independently across genuinely different branches of
+mathematics. The following subsections verify the less familiar
+instances.
+
+\subsection{Conditional Densities and Bayes' Theorem}
+\label{subsec:bayes}
+
+Let $X, Y$ be continuous random variables with joint density $f_{X,Y}$.
+The event $\{X = x\}$ has probability zero---specifically, IVNA
+probability $\vz{f_X(x)}$, where $f_X$ is the marginal density.
+Bayes' theorem for the conditional density follows from
+Axiom~\ref{ax:zzdiv} ($\vz{a}/\vz{b} = a/b$):
+\[
+f_{Y|X}(y \mid x) = \frac{P(X = x, Y = y)}{P(X = x)}
+= \frac{\vz{f_{X,Y}(x,y)}}{\vz{f_X(x)}}
+= \frac{f_{X,Y}(x,y)}{f_X(x)}.
+\]
+The density \emph{is} the index. No additional measure-theoretic
+machinery beyond what defines the density itself is required---no
+Radon--Nikodym theorem, no limiting argument---just the zero-zero
+quotient rule applied to indexed probabilities.
+
+This resolves the Borel--Kolmogorov paradox transparently. The
+``paradox'' arises when conditioning on the same geometric event
+(e.g., a great circle on $S^2$) using different parameterizations
+yields different conditional densities. In IVNA, different
+parameterizations produce different indexed zeros---$\vz{f_X(x)}$
+vs.\ $\vz{g_U(u)}$---and Axiom~\ref{ax:zzdiv} correctly produces
+different quotients. The result is not paradoxical; it is the expected
+consequence of dividing different indexed zeros.
+
+Verification: tested on bivariate normal ($\rho$ general),
+Gumbel bivariate exponential ($\theta = 0.5$), and bivariate
+Cauchy (no finite moments). All conditionals integrate to~1.
+The Cauchy case is the strongest test: a distribution with no
+mean or variance still produces correct conditional densities
+via Axiom~\ref{ax:zzdiv} (6 checks, 0 failures; see supplementary
+\texttt{verify-01-bayes-theorem.md}).
+
+The closest prior work is Jacobs~\cite{jacobs2021}, who uses
+infinitesimal ratios for conditional densities within a
+categorical probability framework. IVNA's contribution is the
+directness: Axiom~\ref{ax:zzdiv} \emph{is} Bayes' theorem, stated
+as a single axiom that was already present in the core algebra for
+independent reasons.
+
+\subsection{The Dirac Delta from the Product Rule}
+\label{subsec:dirac}
+
+The Dirac delta ``function'' $\delta(x)$ satisfies $\int \delta(x)\,dx = 1$
+and $\delta(x) = 0$ for $x \neq 0$. Distribution theory
+(Schwartz, 1950) formalizes this as a linear functional, not a function.
+
+In IVNA, $\delta$ is a function: at $x = 0$, it takes the value $\vi{1}$
+(infinite height), defined on a domain of width $\vz{1}$ (infinitesimal
+support). Its ``area'' is:
+\[
+\vi{1} \cdot \vz{1} = 1 \quad \text{(Axiom~\ref{ax:zi})}.
+\]
+The four standard properties follow algebraically:
+\begin{enumerate}
+\item \textbf{Normalization}: $\vi{1} \cdot \vz{1} = 1$. \checkmark
+\item \textbf{Sifting}: $f(0) \cdot \vi{1} \cdot \vz{1} = f(0)$. \checkmark
+\item \textbf{Scaling}: $\delta(ax)$ has height $\vi{1/a}$, width $\vz{a}$,
+  so $\vi{1/a} \cdot \vz{a} = 1/|a| \cdot a/a = 1/|a|$. \checkmark
+\item \textbf{Convolution}: index products of two deltas compose. \checkmark
+\end{enumerate}
+
+For any nascent delta family with height $h(\varepsilon)$ and width
+$w(\varepsilon)$, the product $h \cdot w = 1$ holds at every
+$\varepsilon > 0$---not just in the limit. Axiom~\ref{ax:zi}
+characterizes the \emph{entire family}, not its limit.
+
+Verification: 28 checks across rectangular, Gaussian, and Lorentzian
+nascent delta families (see supplementary
+\texttt{verify-03-dirac-delta.md}).
+
+The NSA treatment of delta functions dates to
+Robinson~\cite{robinson1966}; Todorov~\cite{todorov1990} and
+Vernaeve~\cite{vernaeve2025} develop this further. IVNA's
+contribution is that the single axiom~\ref{ax:zi} unifies all four
+properties, and the characterization is exact equality (not
+the ``infinitely close'' relation $\approx$ of NSA).
+
+\subsection{Removable Singularities as Index Cancellation}
+\label{subsec:removable}
+
+A removable singularity of $f(x)/g(x)$ at $x = a$ occurs when both
+$f$ and $g$ vanish at $a$ with the same order. In IVNA:
+\[
+\frac{f(a)}{g(a)} = \frac{\vz{f'(a)}}{\vz{g'(a)}} = \frac{f'(a)}{g'(a)}.
+\]
+The singularity ``removes itself'' by index cancellation
+(Axiom~\ref{ax:zzdiv}). No limit is computed; the value at the
+point is defined by the algebra.
+
+More generally, if $f$ vanishes to order $m$ and $g$ to order $n$ with
+$m = n$, the IVNA quotient $\vzn{m}{c_f}/\vzn{n}{c_g} = c_f/c_g$
+exits to a finite number. When $m > n$, the result is $\vz{c_f/c_g}$
+(the function has a zero). When $m < n$, the result is $\vi{c_f/c_g}$
+(a genuine pole). The order comparison determines the singularity type;
+the index carries the value.
+
+Verification: 24 checks across polynomial and trigonometric examples
+(see supplementary \texttt{verify-04-removable-singularities.md}).
+
+\subsection{The Blow-Up Correspondence}
+\label{subsec:blowup}
+
+In algebraic geometry, \emph{blow-ups} resolve indeterminacy at singular
+points by replacing a point with the projective space of approach
+directions (the exceptional divisor $E \cong \mathbb{P}^1$). The
+following theorem establishes a precise correspondence.
+
+\begin{theorem}[IVNA--Blow-Up Correspondence]
+\label{thm:blowup}
+Let $f, g$ be polynomials vanishing at the origin with orders $a, b$
+and leading homogeneous forms $f_a, g_b$. In the blow-up chart $y = tx$,
+the proper transform of $f/g$ restricts to $E$ as the rational function
+$f_a(1,t)/g_b(1,t)$. The IVNA quotient $\vzn{a}{f_a}/\vzn{b}{g_b}$
+produces the same data: index $f_a/g_b$ and grade $a - b$.
+\end{theorem}
+
+\begin{proof}
+\emph{Blow-up side.} Substituting $y = tx$ into $f$ factors out $x^a$;
+into $g$ factors out $x^b$. The proper transform $x^{b-a} f_a(1,t)/g_b(1,t)$
+restricts to $E$ (where $x = 0$) as $f_a(1,t)/g_b(1,t)$ when $a = b$,
+and vanishes or diverges along $E$ when $a \neq b$.
+
+\emph{IVNA side.} Under the $K^* \times \mathbb{Z}$ characterization,
+$(f_a, a) / (g_b, b) = (f_a/g_b,\, a - b)$. The grade $a - b$
+determines the virtual type (zero if positive, real if zero, infinity
+if negative); the index $f_a/g_b$ carries the resolved value.
+
+The $\mathbb{P}^1$ coordinate $t = y/x$ parametrizes both: the IVNA
+index at direction $t$ equals the blow-up proper transform evaluated at
+the corresponding point on $E$.
+\end{proof}
+
+\begin{example}
+For $f = xy$, $g = x^2 + y^2$ (both order 2): blow-up gives
+$t/(1+t^2)$ on $E$; IVNA gives $\vz{xy}/\vz{x^2+y^2} = xy/(x^2+y^2)$.
+At direction $t$, both evaluate to $t/(1+t^2)$.
+\end{example}
+
+The key distinction is structural: a blow-up produces a geometric
+object (the exceptional divisor) within scheme-theoretic framework;
+IVNA produces an algebraic element supporting further multiplication,
+division, and exponentiation. Blow-ups resolve singularities globally;
+IVNA provides arithmetic on singular values locally. Neither subsumes
+the other. Notably, IVNA's purely algebraic axioms apply over any
+field---including positive characteristic, where resolution of
+singularities in dimension $\geq 4$ remains open.
+
+No prior division-by-zero framework (meadows, wheels, transreal
+arithmetic, S-Extensions) has connected to blow-up theory; the
+correspondence appears to be new. Verification: 14 checks across
+polynomial and trigonometric examples (see supplementary
+\texttt{verify-08-blow-up.md}).
+
+\subsection{A Structural Remark}
+
+The observation that Axiom~\ref{ax:zi} ($\vz{x} \cdot \vi{y} = xy$)
+independently resolves indeterminate forms across nine domains can be
+understood algebraically: each domain's resolution mechanism is an
+independent embedding into IVNA's graded algebra $K^* \times \mathbb{Z}$,
+where the product rule serves as the universal resolution step. The
+index carries domain-specific information (derivative coefficients,
+probability densities, residues, blow-up coordinates), while the
+grade crossing from virtual to real ($+1 + (-1) = 0$) performs the
+resolution.
+
+A natural objection: $K^* \times \mathbb{Z}$ is one of the simplest
+algebraic structures, and \emph{any} domain involving quantities that
+vanish or diverge will have Laurent-like behavior at singularities.
+The cross-domain pattern may therefore reflect the structure of
+singularities in general rather than a deep connection between the
+specific domains listed. We acknowledge this. The observation's value
+is not that the pattern is surprising in retrospect, but that it
+was not previously articulated: no prior work collects these domain
+resolutions under a single named algebraic operation. Whether this
+articulation has deeper structural significance---a functorial
+relationship between domains, perhaps---is an open question for
+future work.
 
 
 % ============================================================
@@ -893,15 +1193,15 @@ algebraic.
 \label{sec:cs}
 % ============================================================
 
-\subsection{VEAMode}
+\subsection{VEA Mode}
 
 In IEEE~754 floating-point arithmetic~\cite{ieee754}, division by zero
 produces \texttt{Inf}, and \texttt{Inf * 0} produces \texttt{NaN}. Once
 a \texttt{NaN} appears, it propagates through every subsequent operation,
 silently corrupting the computation.
 
-IVNA suggests an alternative we call \textbf{VEA mode} (Virtual EXtended
-arithmetic). In VEA mode, \texttt{5.0 / 0.0} returns $\vi{5}$---an
+IVNA suggests an alternative we call \textbf{VEA mode} (Virtual Extended
+Arithmetic). In VEA mode, \texttt{5.0 / 0.0} returns $\vi{5}$---an
 indexed infinity that remembers its origin. Multiplying $\vi{5}$ by
 $\vz{1}$ recovers $5$. No information is lost.
 
@@ -1021,54 +1321,11 @@ Bergstra's survey~\cite{bergstra2019} of the design space.
 Wenmackers~\cite{wenmackers2024} provides a philosophical comparison
 of methods for comparing infinite quantities.
 
-In algebraic geometry, \emph{blow-ups} resolve indeterminacy at singular
-points by replacing a point with the projective space of approach
-directions (the exceptional divisor $E \cong \mathbb{P}^1$). The
-following theorem establishes a precise correspondence.
-
-\begin{theorem}[IVNA--Blow-Up Correspondence]
-\label{thm:blowup}
-Let $f, g$ be polynomials vanishing at the origin with orders $a, b$
-and leading homogeneous forms $f_a, g_b$. In the blow-up chart $y = tx$,
-the proper transform of $f/g$ restricts to $E$ as the rational function
-$f_a(1,t)/g_b(1,t)$. The IVNA quotient $\vzn{a}{f_a}/\vzn{b}{g_b}$
-produces the same data: index $f_a/g_b$ and grade $a - b$.
-\end{theorem}
-
-\begin{proof}
-\emph{Blow-up side.} Substituting $y = tx$ into $f$ factors out $x^a$;
-into $g$ factors out $x^b$. The proper transform $x^{b-a} f_a(1,t)/g_b(1,t)$
-restricts to $E$ (where $x = 0$) as $f_a(1,t)/g_b(1,t)$ when $a = b$,
-and vanishes or diverges along $E$ when $a \neq b$.
-
-\emph{IVNA side.} Under the $K^* \times \mathbb{Z}$ characterization,
-$(f_a, a) / (g_b, b) = (f_a/g_b,\, a - b)$. The grade $a - b$
-determines the virtual type (zero if positive, real if zero, infinity
-if negative); the index $f_a/g_b$ carries the resolved value.
-
-The $\mathbb{P}^1$ coordinate $t = y/x$ parametrizes both: the IVNA
-index at direction $t$ equals the blow-up proper transform evaluated at
-the corresponding point on $E$.
-\end{proof}
-
-\begin{example}
-For $f = xy$, $g = x^2 + y^2$ (both order 2): blow-up gives
-$t/(1+t^2)$ on $E$; IVNA gives $\vz{xy}/\vz{x^2+y^2} = xy/(x^2+y^2)$.
-At direction $t$, both evaluate to $t/(1+t^2)$.
-\end{example}
-
-The key distinction is structural: a blow-up produces a geometric
-object (the exceptional divisor) within scheme-theoretic framework;
-IVNA produces an algebraic element supporting further multiplication,
-division, and exponentiation. Blow-ups resolve singularities globally;
-IVNA provides arithmetic on singular values locally. Neither subsumes
-the other. Notably, IVNA's purely algebraic axioms apply over any
-field---including positive characteristic, where resolution of
-singularities in dimension $\geq 4$ remains open.
-
-No prior division-by-zero framework (meadows, wheels, transreal
-arithmetic, S-Extensions) has connected to blow-up theory; the
-correspondence appears to be new.
+The IVNA--Blow-Up Correspondence (Theorem~\ref{thm:blowup} in
+Section~\ref{subsec:blowup}) establishes a precise connection
+between IVNA's index arithmetic and blow-up resolution in algebraic
+geometry. No prior division-by-zero framework has made this
+connection.
 
 \subsection{Comparison}
 
@@ -1099,15 +1356,43 @@ The indexed product rule $\vz{x} \cdot \vi{y} = xy$ has no exact
 precedent. In NSA, $\varepsilon \cdot \omega$ is indeterminate without
 specifying which pair. In wheel algebra, $0 \cdot \infty = \bot$.
 IVNA's rule is a general algebraic law over a continuously parameterized
-index space. A search of arXiv, Semantic Scholar, and the general web
-confirmed that the terms ``indexed zeros'' and ``indexed infinities''
-together return zero results in the academic literature.
+index space. A systematic search of arXiv, Semantic Scholar, Google
+Scholar, and the general web (approximately 125 targeted queries across
+six claim streams) confirmed that the terms ``indexed zeros'' and
+``indexed infinities'' together return zero results in the academic
+literature.
 
-The closest prior work is Santangelo's S-Extension~\cite{santangelo2016},
-which proposes unique elements per numerator in division by zero.
-The S-Extension establishes the structural intuition but provides
-no arithmetic, no consistency proof, and no applications. IVNA provides
-all three.
+Of the new results presented in this paper, two appear to be fully
+novel: the IVNA--Blow-Up Correspondence (Theorem~\ref{thm:blowup})
+and the cross-domain structural observation
+(Section~\ref{sec:crossdomain}). No prior division-by-zero framework
+has connected to blow-up theory, and no prior work has identified the
+same algebraic operation recurring across nine domains.
+
+Four results are partially anticipated by prior work but with
+meaningful IVNA-specific differentiation:
+the probability/Bayes connection (cf.\ Jacobs~\cite{jacobs2021}),
+the Dirac delta treatment (cf.\ Todorov~\cite{todorov1990},
+Vernaeve~\cite{vernaeve2025}),
+the infinity subtraction / renormalization connection
+(cf.\ Albeverio et al.~\cite{albeverio1986}),
+and the $K^* \times \mathbb{Z}$ algebraic characterization
+(cf.\ Santangelo~\cite{santangelo2016}).
+In each case, IVNA's contribution is the directness and algebraic
+operability of the result, not the underlying mathematical fact.
+
+The closest prior work remains Santangelo's
+S-Extension~\cite{santangelo2016}, which proposes unique elements per
+numerator in division by zero. The S-Extension establishes the
+structural intuition but provides no arithmetic, no consistency proof,
+and no applications. IVNA provides all three.
+Fereydoni~\cite{fereydoni2025} independently introduces stratified
+infinities $\{\infty_k\}$ via fixed-point iteration on a compactified
+metric space, with notation superficially similar to IVNA's
+$\vi{x}$; however, Fereydoni's indices encode algebraic hierarchy
+(iterated fixed points), not the zero or blow-up that produced the
+infinity, and no product rule or cross-domain applications are
+developed.
 
 \subsection{Addressing Potential Criticisms}
 
@@ -1158,9 +1443,27 @@ We anticipate five objections:
 
 \item \textbf{Foundational claims.} None. IVNA is consistent relative
   to ZFC+AC, not a foundation for mathematics.
+
+\item \textbf{Sub-first-order infinities.} IVNA's indexed infinities
+  $\vi{x} = x/\varepsilon_0$ are first-order (linear in
+  $1/\varepsilon_0$). The harmonic series $H_n \sim \ln n + \gamma$
+  diverges to an infinity of \emph{lower} order than any $\vi{x}$:
+  $\ln(1/\varepsilon_0)$ grows slower than $x/\varepsilon_0$ for any
+  $x > 0$. IVNA's current notation does not parameterize logarithmic
+  or sub-logarithmic infinities. This precisely delineates the
+  scope of the indexed notation.
+
+\item \textbf{Restatements vs.\ new results.} Several results in
+  Section~\ref{sec:crossdomain} are IVNA restatements of facts
+  known from standard analysis or NSA. The Dirac delta properties
+  follow from NSA (Robinson, 1966); the conditional density
+  formula is Bayes' theorem in different notation. What IVNA adds
+  in each case is directness and algebraic operability, not the
+  underlying mathematical fact. We state this explicitly because
+  honest positioning is more valuable than overclaiming.
 \end{enumerate}
 
-\subsection{The Isomorphism Question}
+\subsection{Is IVNA ``Just Notation''?}
 
 IVNA is isomorphic to Laurent monomials in a reference infinitesimal.
 Is it ``just notation''?
@@ -1177,6 +1480,65 @@ consequences---accessible to anyone who can multiply.
 
 
 % ============================================================
+\section{Research Methodology}
+\label{sec:methodology}
+% ============================================================
+
+The development of IVNA employed a structured AI-assisted research
+methodology that may be of independent interest.
+
+\textbf{Generate--Verify--Revise (GVR) loop.} Every mathematical
+claim was first generated from theoretical reasoning, then verified
+by at least two independent computational tools (drawn from Python,
+SymPy, Z3, Lean~4, and Wolfram Mathematica), and revised if
+verification failed. This protocol, inspired by the Aletheia
+architecture~\cite{feng2026aletheia}, enforces falsifiability at the
+point of creation rather than after publication.
+
+\textbf{Adversarial debate.} Key thesis claims were stress-tested
+via structured adversarial analysis: independent AI agents assigned
+PRO and CON positions argued from the paper's source text, with a
+neutral agent synthesizing. Across four debates, this process was
+not merely verificatory but \emph{generative}. The first debate
+(March 2026) identified blow-up theory as a comparator that IVNA
+had not engaged; the resulting research produced the IVNA--Blow-Up
+Correspondence (Theorem~\ref{thm:blowup}), the paper's most novel
+result. A subsequent debate discovered that the cross-domain
+observation existed only in supplementary research documents and
+had not been incorporated into the paper, directly precipitating
+Section~\ref{sec:crossdomain}. A final debate calibrated the
+framing from ``unification'' to ``structural observation''---a
+distinction this section's careful hedging reflects. Each debate
+exposed a specific gap; closing that gap produced the next real
+finding.
+
+\textbf{Multi-tool cross-verification.} High-priority claims (the
+Bayes/Axiom~\ref{ax:zzdiv} identification, the Borel--Kolmogorov
+dissolution, the Dirac delta properties) were verified with three
+independent tool chains rather than two. Tool disagreement triggers
+investigation, not averaging.
+
+\textbf{Meta-verification.} A post-completion audit revealed that the
+original verification suite conflated IVNA-native checks (exercising the
+\texttt{Virtual} class) with classical computations narrated in IVNA
+notation. The suite was rebuilt with three explicit categories:
+Category~A (IVNA-native, using the axiom implementation), Category~B
+(NSA embedding consistency via SymPy), and Category~C (classical
+correspondence, honestly labeled). A meta-verification layer checks
+that the suite itself is structurally sound---catching tautological
+assertions, circular passthrough functions, and category violations.
+This ``meta-GVR'' step---verifying that verification tests what it
+claims to test---is itself a methodological finding: automated
+verification can produce false confidence when tests exercise notation
+rather than the target algebra.
+
+The complete methodology, including all agent transcripts, debate
+records, and verification logs, is available in the supplementary
+repository. A detailed case study of the AI-assisted research
+process is in preparation as a companion document.
+
+
+% ============================================================
 \section{Conclusion}
 \label{sec:conclusion}
 % ============================================================
@@ -1187,7 +1549,17 @@ Indexed Virtual Number Algebra is a consistent, computationally verified,
 and formally proven algebraic framework for zeros and infinities. Its
 central rule---$\vz{x} \cdot \vi{y} = xy$---resolves indeterminate forms
 by preserving index information through operations. Consistency is proven
-via NSA embedding, with 489 automated checks and Lean~4 formalization.
+via NSA embedding, with 403 automated checks across six independent
+tool chains and Lean~4 formalization, with zero failures.
+
+The same product rule that defines IVNA's core algebra recurs as the
+resolution mechanism across calculus, distribution theory, probability,
+and algebraic geometry (Section~\ref{sec:crossdomain}). This structural
+observation---verified but not yet fully explained---suggests that the
+indexed product rule captures something about how mathematics resolves
+singularities, though whether this reflects deep structure or the
+inherent simplicity of $K^* \times \mathbb{Z}$ remains an open
+question.
 
 IVNA is not new foundational mathematics. It is a structured interface to
 Non-Standard Analysis, analogous to $a + bi$ for $\R^2$. Its value is in
@@ -1215,6 +1587,20 @@ between zero and infinity.
   algebraic invariance property---defined at the point, not via limits---is
   a candidate for a formal theorem connecting IVNA's index algebra to
   classical singularity classification.
+\item \textbf{Measure-theoretic formalization}: rigorously establish
+  the connection between IVNA's indexed zero probabilities and the
+  Radon--Nikodym derivative, and determine whether the
+  Borel--Kolmogorov dissolution (Section~\ref{subsec:bayes}) holds
+  under weaker regularity conditions than joint density existence.
+\item \textbf{Sub-first-order infinities}: extend the indexed
+  notation to parameterize logarithmic and iterated-logarithmic
+  infinities, which arise in the harmonic series
+  (Section~\ref{sec:limitations}) and asymptotic analysis.
+\item \textbf{Functorial structure}: investigate whether the
+  cross-domain pattern of Section~\ref{sec:crossdomain} admits
+  a categorical formalization---specifically, whether the index
+  map defines a functor between suitable categories of singular
+  expressions and $K^* \times \mathbb{Z}$.
 \end{enumerate}
 
 \subsection{The Vision}
@@ -1349,6 +1735,36 @@ K.~Kavukcuoglu, Q.~V.~Le, and T.~Luong,
 ``Towards autonomous mathematics research,''
 arXiv:2602.10177, 2026.
 
+% === Phase 4 additions ===
+
+\bibitem{jacobs2021}
+B.~Jacobs, ``Multinomial and hypergeometric distributions in Markov
+categories,'' in \emph{Proceedings of POPL 2021},
+arXiv:2101.03391.
+
+\bibitem{todorov1990}
+T.~D.~Todorov, ``An existence result for a class of partial differential
+equations with smooth coefficients,'' \emph{Proceedings of the AMS},
+vol.~109, no.~1, pp.~1--10, 1990.
+
+\bibitem{vernaeve2025}
+H.~Vernaeve, ``Nonstandard analysis and the theory of distributions,''
+arXiv:2510.16484, 2025.
+
+\bibitem{albeverio1986}
+S.~Albeverio, J.~E.~Fenstad, R.~H\o egh-Krohn, and T.~Lindstr\o m,
+\emph{Nonstandard Methods in Stochastic Analysis and Mathematical Physics},
+Academic Press, 1986.
+
+\bibitem{meyenburg2025}
+J.~Meyenburg, ``On indexed zeros and infinities,''
+\emph{International Journal of Mathematics Trends and Technology},
+vol.~71, 2025.
+
+\bibitem{fereydoni2025}
+M.~Fereydoni, ``Algebraic fixed-point stratification of infinities,''
+ResearchGate preprint, 2025.
+
 \end{thebibliography}
 
 
@@ -1360,33 +1776,40 @@ arXiv:2602.10177, 2026.
 
 Every mathematical claim in this paper has been verified by at least
 one computational tool. The full verification suite is available in
-the supplementary repository. We summarize the results here so that
-reviewers can assess the scope and depth of testing.
+the supplementary repository at \texttt{verification/}, with detailed
+per-tool outputs saved in \texttt{verification/\_results/}. To
+reproduce: \texttt{python3 verification/run\_all.py}.
 
-\subsection{Verification Layers}
+\subsection{Verification Categories}
+
+An internal audit of the original verification suite (April 2026)
+revealed that some checks tested classical mathematics rather than
+IVNA's axiom system. The suite was rebuilt with honest categorization:
 
 \begin{table}[h]
 \centering
 \begin{tabular}{llrl}
 \toprule
-\textbf{Layer} & \textbf{Tool} & \textbf{Checks} & \textbf{Result} \\
+\textbf{Category} & \textbf{Tool} & \textbf{Checks} & \textbf{Result} \\
 \midrule
-Core axiom tests     & Python (ivna.py)          & 28  & 28/28 pass \\
-NSA embedding        & SymPy symbolic            & 37  & 37/37 pass \\
-Axiom satisfiability & Z3 SMT solver             & 11  & 11/11 pass \\
-Formal proofs        & Lean 4.16                 & 23  & Compiles \\
-Calculus suite       & SymPy                     & 115 & 115/115 pass \\
-Comprehensive        & SymPy + Z3                & 148 & 145/0/3\textsuperscript{*} \\
-SymPy MCP            & sympy-mcp (40+ tools)     & 69  & 69/69 pass \\
-Z3 MCP               & mcp-solver                & 31  & 31/31 pass \\
-Wolfram MCP          & Wolfram Language           & 27  & 27/27 pass \\
+A: IVNA-native       & Python (ivna.py)          & 185 & 185/185 pass \\
+A: Core unit tests   & Python (ivna.py)          & 30  & 30/30 pass \\
+B: NSA embedding     & SymPy symbolic            & 70  & 70/70 pass \\
+C: Classical corresp. & SymPy                    & 93  & 93/93 pass \\
+Z3 axiom encoding    & Z3 SMT solver             & 13  & 13/13 pass \\
+Wolfram cross-verif. & Wolfram Engine            & 42  & 42/42 pass \\
+Formal proofs        & Lean 4.16                 & 23  & Compiles (0 sorry) \\
+Meta-verification    & Python                    & 18  & 18/18 pass \\
 \midrule
-\textbf{Total}       & \textbf{5 independent chains} & \textbf{489} & \textbf{0 failures} \\
+\textbf{Total}       & \textbf{6 independent chains} & \textbf{403+Lean} & \textbf{0 failures} \\
 \bottomrule
 \end{tabular}
-\caption{Verification summary. \textsuperscript{*}3 warnings are framing
-recommendations (divergent series~\cite{tao2010}, residues, nonlinear ODEs),
-not mathematical errors.}
+\caption{Verification summary by category. Category~A checks exercise
+IVNA's \texttt{Virtual} class directly. Category~B proves axiom
+consistency under the NSA embedding. Category~C confirms that IVNA
+notation maps correctly onto classical results (honest framing---these
+are correspondence checks, not independent derivations).
+Meta-verification confirms the suite itself is structurally sound.}
 \label{tab:verification}
 \end{table}
 
@@ -1426,24 +1849,28 @@ To verify: install Lean~4.16+ via \texttt{elan}, then run
 \texttt{cd lean-ivna \&\& lake build}. Build completes in approximately
 10 seconds with zero errors.
 
-\subsection{Z3 Independence Result}
+\subsection{Z3 Axiom Encoding}
 
-The Z3 satisfiability checker confirmed that all 11 core axioms are
-\emph{independent}: no axiom is derivable from the remaining 10.
-Additionally, the roundtrip property
-$(\text{real}(y) / \vz{x}) \cdot \vz{x} = y$ was shown to be a
-\emph{joint theorem} of Axioms~\ref{ax:zi} and~\ref{ax:divzero}---it
-follows from these two axioms alone, without needing the others.
+The Z3 SMT solver encodes IVNA's index arithmetic in first-order
+real arithmetic and verifies satisfiability, roundtrip properties,
+and axiom independence (13 checks total). Notable findings:
 
-The rejected variant $\vz{1} \cdot \vi{1} = 2\pi$ (proposed in an
-earlier draft) was confirmed UNSAT when combined with
-Axiom~\ref{ax:zi}, providing machine-checked proof that this alternative
-is incompatible with the core algebra.
+\begin{itemize}
+\item The roundtrip $(y / \vz{x}) \cdot \vz{x} = y$ is a tautology
+  of real arithmetic under the NSA embedding (negation is UNSAT).
+\item The product rule constant must be 1: enforcing
+  $c \cdot xy = xy$ with $c \neq 1$ is UNSAT.
+\item D-INDEX-ZERO ($\vz{x} - \vz{x} = 0$) is \emph{derivable}
+  from Axiom~\ref{ax:zadd} and the embedding ($0 \cdot \varepsilon = 0$),
+  and is therefore a convenience axiom rather than an independent postulate.
+\item The rejected variant $\vz{1} \cdot \vi{1} = 2\pi$ is UNSAT
+  when combined with Axiom~\ref{ax:zi}.
+\end{itemize}
 
 \subsection{Python Test Suite}
 
 The Python implementation (\texttt{code/ivna.py}) serves as a reference
-implementation and test harness. The 28 core tests cover:
+implementation and test harness. The 30 core tests cover:
 
 \begin{itemize}
 \item All 11 axioms with multiple index values (including negative,
@@ -1455,41 +1882,55 @@ implementation and test harness. The 28 core tests cover:
 \item The D-INDEX-ZERO rule (index cancellation exits to real~0)
 \item Derivatives of $x^n$ for $n = 2, 3, 4, 5$ at multiple evaluation points
 \item Transcendental derivatives: $\sin$, $\cos$, $e^x$, $\ln$, $1/x$
+  (each exercising the A-VT $\to$ A8 pipeline, not a passthrough)
+\item Derivative machinery verification: confirms \texttt{ivna\_derivative()}
+  calls \texttt{virtual\_taylor()}, divides via Axiom~\ref{ax:zzdiv}, and
+  produces residuals that are higher-order virtual zeros
 \item The exponential axiom: $(1 + \vz{x})^{\vi{y}} = e^{xy}$ for
   6 index pairs
 \end{itemize}
 
 \noindent
 To run: \texttt{python3 code/ivna.py}. Expected output:
-\texttt{28 passed, 0 failed}.
+\texttt{30 passed, 0 failed}.
 
-\subsection{SymPy Symbolic Verification}
+\subsection{SymPy Verification}
 
-Three independent SymPy verification layers test overlapping but distinct
-properties:
+Two SymPy-based verification files cover distinct purposes:
 
 \begin{itemize}
-\item \textbf{NSA embedding} (37 checks, \texttt{verify\_nsa\_embedding.py}):
-  verifies that each IVNA axiom holds under the hyperreal mapping
-  $\vz{x} = x\varepsilon_0$, $\vi{x} = x/\varepsilon_0$, using symbolic
-  simplification to confirm equality.
-\item \textbf{Calculus suite} (115 checks, \texttt{verify-calculus.py}):
-  step-by-step verification of IVNA derivatives (polynomial, rational,
-  trigonometric, exponential, logarithmic), the Fundamental Theorem of
-  Calculus in both directions, power series convergence, and the exponential
-  axiom.
-\item \textbf{SymPy MCP} (69 checks, \texttt{verify-ivna-sympy-comprehensive.py}):
-  an independent re-verification using SymPy's \texttt{sympy-mcp} tooling,
-  covering all 11 core axioms, D-INDEX-ZERO, A-EXP (four derivation methods),
-  A-VT for four transcendental functions, seven IVNA derivatives, FTC via
-  Riemann sums, L'H\^opital elimination, and NSA consistency.
+\item \textbf{Category B: NSA embedding} (70 checks,
+  \texttt{cat\_b\_nsa\_embedding.py}): verifies all axioms A1--A11,
+  D-INDEX-ZERO, A-EXP, negation, and higher-order virtual behavior
+  (orders 2--4) under the hyperreal mapping $\vz{x} = x\varepsilon_0$,
+  $\vi{x} = x/\varepsilon_0$.
+\item \textbf{Category C: Classical correspondence} (93 checks,
+  \texttt{cat\_c\_classical\_correspondence.py}): confirms that IVNA
+  notation maps correctly onto known results across nine domains (Bayes,
+  Borel--Kolmogorov, Dirac delta, removable singularities, infinity
+  subtraction, residues, compound growth, blow-ups, KL divergence).
+  These are honestly labeled as correspondence checks---they verify
+  notation, not independent derivation.
 \end{itemize}
 
-\subsection{Wolfram Verification}
+\subsection{Wolfram Cross-Verification}
 
-The Wolfram Language verification (27 checks) independently confirmed
-derivative computations, the Fundamental Theorem of Calculus, and
-the exponential axiom using step-by-step symbolic derivation---a
-different symbolic engine from SymPy, providing cross-tool validation.
+The Wolfram Engine verification (42 checks,
+\texttt{wolfram\_crosscheck.py}) independently confirms all core
+axioms, roundtrip properties, the exponential axiom, five derivative
+classes, higher-order embedding behavior, and classical correspondence
+results (limits, residues, Dirac delta)---using a different symbolic
+engine from SymPy.
+
+\subsection{Meta-Verification}
+
+The meta-verification layer (18 checks, \texttt{meta\_verify.py})
+checks the verification suite itself: that Category~A files import
+\texttt{ivna.py} (actually test the system), that Category~C files
+do not (honest about being classical), that no assertions are
+tautological, that Z3 contains no trivial checks, and that
+\texttt{ivna\_derivative()} exercises the A-VT pipeline rather than
+being a passthrough. This layer runs first---if it fails, the
+remaining results are not trusted.
 
 \end{document}

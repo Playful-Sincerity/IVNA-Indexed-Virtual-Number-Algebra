@@ -31,17 +31,17 @@ For the full 489-check verification suite (requires SymPy, Z3, and Wolfram acces
 
 ```bash
 # SymPy symbolic verification — NSA embedding (37 checks) + comprehensive (69 checks)
-pip install sympy && python3 code/verify_nsa_embedding.py
-python3 code/verify-ivna-sympy-comprehensive.py
+pip install sympy && python3 code/verify/verify-nsa-embedding.py
+python3 code/verify/verify-sympy-comprehensive.py
 
 # Z3 satisfiability — axiom consistency (31 checks)
-pip install z3-solver && python3 code/verify_z3_comprehensive.py
+pip install z3-solver && python3 code/verify/verify-z3-comprehensive.py
 
 # Calculus suite — derivatives, integrals, FTC (115 checks)
-python3 code/verify-calculus.py
+python3 code/verify/verify-calculus.py
 
 # Comprehensive — extended algebraic checks (148 checks)
-python3 code/verify-comprehensive.py
+python3 code/verify/verify-comprehensive.py
 ```
 
 A successful `lake build` means every proof has been machine-checked. A successful `python3 code/ivna.py` runs the core algebraic test suite. The additional verification scripts reproduce the full 489-check result reported in the paper.
@@ -61,15 +61,18 @@ A successful `lake build` means every proof has been machine-checked. A successf
 │
 ├── code/
 │   ├── ivna.py                 # Core implementation + 28 tests
-│   ├── verify_nsa_embedding.py # NSA embedding verification (37 SymPy + 11 Z3)
-│   ├── verify-comprehensive.py # Extended verification suite
-│   └── ...                     # Additional verification scripts and demos
+│   ├── verify/                 # All verification scripts
+│   ├── demos/                  # Demo scripts + outputs
+│   └── vea-web/                # Interactive VEA calculator demo
 │
-├── vex-web/
-│   └── index.html              # Interactive VEA calculator demo
+├── research/
+│   ├── findings/               # Research findings and exploration results
+│   ├── verification/           # Verification logs and outputs
+│   └── writing/                # Style guide and writing aids
 │
-└── research/
-    └── findings/               # Verification logs and exploration results
+├── phases/                     # Phase plans (1-5)
+├── debates/                    # Adversarial analysis transcripts
+└── distribution/               # Outreach and publication materials
 ```
 
 ## Core Idea
@@ -122,7 +125,7 @@ The paper's claims are verified across five independent tool chains totaling **4
 
 ## Interactive Demo
 
-Open `vex-web/index.html` in a browser for a live VEA (Virtual Expression Arithmetic) calculator. Type expressions like `5/0` and see IVNA in action.
+Open `code/vea-web/index.html` in a browser for a live VEA (Virtual Expression Arithmetic) calculator. Type expressions like `5/0` and see IVNA in action.
 
 ## Author
 

@@ -1,0 +1,28 @@
+# Borel-Kolmogorov dissolution
+# Run: 2026-04-01T23:11:54.710449
+# Exit code: 0
+
+============================================================
+VERIFY-02: Borel-Kolmogorov paradox dissolution
+============================================================
+
+--- Param 1: (theta, phi), theta in [0,pi], phi in [0,2pi) ---
+  Marginal f(phi): 1/(2*pi)
+  [PASS] Param1: marginal = 1/(2pi)
+  Conditional f(theta|phi): sin(theta)/2
+  [PASS] Param1: conditional integrates to 1
+  [PASS] Param1: conditional = sin(theta)/2
+
+--- Param 2: (u=cos(theta), phi), u in [-1,1] ---
+  Marginal f(phi): 1/(2*pi)
+  [PASS] Param2: marginal = 1/(2pi)
+  Conditional f(u|phi): 1/2
+  [PASS] Param2: conditional integrates to 1
+  [PASS] Param2: conditional = 1/2
+
+--- Paradox check ---
+  [PASS] Different conditionals: sin(theta)/2 != 1/2
+
+============================================================
+RESULT: 7/7 checks passed
+VERDICT: PASS

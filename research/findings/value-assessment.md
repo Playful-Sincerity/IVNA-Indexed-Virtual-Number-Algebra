@@ -71,7 +71,7 @@ satisfies ALL core IVNA axioms (A1-A7) algebraically. Every axiom, when translat
 
 **3. The =; collapse operator extending to infinities.** NSA's standard part function st() is defined only for finite hyperreals. IVNA's =; collapses both zeros (0_x =; 0) and infinities (inf_x =; inf), providing a uniform "de-indexing" operation across the entire virtual number system.
 
-**4. The VEX concept (Virtual Extended arithmetic).** No existing framework proposes replacing calculator "ERROR" outputs with indexed infinities that can continue participating in arithmetic. This is an interface/engineering contribution, not a mathematical one, but it is novel.
+**4. The VEA concept (Virtual Extended arithmetic).** No existing framework proposes replacing calculator "ERROR" outputs with indexed infinities that can continue participating in arithmetic. This is an interface/engineering contribution, not a mathematical one, but it is novel.
 
 ### What is NOT novel
 
@@ -103,7 +103,7 @@ IVNA occupies a similar position relative to NSA. The mathematical content (Laur
 
 ### Where IVNA adds genuine value
 
-**1. Calculator paradigm shift (VEX mode).** (Value: HIGH)
+**1. Calculator paradigm shift (VEA mode).** (Value: HIGH)
 
 Current state: Every calculator, programming language, and spreadsheet outputs "ERROR" or "NaN" for 1/0. The information about what was divided is lost. If the result is used in further computation, the entire chain fails.
 
@@ -132,7 +132,7 @@ This is not new physics --- singularity classification exists --- but the notati
 
 **4. Computer arithmetic (IEEE 754 extension).** (Value: MODERATE to HIGH)
 
-An IVNA-extended floating-point format (VEX mode) could eliminate approximately 80% of NaN results in IEEE 754 arithmetic. The remaining NaN cases are genuine information-loss scenarios (0_0, or mixing indices from unrelated computations). This has potential value for:
+An IVNA-extended floating-point format (VEA mode) could eliminate approximately 80% of NaN results in IEEE 754 arithmetic. The remaining NaN cases are genuine information-loss scenarios (0_0, or mixing indices from unrelated computations). This has potential value for:
 - Scientific computing (singularity handling in numerical simulations)
 - Error propagation (indexed infinities propagate more information than NaN)
 - Symbolic-numeric hybrid computation
@@ -156,7 +156,7 @@ An IVNA-extended floating-point format (VEX mode) could eliminate approximately 
 
 | Application Domain | Specific Application | Value Level | Requires New Development? |
 |---|---|---|---|
-| **Computer Science** | VEX calculator / library | HIGH | No (implementable now) |
+| **Computer Science** | VEA calculator / library | HIGH | No (implementable now) |
 | **Education** | L'Hopital elimination | HIGH | No (examples ready) |
 | **Education** | Limit-free derivatives | HIGH | No (confirmed for polynomials + transcendentals via A-VT) |
 | **Computer Science** | IEEE 754 extension | MODERATE-HIGH | Some (format design, standardization) |
@@ -211,7 +211,7 @@ Based on all findings, here is the recommended structure for a revised IVNA pape
 
 7. **Physics applications section.** Coulomb singularity, black hole singularity classification, renormalization notation. Honestly assessed. (See `applications-physics.md`, Part 1.)
 
-8. **VEX mode section.** Calculator / computer arithmetic application. The tangible "product" of IVNA.
+8. **VEA mode section.** Calculator / computer arithmetic application. The tangible "product" of IVNA.
 
 9. **Literature positioning section.** Comparison table against NSA, grossone, numerosity, wheel algebra, surreals, SIA/SDG. Honest about overlap, clear about genuine novelty (indexed product rule). (Based on `plan-section-literature.md`.)
 
@@ -262,7 +262,7 @@ Based on all findings, here is the recommended structure for a revised IVNA pape
    6.3 Renormalization notation (honest assessment)
 
 7. Applications: Computer Science
-   7.1 VEX mode: calculators without ERROR
+   7.1 VEA mode: calculators without ERROR
    7.2 IEEE 754 extension concept
    7.3 Programming language integration
 
@@ -280,7 +280,7 @@ Based on all findings, here is the recommended structure for a revised IVNA pape
 
 10. Conclusion and Future Work
     10.1 Assessment: consistent, accessible, useful in specific domains
-    10.2 Future: Lean4 formalization, VEX implementation, integration development
+    10.2 Future: Lean4 formalization, VEA implementation, integration development
     10.3 The vision: indexed infinities as a standard tool
 ```
 
@@ -294,7 +294,7 @@ The paper should be submitted to a journal or venue that values:
 Possible venues:
 - *The American Mathematical Monthly* (pedagogical audience, appreciates accessible exposition)
 - *Journal of Mathematical Analysis and Applications* (if the applications section is strong enough)
-- *Mathematics of Computation* (if the IEEE 754 / VEX angle is developed)
+- *Mathematics of Computation* (if the IEEE 754 / VEA angle is developed)
 - *The Mathematical Intelligencer* (for a more informal, ideas-oriented presentation)
 - ArXiv preprint (math.GM or cs.NA) for community feedback before journal submission
 
@@ -308,7 +308,7 @@ The paper should NOT be submitted to:
 
 ### Should IVNA be formalized in Lean 4?
 
-**Verdict: Worth doing, but not urgent. Prioritize the paper and VEX prototype first.**
+**Verdict: Worth doing, but not urgent. Prioritize the paper and VEA prototype first.**
 
 ### What formalization would look like
 
@@ -363,13 +363,13 @@ Formalize the key results:
 | NSA embedding instance | MEDIUM | Requires Mathlib hyperreals, which exist but are technical |
 | A-VT formalization | HIGH | Taylor series in Lean requires convergence proofs |
 | L'Hopital examples | MEDIUM-HIGH | Each example needs a separate formal proof |
-| VEX float formalization | LOW | Just a data type + operations |
+| VEA float formalization | LOW | Just a data type + operations |
 
 ### Recommendation
 
 **Now (before paper submission):**
 - Do NOT formalize. The effort-to-value ratio is too high for the current stage.
-- Focus on: writing the paper, implementing VEX prototype, running the remaining computational tests.
+- Focus on: writing the paper, implementing VEA prototype, running the remaining computational tests.
 
 **After paper feedback (3-6 months):**
 - If the paper is well-received and reviewers ask for rigor, formalize Phase 1 (core axioms) and Phase 2 (NSA embedding).
@@ -390,7 +390,7 @@ The right framing: **IVNA is to NSA what a+bi is to R^2** --- a notational inter
 
 The recommended path forward:
 1. **Write the revised paper** using the outline in Section 4 above.
-2. **Build the VEX prototype** (Python library implementing IVNA arithmetic).
+2. **Build the VEA prototype** (Python library implementing IVNA arithmetic).
 3. **Submit to an appropriate venue** (Monthly, Math Intelligencer, or arXiv).
 4. **Formalize in Lean 4** only after community feedback.
 

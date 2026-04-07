@@ -1,0 +1,27 @@
+# Infinity subtraction
+# Run: 2026-04-01T23:11:58.152011
+# Exit code: 0
+
+============================================================
+VERIFY-05: Infinity subtraction ∞_a - ∞_b = ∞_{a-b}
+============================================================
+
+--- Symbolic identity: a/ε - b/ε = (a-b)/ε ---
+  [PASS] a/ε - b/ε - (a-b)/ε = 0
+
+--- Specific cases ---
+  [PASS] a=3, b=1: ∞_3 - ∞_1 = ∞_{2}
+  [PASS] a=5, b=5: ∞_5 - ∞_5 = 0 (D-INDEX-ZERO)
+  [PASS] a=π, b=-π: ∞_pi - ∞_-pi = ∞_{2*pi}
+  [PASS] a=1, b=-1: ∞_1 - ∞_-1 = ∞_{2}
+
+--- Edge cases ---
+  [PASS] ∞_a - ∞_{-a} = ∞_{2a}
+  [PASS] ∞_a - ∞_a = 0
+
+--- Z3 consistency check ---
+  [SKIP] Z3 not available
+
+============================================================
+RESULT: 7/7 checks passed
+VERDICT: PASS

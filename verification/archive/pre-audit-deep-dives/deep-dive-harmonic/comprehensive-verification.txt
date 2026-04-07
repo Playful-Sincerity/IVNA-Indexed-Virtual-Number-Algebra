@@ -1,0 +1,82 @@
+=== COMPREHENSIVE IVNA HARMONIC VERIFICATION ===
+Date: 2026-04-01
+Tool: SymPy 1.14.0
+
+--- Test 1: Euler-Mascheroni constant ---
+gamma = 0.577215664901532860606512090082
+
+--- Test 2: H_n - ln(n) convergence to gamma ---
+  H_10 - ln(10) = 0.626383160974, error from gamma = 4.92e-02
+  H_100 - ln(100) = 0.582207331652, error from gamma = 4.99e-03
+  H_1000 - ln(1000) = 0.577715581568, error from gamma = 5.00e-04
+  H_10000 - ln(10000) = 0.577265664068, error from gamma = 5.00e-05
+  gamma = 0.577215664902
+
+--- Test 3: Alternating harmonic series ---
+  Sum = log(2) = 0.69314718055994530942
+  ln(2) = 0.69314718055994530942
+  Match: True
+
+--- Test 4: Basel problem ---
+  Sum 1/k^2 = pi**2/6 = 1.6449340668482264365
+  pi^2/6 = 1.6449340668482264365
+  Match: True
+
+--- Test 5: Zeta regularization ---
+  zeta(-0) = -1/2
+  zeta(-1) = -1/12
+  zeta(-2) = 0
+  zeta(-3) = 1/120
+  zeta(-4) = 0
+  zeta(-5) = -1/252
+  zeta(-1) = -1/12: True
+
+--- Test 6: Digamma function ---
+  psi(1) = -0.57721566490153286061
+  -gamma = -0.57721566490153286061
+  Match: True
+
+--- Test 7: psi(n) = -gamma + H_{n-1} ---
+  psi(1) = -0.577215664902, -gamma + H_0 = -0.577215664902
+  psi(2) = 0.422784335098, -gamma + H_1 = 0.422784335098
+  psi(3) = 0.922784335098, -gamma + H_2 = 0.922784335098
+  psi(4) = 1.256117668432, -gamma + H_3 = 1.256117668432
+  psi(5) = 1.506117668432, -gamma + H_4 = 1.506117668432
+
+--- Test 8: gamma = -integral e^{-x} ln(x) dx ---
+  Result: EulerGamma
+  = EulerGamma: True
+
+--- Test 9: Paired alternating harmonic ---
+  Sum_{j=1}^{100} 1/((2j-1)(2j)) = 0.690653430482
+  Sum_{j=1}^{1000} 1/((2j-1)(2j)) = 0.692897243060
+  Sum_{j=1}^{10000} 1/((2j-1)(2j)) = 0.693122181185
+  ln(2) = 0.693147180560
+
+--- Test 10: Laurent expansion near h=0 ---
+  1/h + 1/ln(1-h) = 1/2 + h/12 + h**2/24 + 19*h**3/720 + 3*h**4/160 + O(h**5)
+  (poles cancel, constant term = 1/2)
+
+--- Test 11: Sum 1+2+...+n = n(n+1)/2 ---
+  S_10 = 55, direct = 55, match: True
+  S_100 = 5050, direct = 5050, match: True
+  S_1000 = 500500, direct = 500500, match: True
+
+--- Test 12: Bernoulli numbers ---
+  B_0 = 1
+  B_1 = 1/2
+  B_2 = 1/6
+  B_3 = 0
+  B_4 = -1/30
+  B_5 = 0
+  B_6 = 1/42
+  B_7 = 0
+  B_8 = -1/30
+  B_9 = 0
+
+--- Test 13: Odd reciprocal squares ---
+  Sum 1/(2k-1)^2 = pi**2/8 = 1.23370055013617
+  pi^2/8 = 1.23370055013617
+  Match: True
+
+=== ALL 13 TESTS COMPLETE ===

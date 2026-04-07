@@ -8,3 +8,8 @@ node_modules/
 
 # Internal strategy docs — not for public repo
 distribution/
+
+# Internal process logs
+chronicle/
+sessions/
+.claude/

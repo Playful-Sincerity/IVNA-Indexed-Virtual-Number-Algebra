@@ -1,0 +1,102 @@
+
+============================================================
+CATEGORY C: CLASSICAL CORRESPONDENCE
+(These verify notation maps onto known results)
+============================================================
+  [PASS] [Classical] Bayes: f(X|Y=0) = f(X) for independent bivariate normal
+  [PASS] [Classical] Bayes: f(X|Y=0) = f(X) for independent normals
+  [PASS] [Classical] Bayes: f(X|Y=1) = f(X) for independent normals
+  [PASS] [Classical] Bayes: f(X|Y=-1) = f(X) for independent normals
+  [PASS] [Classical] Bayes: f(X|Y=2) = f(X) for independent normals
+  [PASS] [Classical] Bayes: marginal f(X) integrates to 1
+  [PASS] [Classical] Bayes: joint f(X,Y) integrates to 1
+  [PASS] [Classical] Bayes: correlated bivariate normal conditional is Gaussian
+  [PASS] [Classical] Bayes: P(A|B)*P(B) = P(B|A)*P(A) algebraic identity
+  [PASS] [Classical] Bayes: integral of f(X|y)*f(y) dy = f(X)
+  [PASS] [Classical] Bayes: f(X,Y=0) = f(X|Y=0)*f(Y=0)
+  [PASS] [Classical] Borel-Kolmogorov: f(theta|phi=phi0) = sin(theta)/2 in spherical coords
+  [PASS] [Classical] Borel-Kolmogorov: f(theta|phi) integrates to 1 over [0,pi]
+  [PASS] [Classical] Borel-Kolmogorov: f(x|phi=phi0) = 1/2 in (x,phi) coords (uniform on [-1,1])
+  [PASS] [Classical] Borel-Kolmogorov: f(x|phi) integrates to 1 over [-1,1]
+  [PASS] [Classical] Borel-Kolmogorov: conditionals agree at equator (theta=pi/2)
+  [PASS] [Classical] Borel-Kolmogorov: conditionals differ off equator (theta=pi/4)
+  [PASS] [Classical] Borel-Kolmogorov: f(theta|z) = sin(theta)/2 in (theta,z) coords
+  [PASS] [Classical] Borel-Kolmogorov: Jacobian |dx/dtheta| = |sin(theta)|
+  [PASS] [Classical] Borel-Kolmogorov: parameterization changes conditional (different indices)
+  [PASS] [Classical] Dirac: rectangular nascent delta integrates to 1
+  [PASS] [Classical] Dirac: Gaussian nascent delta integrates to 1
+  [PASS] [Classical] Dirac: Lorentzian nascent delta integrates to 1
+  [PASS] [Classical] Dirac: sifting property integral x^2+3x+1 * delta(x-a) = a^2+3a+1
+  [PASS] [Classical] Dirac: sifting integral sin(x)*delta(x-pi/2) = 1
+  [PASS] [Classical] Dirac: sifting integral exp(x)*delta(x-2) = e^2
+  [PASS] [Classical] Dirac: sifting integral cos(x)*delta(x) = 1
+  [PASS] [Classical] Dirac: delta(a*x) scaling integral gives f(0)/|a|
+  [PASS] [Classical] Dirac: delta(2x) scaling: integral exp(x)*delta(2x)dx = 1/2
+  [PASS] [Classical] Dirac: d/dx Heaviside(x) = DiracDelta(x)
+  [PASS] [Classical] Dirac: rectangular delta height * width = 1 (A3 invariant)
+  [PASS] [Classical] Dirac: Gaussian delta height * width = 1 (A3 invariant)
+  [PASS] [Classical] Dirac: delta(x^2-1) has roots at x=±1
+  [PASS] [Classical] Dirac: integral x^2 * delta(x^2-1) dx = 1
+  [PASS] [Classical] Dirac: delta(-x-1) = delta(x+1), integral exp(x)*delta(-x-1)dx = e^{-1}
+  [PASS] [Classical] Removable: lim_{x->0} sin(x)/x = 1
+  [PASS] [Classical] Removable: lim_{x->0} (e^x-1)/x = 1
+  [PASS] [Classical] Removable: lim_{x->0} (1-cos(x))/x^2 = 1/2
+  [PASS] [Classical] Removable: lim_{x->0} tan(x)/x = 1
+  [PASS] [Classical] Removable: lim_{x->0} ln(1+x)/x = 1
+  [PASS] [Classical] Removable: lim_{x->3} (x^2-9)/(x-3) = 6
+  [PASS] [Classical] Removable: lim_{x->2} (x^3-8)/(x-2) = 12
+  [PASS] [Classical] Removable: lim_{x->0} sin(3x)/sin(5x) = 3/5
+  [PASS] [Classical] Removable: Taylor sin(x) = x - x^3/6 + O(x^4) confirms sinc limit
+  [PASS] [Classical] Removable: Taylor (e^x-1)/x leading term = 1
+  [PASS] [Classical] Removable: lim_{x->1} (x^2-1)/(x-1) = 2
+  [PASS] [Classical] Removable: lim_{x->1} (sqrt(x)-1)/(x-1) = 1/2
+  [PASS] [Classical] InfSub: a/eps - b/eps = (a-b)/eps
+  [PASS] [Classical] InfSub: 3/eps - 2/eps = 1/eps
+  [PASS] [Classical] InfSub: 5/eps - 5/eps = 0
+  [PASS] [Classical] InfSub: (a/eps - b/eps)*eps = a-b
+  [PASS] [Classical] InfSub: lim (1/eps - 2/eps)*eps = -1
+  [PASS] [Classical] InfSub: (a/eps - b/eps) - c/eps = (a-b-c)/eps
+  [PASS] [Classical] Residue: Res[1/z, z=0] = 1
+  [PASS] [Classical] Residue: Res[1/(z-1), z=1] = 1
+  [PASS] [Classical] Residue: Res[3/(z-2), z=2] = 3
+  [PASS] [Classical] Residue: Res[1/((z-1)(z+1)), z=1] = 1/2
+  [PASS] [Classical] Residue: Res[1/((z-1)(z+1)), z=-1] = -1/2
+  [PASS] [Classical] Residue: Res[z/(z^2+1), z=i] = 1/2
+  [PASS] [Classical] Residue: Res[exp(z)/(z-1), z=1] = e
+  [PASS] [Classical] Residue: cancel(z/(z*(z+1))) = 1/(z+1)
+  [PASS] [Classical] Residue: Res[1/z^2, z=0] = 0 (double pole residue formula)
+  [PASS] [Classical] Residue: Res[sin(z)/z^2, z=0] = 1
+  [PASS] [Classical] Residue: (z^2-1)/(z-1) cancels to z+1 (no pole, residue=0)
+  [PASS] [Classical] Residue: Res[1/((z-1)(z-2))] sum = Res_1 + Res_2 = -1 + 1 = 0
+  [PASS] [Classical] CompoundGrowth: lim_m (1+1/m)^m = e^1
+  [PASS] [Classical] CompoundGrowth: lim_m (1+2/m)^m = e^2
+  [PASS] [Classical] CompoundGrowth: lim_m (1+-1/m)^m = e^-1
+  [PASS] [Classical] CompoundGrowth: lim_m (1+1/2/m)^m = e^1/2
+  [PASS] [Classical] CompoundGrowth: lim_m (1+1/m)^m = e
+  [PASS] [Classical] CompoundGrowth: lim_m (1+1/(2m))^(2m) = e
+  [PASS] [Classical] CompoundGrowth: lim_m (1+2/(3m))^(3m) = e^2
+  [PASS] [Classical] CompoundGrowth: e^x1 * e^x2 = e^(x1+x2)
+  [PASS] [Classical] CompoundGrowth: (e^x)^n = e^(nx)
+  [PASS] [Classical] CompoundGrowth: d/dx e^x = e^x
+  [PASS] [Classical] CompoundGrowth: lim_m (1+1/m)^m / e = 1
+  [PASS] [Classical] BlowUp: (x^2+t^2*x^2)/(x*t*x) = (1+t^2)/t
+  [PASS] [Classical] BlowUp: (x^3-y^3)/(x-y) = x^2+xy+y^2
+  [PASS] [Classical] BlowUp: (x^2-y^2)/(x-y) = x+y
+  [PASS] [Classical] BlowUp: xy=0 node blown up: x*(tx)/x^2 = t (coordinate on exceptional divisor)
+  [PASS] [Classical] BlowUp: x^2+xy = x^2(1+t) under y=tx substitution
+  [PASS] [Classical] BlowUp: x^4-1 = (x-1)(x+1)(x^2+1)
+  [PASS] [Classical] BlowUp: lim_{x->2} (x^2-4)/(x-2) = 4
+  [PASS] [Classical] BlowUp: circle singularity blown up resolves to 2 at h->0
+  [PASS] [Classical] KL: lim_{eps->0+} eps*ln(eps) = 0
+  [PASS] [Classical] KL: lim_{eps->0+} eps^2*ln(eps) = 0
+  [PASS] [Classical] KL: KL(Bernoulli(1/3) || Bernoulli(1/2)) > 0
+  [PASS] [Classical] KL: KL(p||p) = 0
+  [PASS] [Classical] KL: KL(Bernoulli(0.3)||Bernoulli(0.7)) > 0
+  [PASS] [Classical] KL: KL(p||q) ≠ KL(q||p) in general
+  [PASS] [Classical] KL: KL(Uniform||Uniform same) = 0
+  [PASS] [Classical] KL: lim_{p->0+} p*ln(p/q) = 0 for fixed q>0
+  [PASS] [Classical] KL: H(p,q) = H(p) + KL(p||q)
+
+  Total: 93  |  Passed: 93  |  Failed: 0
+============================================================
+  ALL CHECKS PASSED

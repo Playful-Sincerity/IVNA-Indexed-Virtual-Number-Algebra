@@ -40,12 +40,12 @@ What is NOT new: the underlying arithmetic (isomorphic to Laurent monomials in a
 **The problem they have:** IEEE 754 NaN propagation. One division by zero poisons an entire computation. Defensive coding around edge cases.
 
 **What IVNA gives them:**
-- **VEX mode** — Virtual Extended arithmetic eliminates ~80% of NaN cases. `5/0` returns `inf_5`, computation continues, and the result either resolves to a real number or can be inspected for what went wrong
+- **VEA mode** — Virtual Extended arithmetic eliminates ~80% of NaN cases. `5/0` returns `inf_5`, computation continues, and the result either resolves to a real number or can be inspected for what went wrong
 - Gradient tracking through singularities (ML applications — see Demo 2 in `phase3-cs-demos.md`)
 - N-body simulation without softening parameters at zero distance (Demo 1)
 - Symbolic computation that doesn't halt on division by zero
 
-**Realistic adoption path:** Python/JS library first (VEX package on PyPI). Then a SymPy plugin. Integration into numerical computing frameworks would require community adoption and performance benchmarking. IEEE 754 standard revision is a 10+ year process requiring industry consortium buy-in — not a near-term goal.
+**Realistic adoption path:** Python/JS library first (VEA package on PyPI). Then a SymPy plugin. Integration into numerical computing frameworks would require community adoption and performance benchmarking. IEEE 754 standard revision is a 10+ year process requiring industry consortium buy-in — not a near-term goal.
 
 ### Mathematicians
 
@@ -70,7 +70,7 @@ When Bombelli wrote rules for sqrt(-1) in 1572, nobody updated abacuses. It took
 But the pace is faster now. Information spreads in days, not decades. The relevant modern precedent is **Keisler's infinitesimal calculus** — a well-structured, pedagogically superior alternative to epsilon-delta, published in the 1970s. 50 years later, it's freely available online and used in some courses, but epsilon-delta still dominates most curricula.
 
 **IVNA's advantages over Keisler's adoption path:**
-- A working calculator demo (VEX) — Keisler had no software artifact
+- A working calculator demo (VEA) — Keisler had no software artifact
 - Lean4 machine-checked proofs — Keisler had only traditional proofs
 - A practical CS application (NaN elimination) — Keisler addressed only pedagogy
 - Internet distribution — papers, code, and demos reach anyone instantly
@@ -88,10 +88,10 @@ But the pace is faster now. Information spreads in days, not decades. The releva
 - **Success metric:** Citations, responses from contacted researchers, r/math reception
 
 ### Phase 2: Tooling (Months 3-12)
-- VEX web calculator (the single most shareable artifact)
-- VEX Python package on PyPI
+- VEA web calculator (the single most shareable artifact)
+- VEA Python package on PyPI
 - SymPy plugin for IVNA notation
-- **Success metric:** Downloads, GitHub stars, people building things with VEX
+- **Success metric:** Downloads, GitHub stars, people building things with VEA
 
 ### Phase 3: Community Formation (Months 6-18)
 - See community section below
@@ -106,7 +106,7 @@ But the pace is faster now. Information spreads in days, not decades. The releva
 - **Success metric:** IVNA notation appearing in papers by people Wisdom didn't contact
 
 ### Phase 5: Infrastructure Change (Years 5-20)
-- VEX mode proposal to IEEE 754 working group
+- VEA mode proposal to IEEE 754 working group
 - Curriculum pilot programs
 - Calculator manufacturers consider indexed infinities
 - **Success metric:** Standards body engagement, curriculum adoption somewhere
@@ -141,7 +141,7 @@ IVNA is a notation — its value multiplies when people use it in their own doma
 
 **Phase 3: Knowledge Hub (as content accumulates)**
 - Community wiki documenting IVNA applications, worked examples, teaching guides
-- User-contributed VEX implementations in different languages
+- User-contributed VEA implementations in different languages
 - Collection of "IVNA in the wild" — papers, blog posts, projects using the notation
 - Integration with The Hearth (PS Software) as a model for community knowledge sharing
 
@@ -165,7 +165,7 @@ IVNA is a notation — its value multiplies when people use it in their own doma
 
 ### What NOT to Do
 
-- Don't create a community before there's something for people to do — launch alongside the VEX web demo so people can play immediately
+- Don't create a community before there's something for people to do — launch alongside the VEA web demo so people can play immediately
 - Don't gate-keep — IVNA's value is in accessibility, so the community must be accessible
 - Don't oversell — the honest limitations section in the paper sets the tone for the whole community
 - Don't fragment too early — start with GitHub Discussions, only add platforms when there's enough activity to justify them
@@ -176,7 +176,7 @@ IVNA is a notation — its value multiplies when people use it in their own doma
 
 IVNA won't change calculators worldwide next year. But it offers something that didn't exist before: a consistent, verified way to keep computing through division by zero while preserving the information that standard arithmetic throws away.
 
-The notation sells itself to anyone who's ever been annoyed by "undefined." The complex number analogy gives them permission to take it seriously. The Lean proofs give them reason to trust it. The VEX demo gives them something to play with.
+The notation sells itself to anyone who's ever been annoyed by "undefined." The complex number analogy gives them permission to take it seriously. The Lean proofs give them reason to trust it. The VEA demo gives them something to play with.
 
 Make it so clear and useful that people can't ignore it. Then let them spread it in their own way.
 

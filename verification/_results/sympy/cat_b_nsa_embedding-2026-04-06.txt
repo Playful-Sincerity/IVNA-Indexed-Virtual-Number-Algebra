@@ -1,0 +1,83 @@
+======================================================================
+IVNA VERIFICATION — CATEGORY B: NSA EMBEDDING CONSISTENCY
+======================================================================
+
+  Embedding: 0_x -> x*eps^order,  inf_x -> x*eps^(-order)
+  Engine:    SymPy symbolic algebra (no ivna.py)
+
+  [PASS] A1: embed_zero(x)*embed_zero(y) = embed_zero(xy, 2)
+  [PASS] A1-concrete: embed_zero(2)*embed_zero(3) = embed_zero(6, 2)
+  [PASS] A1-concrete: embed_zero(5)*embed_zero(7) = embed_zero(35, 2)
+  [PASS] A1-concrete: embed_zero(1)*embed_zero(1) = embed_zero(1, 2)
+  [PASS] A2: embed_inf(x)*embed_inf(y) = embed_inf(xy, 2)
+  [PASS] A2-concrete: embed_inf(2)*embed_inf(3) = embed_inf(6, 2)
+  [PASS] A2-concrete: embed_inf(5)*embed_inf(7) = embed_inf(35, 2)
+  [PASS] A2-concrete: embed_inf(1)*embed_inf(1) = embed_inf(1, 2)
+  [PASS] A3: embed_zero(x)*embed_inf(y) = xy
+  [PASS] A3-comm: embed_inf(y)*embed_zero(x) = xy
+  [PASS] A3-concrete: embed_zero(2)*embed_inf(3) = 6
+  [PASS] A3-concrete: embed_zero(7)*embed_inf(5) = 35
+  [PASS] A3-concrete: embed_zero(1)*embed_inf(1) = 1
+  [PASS] A4: r*embed_zero(x) = embed_zero(rx)
+  [PASS] A4-concrete: 3*embed_zero(2) = embed_zero(6)
+  [PASS] A4-concrete: 5*embed_zero(7) = embed_zero(35)
+  [PASS] A4-concrete: -2*embed_zero(3) = embed_zero(-6)
+  [PASS] A5: r*embed_inf(x) = embed_inf(rx)
+  [PASS] A5-concrete: 3*embed_inf(2) = embed_inf(6)
+  [PASS] A5-concrete: 5*embed_inf(7) = embed_inf(35)
+  [PASS] A5-concrete: -1*embed_inf(3) = embed_inf(-3)
+  [PASS] A6: y/embed_zero(x) = embed_inf(y/x)
+  [PASS] A6-concrete: 6/embed_zero(2) = embed_inf(6/2)
+  [PASS] A6-concrete: 10/embed_zero(5) = embed_inf(10/5)
+  [PASS] A6-concrete: 1/embed_zero(1) = embed_inf(1/1)
+  [PASS] A7: y/embed_inf(x) = embed_zero(y/x)
+  [PASS] A7-concrete: 6/embed_inf(2) = embed_zero(6/2)
+  [PASS] A7-concrete: 10/embed_inf(5) = embed_zero(10/5)
+  [PASS] A7-concrete: 1/embed_inf(1) = embed_zero(1/1)
+  [PASS] A8: embed_zero(x)/embed_zero(y) = x/y
+  [PASS] A8-concrete: embed_zero(6)/embed_zero(2) = 6/2
+  [PASS] A8-concrete: embed_zero(10)/embed_zero(5) = 10/5
+  [PASS] A8-concrete: embed_zero(7)/embed_zero(3) = 7/3
+  [PASS] A9: embed_inf(x)/embed_inf(y) = x/y
+  [PASS] A9-concrete: embed_inf(6)/embed_inf(2) = 6/2
+  [PASS] A9-concrete: embed_inf(10)/embed_inf(5) = 10/5
+  [PASS] A9-concrete: embed_inf(7)/embed_inf(3) = 7/3
+  [PASS] A10: embed_zero(x)+embed_zero(y) = embed_zero(x+y)
+  [PASS] A10-concrete: embed_zero(2)+embed_zero(3) = embed_zero(5)
+  [PASS] A10-concrete: embed_zero(7)+embed_zero(5) = embed_zero(12)
+  [PASS] A10-concrete: embed_zero(1)+embed_zero(1) = embed_zero(2)
+  [PASS] A11: embed_inf(x)+embed_inf(y) = embed_inf(x+y)
+  [PASS] A11-concrete: embed_inf(2)+embed_inf(3) = embed_inf(5)
+  [PASS] A11-concrete: embed_inf(7)+embed_inf(5) = embed_inf(12)
+  [PASS] A11-concrete: embed_inf(1)+embed_inf(1) = embed_inf(2)
+  [PASS] D-INDEX-ZERO: embed_zero(x)-embed_zero(x) = 0
+  [PASS] D-INDEX-ZERO-concrete: embed_zero(1)-embed_zero(1) = 0
+  [PASS] D-INDEX-ZERO-concrete: embed_zero(3)-embed_zero(3) = 0
+  [PASS] D-INDEX-ZERO-concrete: embed_zero(7)-embed_zero(7) = 0
+  [PASS] A-EXP leading term: (y/eps)*ln(1+x*eps) constant = xy
+  [PASS] A-EXP leading term concrete: (3/eps)*ln(1+2*eps) constant = 6
+  [PASS] Negation: -embed_zero(x) = embed_zero(-x)
+  [PASS] Negation-inf: -embed_inf(x) = embed_inf(-x)
+  [PASS] Negation-concrete: -embed_zero(2) = embed_zero(-2)
+  [PASS] Negation-concrete: -embed_zero(5) = embed_zero(-5)
+  [PASS] Negation-concrete: -embed_zero(-3) = embed_zero(3)
+  [PASS] HO: embed_zero(x,2)*embed_inf(y,2) = xy
+  [PASS] HO-concrete(2,2): embed_zero(2,2)*embed_inf(3,2) = 6
+  [PASS] HO-concrete(2,2): embed_zero(5,2)*embed_inf(7,2) = 35
+  [PASS] HO: embed_zero(x,3)*embed_inf(y,2) = embed_zero(xy,1) = xy*eps
+  [PASS] HO-concrete(3,2): embed_zero(2,3)*embed_inf(3,2) = embed_zero(6,1)
+  [PASS] HO-concrete(3,2): embed_zero(1,3)*embed_inf(1,2) = embed_zero(1,1)
+  [PASS] HO: embed_zero(x,3)*embed_inf(y,1) = embed_zero(xy,2) = xy*eps^2
+  [PASS] HO-concrete(3,1): embed_zero(2,3)*embed_inf(3,1) = embed_zero(6,2)
+  [PASS] HO-concrete(3,1): embed_zero(1,3)*embed_inf(1,1) = embed_zero(1,2)
+  [PASS] HO-order-cancel(n=1): embed_zero(x,1)*embed_inf(y,1) = xy
+  [PASS] HO-order-cancel(n=2): embed_zero(x,2)*embed_inf(y,2) = xy
+  [PASS] HO-order-cancel(n=3): embed_zero(x,3)*embed_inf(y,3) = xy
+  [PASS] HO-order-cancel(n=4): embed_zero(x,4)*embed_inf(y,4) = xy
+  [PASS] HO-asymm(2,3): embed_zero(x,2)*embed_inf(y,3) = embed_inf(xy,1)
+
+  PASSED: 70
+  FAILED: 0
+  TOTAL:  70
+
+  ALL CATEGORY B CHECKS PASSED

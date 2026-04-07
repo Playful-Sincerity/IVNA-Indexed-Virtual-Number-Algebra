@@ -1,0 +1,23 @@
+======================================================================
+IVNA VERIFICATION — Z3 AXIOM ENCODING
+======================================================================
+
+  [PASS] Z3-SAT: Axiom system with A3 product rule is satisfiable
+  [PASS] Z3-Roundtrip: (y/x)*x = y is tautology (negation UNSAT)
+  [PASS] Z3-DivConsist: y/x1*x1 = y/x2*x2 (negation UNSAT)
+  [PASS] Z3-A8: (x*y)/y = x (index cancellation, negation UNSAT)
+  [PASS] Z3-A10: x*eps + y*eps = (x+y)*eps (negation UNSAT)
+  [PASS] Z3-D-INDEX-ZERO: x*eps - x*eps = 0 (negation UNSAT)
+  [PASS] Z3-A3: x*eps * y/eps = x*y (negation UNSAT)
+  [PASS] Z3-A1: (x*eps)*(y*eps) = xy*eps^2 (negation UNSAT)
+  [PASS] Z3-A2: (x/eps)*(y/eps) = xy/eps^2 (negation UNSAT)
+  [PASS] Z3-Independence: A3 constant must be 1 (c!=1 UNSAT)
+  [PASS] Z3-D-INDEX-ZERO derivable: 0*eps = 0 (negation UNSAT)
+  [PASS] Z3-AddDistrib: Addition distributes given A3 (negation UNSAT)
+  [PASS] Z3-Scaling: (x/n)*(ny) = xy (negation UNSAT)
+
+  PASSED: 13
+  FAILED: 0
+  TOTAL:  13
+
+  ALL Z3 CHECKS PASSED

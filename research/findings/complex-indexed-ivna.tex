@@ -1,0 +1,269 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=RoyalBlue, urlcolor=RoyalBlue}
+
+\newcommand{\vi}[1]{0_{#1}}          % virtual zero
+\newcommand{\vinf}[1]{\infty_{#1}}   % virtual infinity
+\newcommand{\collapse}{\mathrel{\equiv}}
+
+\title{\textbf{Complex-Indexed Virtual Numbers}\\[4pt]
+\large What happens when IVNA indices live in $\mathbb{C}^*$}
+\author{Exploration Notes — IVNA Project}
+\date{April 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Standard IVNA uses real indices: $\vi{3}$ is a zero ``of kind 3.'' When we extend to complex indices---letting $\vi{e^{i\alpha}}$ mean ``a zero approaching from angle $\alpha$''---the index algebra becomes the symmetry group of the plane, the residue theorem falls out of index cancellation, monodromy becomes algebraic, and the interference pattern of indexed zeros mirrors quantum phase interference. This document walks through these observations with full notation.
+\end{abstract}
+
+\tableofcontents
+\bigskip
+
+%% ============================================================
+\section{Setup: Complex Indices}
+
+In standard IVNA over a field $K$, the virtual numbers form the group
+\[
+  K^* \times \mathbb{Z},
+\]
+where $K^* = K \setminus \{0\}$ carries the \emph{index} (provenance) and $\mathbb{Z}$ carries the \emph{grade} (zero vs.\ real vs.\ infinity).
+
+When $K = \mathbb{R}$, the index is a nonzero real number.
+When $K = \mathbb{C}$, the index is a nonzero complex number: $z = r\,e^{i\alpha}$ with $r > 0$ and $\alpha \in [0, 2\pi)$.
+
+A \textbf{complex-indexed virtual zero} $\vi{r\,e^{i\alpha}}$ encodes:
+\begin{itemize}[nosep]
+  \item \textbf{Magnitude} $r$: how ``strongly'' zero is approached.
+  \item \textbf{Angle} $\alpha$: the \emph{direction} of approach in the complex plane.
+\end{itemize}
+
+A \textbf{complex-indexed virtual infinity} $\vinf{r\,e^{i\alpha}}$ similarly carries a complex direction.
+
+All IVNA axioms carry over unchanged. The key rules with complex indices:
+
+\begin{align}
+  \vi{z_1} \cdot \vi{z_2} &= 0^2_{z_1 z_2} \tag{A1} \\[3pt]
+  \vinf{z_1} \cdot \vinf{z_2} &= \infty^2_{z_1 z_2} \tag{A2} \\[3pt]
+  \vi{z_1} \cdot \vinf{z_2} &= z_1\, z_2 \tag{A3: product rule} \\[3pt]
+  \frac{\vi{z_1}}{\vi{z_2}} &= \frac{z_1}{z_2} \tag{A8: zero-division} \\[3pt]
+  (1 + \vi{z_1})^{\vinf{z_2}} &= e^{z_1 z_2} \tag{A-EXP}
+\end{align}
+
+Since $z_1, z_2 \in \mathbb{C}^*$, all products and ratios on the right-hand side are complex multiplications and divisions.
+
+%% ============================================================
+\section{The Product Rule Is Rotation}
+
+Write the indices in polar form: $z_1 = r_1\,e^{i\alpha}$, $z_2 = r_2\,e^{i\beta}$. Then the product rule gives:
+\[
+  \vi{r_1 e^{i\alpha}} \cdot \vinf{r_2 e^{i\beta}}
+  = r_1\, r_2\, e^{i(\alpha + \beta)}.
+\]
+The result is a \textbf{scaling by $r_1 r_2$} and a \textbf{rotation by $\alpha + \beta$}.
+
+Similarly, dividing two zeros:
+\[
+  \frac{\vi{r_1 e^{i\alpha}}}{\vi{r_2 e^{i\beta}}}
+  = \frac{r_1}{r_2}\, e^{i(\alpha - \beta)}.
+\]
+The ratio of two approach-directions is a \textbf{scaling + rotation}. The index algebra of complex IVNA is the group $\mathbb{C}^* \cong \mathbb{R}_{>0} \times U(1)$---the symmetry group of the plane (dilations $\times$ rotations).
+
+%% ============================================================
+\section{Euler's Formula in Complex IVNA}
+
+From A-EXP with $z_1 = i$ and $z_2 = \theta$ (real):
+\[
+  \bigl(1 + \vi{i}\bigr)^{\vinf{\theta}} = e^{i\theta} = \cos\theta + i\sin\theta.
+\]
+
+The infinitesimal step $\vi{i}$ points in the \emph{imaginary direction}. The repetition count $\vinf{\theta}$ specifies the angle. Their interaction via the grade-crossing product produces Euler's formula directly.
+
+In Lie-theoretic language:
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{lll}
+\textbf{Grade} & \textbf{IVNA} & \textbf{Lie theory} \\
+\hline
+$+1$ (virtual zeros) & $\vi{i}$ & Infinitesimal generator of $SO(2)$ \\
+$\phantom{+}0$ (reals/complex) & $e^{i\theta}$ & Element of $SO(2)$ \\
+$-1$ (virtual infinities) & $\vinf{\theta}$ & Repetition parameter \\
+\end{tabular}
+\end{center}
+
+The exponential map $\exp\colon \mathfrak{so}(2) \to SO(2)$ \emph{is} the grade-crossing product rule.
+
+%% ============================================================
+\section{The Residue Theorem via Index Cancellation}
+
+\subsection{Simple Pole}
+
+Let $f(z) = g(z)/(z - a)$ have a simple pole at $z = a$ with residue $g(a)$.
+
+Approach the singularity from angle $\theta$:
+\[
+  z = a + \vi{e^{i\theta}}.
+\]
+Then:
+\[
+  f\bigl(a + \vi{e^{i\theta}}\bigr) = \frac{g(a)}{\vi{e^{i\theta}}} = \vinf{g(a)\, e^{-i\theta}}.
+\]
+
+Now integrate around the pole. The contour element at angle $\theta$ is:
+\[
+  dz = i\,\vi{e^{i\theta}}\,d\theta.
+\]
+
+So each infinitesimal contribution to the contour integral is:
+\[
+  f(z)\,dz = \vinf{g(a)\,e^{-i\theta}} \cdot i\,\vi{e^{i\theta}}\,d\theta.
+\]
+
+Apply the product rule (A3). The infinity and the zero have matching order, so:
+\[
+  \vinf{g(a)\,e^{-i\theta}} \cdot \vi{e^{i\theta}}
+  = g(a)\,e^{-i\theta} \cdot e^{i\theta}
+  = g(a).
+\]
+
+\textbf{The indices cancel.} The $e^{-i\theta}$ from the infinity's index and the $e^{i\theta}$ from the zero's index multiply to 1. Every angle contributes the same thing. Integrating:
+\[
+  \oint f(z)\,dz = \int_0^{2\pi} g(a) \cdot i\,d\theta = 2\pi i\, g(a).
+\]
+
+This is the residue theorem. No Laurent series, no Cauchy integral formula---just the product rule $\vi{x} \cdot \vinf{y} = xy$ with complex $x$ and $y$.
+
+\subsection{What the Indices Show}
+
+As $\theta$ sweeps from $0$ to $2\pi$:
+\begin{itemize}[nosep]
+  \item The zero's index $e^{i\theta}$ rotates counterclockwise.
+  \item The infinity's index $g(a)\,e^{-i\theta}$ rotates \emph{clockwise} (conjugate direction).
+  \item Their product is always $g(a)$---angle-independent.
+\end{itemize}
+
+The counter-rotation of the indices IS the residue. In standard complex analysis, this cancellation is hidden inside the limit machinery. In complex IVNA, it is \emph{visible in the notation}.
+
+%% ============================================================
+\section{Monodromy as Index Winding}
+
+Consider $\log(z)$ near $z = 0$. The function is multivalued: circling the origin adds $2\pi i$.
+
+In complex IVNA, approach $z = 0$ from angle $\theta$:
+\[
+  z = \vi{e^{i\theta}}.
+\]
+
+After one full circuit $\theta \to \theta + 2\pi$:
+\[
+  \vi{e^{i(\theta + 2\pi)}} = \vi{e^{i\theta}}.
+\]
+The index returns to its original value. But the \emph{winding number} has incremented. The log picks up an additional $2\pi i$ because the path has traversed one more sheet.
+
+In standard analysis, monodromy requires cutting the plane (branch cuts) and tracking which sheet you're on via analytic continuation. In complex IVNA, the sheet information can be encoded in the index's winding number---how many times you've traversed a $2\pi$ cycle.
+
+This suggests an enriched index: instead of $e^{i\theta} \in U(1)$, use $\theta \in \mathbb{R}$ directly (the universal cover of $U(1)$). Then $\vi{e^{i\theta}}$ and $\vi{e^{i(\theta + 2\pi)}}$ are genuinely \emph{different} indexed zeros, and $\log(\vi{e^{i\theta}})$ is single-valued on the enriched space.
+
+%% ============================================================
+\section{Interference of Indexed Zeros}
+
+Two complex-indexed zeros that differ only by phase:
+\[
+  \vi{e^{i\alpha}} \quad\text{and}\quad \vi{e^{i\beta}}.
+\]
+Both collapse to $0$ under $\collapse$. Classically, they are ``the same zero.''
+
+But their sum (by A10, addition of same-grade virtuals):
+\[
+  \vi{e^{i\alpha}} + \vi{e^{i\beta}} = \vi{e^{i\alpha} + e^{i\beta}}.
+\]
+
+The sum index $e^{i\alpha} + e^{i\beta}$ depends on the \textbf{phase difference} $\alpha - \beta$:
+\begin{align*}
+  \left|e^{i\alpha} + e^{i\beta}\right| &= 2\left|\cos\!\frac{\alpha - \beta}{2}\right|.
+\end{align*}
+
+\begin{itemize}[nosep]
+  \item \textbf{Constructive:} when $\alpha \approx \beta$, the magnitude is $\approx 2$. The indices reinforce.
+  \item \textbf{Destructive:} when $\alpha \approx \beta + \pi$, the magnitude is $\approx 0$. The indices cancel.
+  \item \textbf{Complete cancellation:} when $\alpha = \beta + \pi$ exactly, the sum index is $0$, and $\vi{0} = 0$ by axiom D-INDEX-ZERO. Two indexed zeros can annihilate into a \emph{bare} zero.
+\end{itemize}
+
+This is precisely the pattern of \textbf{quantum interference}:
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{lll}
+& \textbf{Quantum mechanics} & \textbf{Complex IVNA} \\
+\hline
+Phase carrier & $\psi = Re^{i\phi}$ & $\vi{re^{i\alpha}}$ \\
+Superposition & $\psi_1 + \psi_2$ & $\vi{z_1} + \vi{z_2} = \vi{z_1 + z_2}$ \\
+Interference & $|\psi_1 + \psi_2|^2$ depends on $\phi_1 - \phi_2$ & $|z_1 + z_2|$ depends on $\alpha - \beta$ \\
+Constructive & same phase $\Rightarrow$ amplitudes add & same angle $\Rightarrow$ indices add \\
+Destructive & opposite phase $\Rightarrow$ cancellation & opposite angle $\Rightarrow$ index $\to 0$ \\
+Phase symmetry & $U(1)$ & $U(1)$ \\
+\end{tabular}
+\end{center}
+
+Both systems carry $U(1)$ phase that is destroyed by a ``measurement'' operation (Born rule $|\psi|^2$ for QM; collapse $\collapse$ for IVNA), but that governs intermediate computations (quantum interference / index arithmetic).
+
+%% ============================================================
+\section{The Residue as Phase-Averaged Index}
+
+Combining Sections 4 and 6 reveals a unified picture.
+
+The contour integral around a simple pole \emph{averages} the infinity's index over all approach angles:
+\[
+  \frac{1}{2\pi}\oint f(z)\,dz
+  = \frac{1}{2\pi}\int_0^{2\pi} \underbrace{\vinf{g(a)\,e^{-i\theta}} \cdot \vi{e^{i\theta}}}_{\text{index cancellation} = g(a)} \cdot i\,d\theta
+  = i\,g(a).
+\]
+
+The residue $g(a)$ is the \textbf{phase-independent part} of the singularity. It's what survives when you average over all approach directions. The phase-dependent part (the $e^{-i\theta}$ in $\vinf{g(a)\,e^{-i\theta}}$) integrates to zero---it's the ``interference term'' that washes out.
+
+This is exactly what happens in quantum mechanics: the Born rule $\langle\psi|\psi\rangle$ extracts the phase-independent part (probability), while the phase-dependent parts (coherences) cancel in the trace.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{lll}
+& \textbf{Contour integral} & \textbf{Born rule} \\
+\hline
+Operation & $\oint (\cdots)\,dz$ & $\langle\psi|\psi\rangle = \int |\psi|^2\,dx$ \\
+What survives & Residue (phase-independent) & Probability (phase-independent) \\
+What cancels & Directional index (phase-dependent) & Quantum phase (phase-dependent) \\
+Mechanism & Index rotation $e^{i\theta} \cdot e^{-i\theta} = 1$ & $e^{i\phi} \cdot e^{-i\phi} = 1$ \\
+\end{tabular}
+\end{center}
+
+%% ============================================================
+\section{Open Questions}
+
+\begin{enumerate}
+  \item \textbf{Higher-order poles.} For a pole of order $n$, the Laurent expansion has terms $(z-a)^{-n}, \ldots, (z-a)^{-1}$. In complex IVNA these become $\vinf[n]{\cdot\,}, \ldots, \vinf{\cdot}$ with varying orders. Does the index cancellation still cleanly extract the residue (the coefficient of $(z-a)^{-1}$)?
+
+  \item \textbf{Lie algebra commutators.} For $\mathfrak{so}(3)$ with generators $\vi{e_x}, \vi{e_y}, \vi{e_z}$, does the commutator
+  \[
+    [\vi{e_x},\, \vi{e_y}] = \vi{e_x}\cdot\vi{e_y} - \vi{e_y}\cdot\vi{e_x}
+  \]
+  produce $0^2_{e_x e_y} - 0^2_{e_y e_x}$? If index multiplication is commutative ($e_x e_y = e_y e_x$ in $\mathbb{C}^*$), this is zero---which is wrong for $\mathfrak{so}(3)$. This might require extending to \emph{non-commutative} index algebras (quaternionic IVNA?).
+
+  \item \textbf{Fibered compactification.} Can we compactify the space $\mathbb{C} \cup \{\vinf{z} : z \in \mathbb{C}^*\}$ by attaching a $\mathbb{C}^*$ fiber over the north pole of $S^2$? This would be the real oriented blow-up of the Riemann sphere at $\infty$. Does it support useful analysis?
+
+  \item \textbf{Quantum IVNA.} At a wavefunction node $\psi(x_0) = 0$, set $\psi(x_0) = \vi{\partial\psi/\partial x}$. The index is the gradient---physically, the rate at which the phase swings through the node. Does indexed-zero QM predict anything different from standard QM, or is it cleaner notation for the same physics?
+
+  \item \textbf{Dependent types.} Is $\vinf{5/k}$ naturally a dependent type---``the result of dividing $5$ by a zero of kind $k$''---in the Curry--Howard sense? Can the Lean formalization be deepened from a structure to a type family?
+\end{enumerate}
+
+%% ============================================================
+\section*{Note}
+
+This document is an exploration, not a proof. The residue calculation in Section~4 works cleanly for simple poles; the extension to higher-order poles and essential singularities needs verification. The quantum parallel in Sections~6--7 is structural, not physical---it identifies a shared algebraic pattern ($U(1)$ phase cancellation), not a physical claim.
+
+The thread is alive. These are invitations, not conclusions.
+
+\end{document}

@@ -1,0 +1,28 @@
+# Compound growth / e
+# Run: 2026-04-01T23:11:58.873495
+# Exit code: 0
+
+============================================================
+VERIFY-07: Compound growth / e scaling symmetry
+============================================================
+
+--- IVNA index cancellation: (x/n)(ny) = xy ---
+  [PASS] (x/n)(ny) simplifies to xy
+
+--- Limit[(1 + x/(nm))^(nmy), m→∞] = e^{xy} ---
+  [PASS] n=1: limit = e^{xy}
+  [PASS] n=2: limit = e^{xy}
+  [PASS] n=3: limit = e^{xy}
+  [PASS] n=1/2: limit = e^{xy}
+  [PASS] n=π: limit = e^{xy}
+
+--- Numerical spot check: x=2, y=3 → e^6 ---
+  [PASS] n=1 numeric: |approx - e^6| < 0.01 (err=1.20e-05)
+  [PASS] n=2 numeric: |approx - e^6| < 0.01 (err=2.68e-05)
+  [PASS] n=3 numeric: |approx - e^6| < 0.01 (err=3.10e-05)
+  [PASS] n=1/2 numeric: |approx - e^6| < 0.01 (err=4.97e-05)
+  [PASS] n=π numeric: |approx - e^6| < 0.01 (err=1.80e-05)
+
+============================================================
+RESULT: 11/11 checks passed
+VERDICT: PASS

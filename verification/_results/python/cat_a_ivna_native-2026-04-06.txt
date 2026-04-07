@@ -1,0 +1,195 @@
+======================================================================
+IVNA VERIFICATION — CATEGORY A: IVNA-NATIVE ALGEBRAIC
+======================================================================
+
+  [PASS] A1: Z(1)*Z(1) = 0^2_{1}
+  [PASS] A1: Z(2)*Z(3) = 0^2_{6}
+  [PASS] A1: Z(1)*Z(7) = 0^2_{7}
+  [PASS] A1: Z(1/2)*Z(4) = 0^2_{2}
+  [PASS] A1: Z(5)*Z(5) = 0^2_{25}
+  [PASS] A1: Z(-2)*Z(3) = 0^2_{-6}
+  [PASS] A2: I(1)*I(1) = inf^2_{1}
+  [PASS] A2: I(2)*I(3) = inf^2_{6}
+  [PASS] A2: I(5)*I(7) = inf^2_{35}
+  [PASS] A2: I(-1)*I(4) = inf^2_{-4}
+  [PASS] A2: I(1/3)*I(9) = inf^2_{3}
+  [PASS] A3: Z(1)*I(1) = 1
+  [PASS] A3: Z(2)*I(3) = 6
+  [PASS] A3: Z(7)*I(5) = 35
+  [PASS] A3: Z(1/3)*I(9) = 3
+  [PASS] A3: Z(-3)*I(2) = -6
+  [PASS] A3: Z(100)*I(100) = 10000
+  [PASS] A3-comm: I(3)*Z(2) = 6
+  [PASS] A3-comm: I(5)*Z(7) = 35
+  [PASS] A3-comm: I(1)*Z(1) = 1
+  [PASS] A3-comm: I(2)*Z(-4) = -8
+  [PASS] A4: 3*Z(2) = Z(6)
+  [PASS] A4: 5*Z(7) = Z(35)
+  [PASS] A4: -2*Z(3) = Z(-6)
+  [PASS] A4: 1/2*Z(4) = Z(2)
+  [PASS] A4: 0*Z(5) = Z(0)
+  [PASS] A5: 3*I(2) = I(6)
+  [PASS] A5: 5*I(7) = I(35)
+  [PASS] A5: -1*I(3) = I(-3)
+  [PASS] A5: 1/2*I(6) = I(3)
+  [PASS] A6: 6/Z(2) = I(3)
+  [PASS] A6: 10/Z(5) = I(2)
+  [PASS] A6: 1/Z(1) = I(1)
+  [PASS] A6: 7/Z(3) = I(7/3)
+  [PASS] A6: -3/Z(2) = I(-3/2)
+  [PASS] A7: 6/I(2) = Z(3)
+  [PASS] A7: 1/I(1) = Z(1)
+  [PASS] A7: 10/I(5) = Z(2)
+  [PASS] A7: 7/I(3) = Z(7/3)
+  [PASS] A8: Z(6)/Z(2) = 3
+  [PASS] A8: Z(10)/Z(5) = 2
+  [PASS] A8: Z(7)/Z(3) = 7/3
+  [PASS] A8: Z(1)/Z(1) = 1
+  [PASS] A8: Z(1/2)/Z(1/4) = 2
+  [PASS] A9: I(6)/I(2) = 3
+  [PASS] A9: I(10)/I(5) = 2
+  [PASS] A9: I(7)/I(3) = 7/3
+  [PASS] A9: I(1)/I(1) = 1
+  [PASS] A10: Z(1)+Z(1) = Z(2)
+  [PASS] A10: Z(2)+Z(3) = Z(5)
+  [PASS] A10: Z(7)+Z(5) = Z(12)
+  [PASS] A10+D-INDEX-ZERO: Z(-3)+Z(3) = 0
+  [PASS] A10: Z(1/2)+Z(1/2) = Z(1)
+  [PASS] A11: I(1)+I(1) = I(2)
+  [PASS] A11: I(2)+I(3) = I(5)
+  [PASS] A11: I(7)+I(5) = I(12)
+  [PASS] A11: I(1/3)+I(2/3) = I(1)
+  [PASS] D-INDEX-ZERO: Z(1)-Z(1) = 0
+  [PASS] D-INDEX-ZERO: Z(3)-Z(3) = 0
+  [PASS] D-INDEX-ZERO: Z(7)-Z(7) = 0
+  [PASS] D-INDEX-ZERO: Z(1/2)-Z(1/2) = 0
+  [PASS] D-INDEX-ZERO: Z(100)-Z(100) = 0
+  [PASS] Power: Z(2)^3 = 0^3_{8}
+  [PASS] Power: Z(1)^2 = 0^2_{1}
+  [PASS] Power: Z(3)^2 = 0^2_{9}
+  [PASS] Power: Z(1)^4 = 0^4_{1}
+  [PASS] Power: Z(2)^5 = 0^5_{32}
+  [PASS] Power: I(2)^3 = inf^3_{8}
+  [PASS] Power: I(1)^2 = inf^2_{1}
+  [PASS] Power: I(3)^2 = inf^2_{9}
+  [PASS] Assoc: (Z(2)*Z(3))*I(5) = 2*(Z(3)*I(5))
+  [PASS] Assoc: (Z(1)*Z(7))*I(3) = 1*(Z(7)*I(3))
+  [PASS] Assoc: (Z(4)*Z(2))*I(6) = 4*(Z(2)*I(6))
+  [PASS] Comm: Z(2)*I(3) = I(3)*Z(2)
+  [PASS] Comm: Z(7)*I(5) = I(5)*Z(7)
+  [PASS] Comm: Z(1)*I(1) = I(1)*Z(1)
+  [PASS] Comm: Z(10)*I(10) = I(10)*Z(10)
+  [PASS] Distrib: Z(2)*(I(3)+I(5)) = Z(2)*I(3)+Z(2)*I(5)
+  [PASS] Distrib: Z(1)*(I(4)+I(6)) = Z(1)*I(4)+Z(1)*I(6)
+  [PASS] Distrib: Z(3)*(I(7)+I(2)) = Z(3)*I(7)+Z(3)*I(2)
+  [PASS] Roundtrip: (1/Z(1))*Z(1) = 1
+  [PASS] Roundtrip: (1/Z(2))*Z(2) = 1
+  [PASS] Roundtrip: (1/Z(3))*Z(3) = 1
+  [PASS] Roundtrip: (5/Z(1))*Z(1) = 5
+  [PASS] Roundtrip: (5/Z(2))*Z(2) = 5
+  [PASS] Roundtrip: (5/Z(3))*Z(3) = 5
+  [PASS] Roundtrip: (7/Z(1))*Z(1) = 7
+  [PASS] Roundtrip: (7/Z(2))*Z(2) = 7
+  [PASS] Roundtrip: (7/Z(3))*Z(3) = 7
+  [PASS] Roundtrip: (-3/Z(1))*Z(1) = -3
+  [PASS] Roundtrip: (-3/Z(2))*Z(2) = -3
+  [PASS] Roundtrip: (-3/Z(3))*Z(3) = -3
+  [PASS] Roundtrip: (1/3/Z(1))*Z(1) = 1/3
+  [PASS] Roundtrip: (1/3/Z(2))*Z(2) = 1/3
+  [PASS] Roundtrip: (1/3/Z(3))*Z(3) = 1/3
+  [PASS] Roundtrip: (42/Z(1))*Z(1) = 42
+  [PASS] Roundtrip: (42/Z(2))*Z(2) = 42
+  [PASS] Roundtrip: (42/Z(3))*Z(3) = 42
+  [PASS] DoubleRecip: 1/(1/Z(1)) = Z(1)
+  [PASS] DoubleRecip: 1/(1/Z(2)) = Z(2)
+  [PASS] DoubleRecip: 1/(1/Z(3)) = Z(3)
+  [PASS] DoubleRecip: 1/(1/Z(7)) = Z(7)
+  [PASS] HiOrder: 0^2_1*I(1) = Z(1)
+  [PASS] HiOrder: 0^2_2*I(3) = Z(6)
+  [PASS] HiOrder: 0^2_5*I(7) = Z(35)
+  [PASS] HiOrder: 0^3_1*inf^2_1 = Z(1)
+  [PASS] HiOrder: 0^3_2*inf^2_3 = Z(6)
+  [PASS] OrderCancel: Z(1)^1*I(1)^1 = 1
+  [PASS] OrderCancel: Z(1)^2*I(1)^2 = 1
+  [PASS] OrderCancel: Z(1)^3*I(1)^3 = 1
+  [PASS] OrderCancel: Z(1)^4*I(1)^4 = 1
+  [PASS] OrderCancel: Z(1)^5*I(1)^5 = 1
+  [PASS] Deriv: d/dx(x^2) at x=5 = 10
+  [PASS] Deriv: d/dx(x^3) at x=5 = 75
+  [PASS] Deriv: d/dx(x^4) at x=5 = 500
+  [PASS] Deriv: d/dx(x^5) at x=5 = 3125
+  [PASS] Deriv: d/dx(x^6) at x=5 = 18750
+  [PASS] Deriv-AVT: d/dx(sin) at x=0.5 = 0.877583
+  [PASS] Deriv-residual: sin at 0.5 residual is zero-kind
+  [PASS] Deriv-residual: sin at 0.5 residual is zero-kind
+  [PASS] Deriv-AVT: d/dx(sin) at x=1.0 = 0.540302
+  [PASS] Deriv-residual: sin at 1.0 residual is zero-kind
+  [PASS] Deriv-residual: sin at 1.0 residual is zero-kind
+  [PASS] Deriv-AVT: d/dx(cos) at x=0.5 = -0.479426
+  [PASS] Deriv-residual: cos at 0.5 residual is zero-kind
+  [PASS] Deriv-residual: cos at 0.5 residual is zero-kind
+  [PASS] Deriv-AVT: d/dx(cos) at x=1.0 = -0.841471
+  [PASS] Deriv-residual: cos at 1.0 residual is zero-kind
+  [PASS] Deriv-residual: cos at 1.0 residual is zero-kind
+  [PASS] Deriv-AVT: d/dx(exp) at x=0.5 = 1.648721
+  [PASS] Deriv-residual: exp at 0.5 residual is zero-kind
+  [PASS] Deriv-residual: exp at 0.5 residual is zero-kind
+  [PASS] Deriv-AVT: d/dx(exp) at x=1.0 = 2.718282
+  [PASS] Deriv-residual: exp at 1.0 residual is zero-kind
+  [PASS] Deriv-residual: exp at 1.0 residual is zero-kind
+  [PASS] Deriv-AVT: d/dx(ln) at x=1.0 = 1.000000
+  [PASS] Deriv-residual: ln at 1.0 residual is zero-kind
+  [PASS] Deriv-residual: ln at 1.0 residual is zero-kind
+  [PASS] Deriv-AVT: d/dx(ln) at x=2.0 = 0.500000
+  [PASS] Deriv-residual: ln at 2.0 residual is zero-kind
+  [PASS] Deriv-residual: ln at 2.0 residual is zero-kind
+  [PASS] Deriv-AVT: d/dx(1/x) at x=1.0 = -1.000000
+  [PASS] Deriv-residual: 1/x at 1.0 residual is zero-kind
+  [PASS] Deriv-residual: 1/x at 1.0 residual is zero-kind
+  [PASS] Deriv-AVT: d/dx(1/x) at x=2.0 = -0.250000
+  [PASS] Deriv-residual: 1/x at 2.0 residual is zero-kind
+  [PASS] Deriv-residual: 1/x at 2.0 residual is zero-kind
+  [PASS] A-EXP: e = virtual_exp(1,1)
+  [PASS] A-EXP: virtual_exp(1,2) = e^{2}
+  [PASS] A-EXP: virtual_exp(2,1) = e^{2}
+  [PASS] A-EXP: virtual_exp(2,3) = e^{6}
+  [PASS] A-EXP: virtual_exp(0.5,2) = e^{1.0}
+  [PASS] A-EXP: virtual_exp(1,-1) = e^{-1}
+  [PASS] A-EXP: virtual_exp(3,0.5) = e^{1.5}
+  [PASS] A-EXP-consist: [e^{1}]^2 = e^{2}
+  [PASS] A-EXP-consist: [e^{6}]^2 = e^{12}
+  [PASS] Integral-alg: Z(1)^1*I(1)^1 = 1
+  [PASS] Integral-alg: Z(1)^2*I(1)^2 = 1
+  [PASS] Integral-alg: Z(1)^3*I(1)^3 = 1
+  [PASS] Integral-alg: Z(1)^4*I(1)^4 = 1
+  [PASS] Integral-alg: Z(1)^5*I(1)^5 = 1
+  [PASS] Integral-alg: Z(1)^6*I(1)^6 = 1
+  [PASS] Integral-hiterm: Z(1)^3*I(1)^2 is Virtual zero
+  [PASS] Integral-hiterm: Z(1)^4*I(1)^3 is Virtual zero
+  [PASS] Integral-hiterm: Z(1)^5*I(1)^4 is Virtual zero
+  [PASS] Unif-Bayes: Z(0.1)/Z(0.3) = 1/3
+  [PASS] Unif-Bayes: Z(0.05)/Z(0.5) = 1/10
+  [PASS] Unif-Bayes: Z(0.2)/Z(0.8) = 1/4
+  [PASS] Unif-Dirac: Z(1/100)*I(100) = 1
+  [PASS] Unif-Dirac: Z(1/1000)*I(1000) = 1
+  [PASS] Unif-Dirac: Z(1/10000)*I(10000) = 1
+  [PASS] Unif-Residue: Z(1)*I(1) = 1
+  [PASS] Unif-Residue: Z(1)*I(2) = 2
+  [PASS] Unif-Residue: Z(1)*I(5) = 5
+  [PASS] Unif-InfSub: I(3)-I(3) = 0
+  [PASS] Unif-InfSub: I(7)-I(7) = 0
+  [PASS] Unif-InfSub: I(100)-I(100) = 0
+  [PASS] Unif-Growth: exp(1/1,  1) = e
+  [PASS] Unif-Growth: exp(1/2,  2) = e
+  [PASS] Unif-Growth: exp(1/10,  10) = e
+  [PASS] Unif-KL: Z(1/100)*I(100) = 1
+  [PASS] Unif-KL: Z(1/1000)*I(1000) = 1
+  [PASS] Unif-Blowup: 1/Z(1) = I(1)
+  [PASS] Unif-Blowup: 3/Z(2) = I(3/2)
+  [PASS] Unif-Blowup: 5/Z(1) = I(5)
+
+  PASSED: 185
+  FAILED: 0
+  TOTAL:  185
+
+  ALL CATEGORY A CHECKS PASSED

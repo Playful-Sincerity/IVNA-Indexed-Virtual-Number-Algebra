@@ -1,0 +1,52 @@
+======================================================================
+IVNA VERIFICATION — WOLFRAM CROSS-VERIFICATION
+======================================================================
+
+  [PASS] Wolfram: engine responds
+  [PASS] Wolfram-A3: (x*eps)*(y/eps) simplifies to x*y
+  [PASS] Wolfram-A1: (x*eps)*(y*eps) = x*y*eps^2
+  [PASS] Wolfram-A2: (x/eps)*(y/eps) = x*y/eps^2
+  [PASS] Wolfram-A8: (x*eps)/(y*eps) = x/y
+  [PASS] Wolfram-A9: (x/eps)/(y/eps) = x/y
+  [PASS] Wolfram-A10: x*eps + y*eps = (x+y)*eps
+  [PASS] Wolfram-A4: n*(x*eps) = (n*x)*eps
+  [PASS] Wolfram-A5: n*(x/eps) = (n*x)/eps
+  [PASS] Wolfram-A6: y/(x*eps) = (y/x)/eps
+  [PASS] Wolfram-A7: y/(x/eps) = (y/x)*eps
+  [PASS] Wolfram-DIZ: x*eps - x*eps = 0
+  [PASS] Wolfram-Roundtrip: (y/(x*eps))*(x*eps) = y
+  [PASS] Wolfram-DoubleRecip: 1/(1/(x*eps)) = x*eps
+  [PASS] Wolfram-Roundtrip-Numeric: (5/0_1)*0_1 = 5
+  [PASS] Wolfram-Roundtrip-Numeric: (7/0_3)*0_3 = 7
+  [PASS] Wolfram-Roundtrip-Numeric: (42/0_2)*0_2 = 42
+  [PASS] Wolfram-AEXP: leading term of (y/eps)*Log[1+x*eps] is x*y
+  [PASS] Wolfram-AEXP: (1+1/n)^n -> e
+  [PASS] Wolfram-AEXP-scaling: (1+3x/N)^N -> e^(3x)
+  [PASS] Wolfram-Deriv: d/dx(x^2) = 2x
+  [PASS] Wolfram-Deriv: d/dx(sin x) = cos x
+  [PASS] Wolfram-Deriv: d/dx(e^x) = e^x
+  [PASS] Wolfram-Deriv: d/dx(ln x) = 1/x
+  [PASS] Wolfram-Deriv: d/dx(1/x) = -1/x^2
+  [PASS] Wolfram-IVNA-Deriv: ((x+h)^2 - x^2)/h leading term = 2x
+  [PASS] Wolfram-HiOrder: (x*eps^2)*(y/eps^2) = x*y
+  [PASS] Wolfram-HiOrder: (x*eps^3)*(y/eps^2) = x*y*eps
+  [PASS] Wolfram-HiOrder: (x*eps^3)*(y/eps) = x*y*eps^2
+  [PASS] Wolfram-Integration: eps^1 * (1/eps)^1 = 1
+  [PASS] Wolfram-Integration: eps^2 * (1/eps)^2 = 1
+  [PASS] Wolfram-Integration: eps^3 * (1/eps)^3 = 1
+  [PASS] Wolfram-Integration: eps^4 * (1/eps)^4 = 1
+  [PASS] Wolfram-Integration: eps^5 * (1/eps)^5 = 1
+  [PASS] Wolfram-Classical: Limit[Sin[x]/x, x->0] = 1
+  [PASS] Wolfram-Classical: Limit[(E^x-1)/x, x->0] = 1
+  [PASS] Wolfram-Classical: Limit[(1-Cos[x])/x^2, x->0] = 1/2
+  [PASS] Wolfram-Classical: Limit[eps*Log[eps], eps->0+] = 0
+  [PASS] Wolfram-Classical: Residue[1/z, {z,0}] = 1
+  [PASS] Wolfram-Classical: Residue[1/(z-1), {z,1}] = 1
+  [PASS] Wolfram-Classical: Integrate[DiracDelta[x], {x,-Inf,Inf}] = 1
+  [PASS] Wolfram-Classical: DiracDelta sifting property
+
+  PASSED: 42
+  FAILED: 0
+  TOTAL:  42
+
+  ALL WOLFRAM CHECKS PASSED

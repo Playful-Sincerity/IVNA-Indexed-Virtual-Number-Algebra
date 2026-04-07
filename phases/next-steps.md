@@ -71,13 +71,13 @@ This is a **difference equation in virtual numbers**, not a differential equatio
 ### Short-term (next 2 weeks)
 5. **Write the paper** — use the 10-section outline from value-assessment.md
 6. **Lean4 Phase 2** — NSA embedding as instance (machine-checked consistency proof)
-7. **VEX calculator web demo** — simple HTML/JS page where you type "5/0" and get "∞₅"
+7. **VEA calculator web demo** — simple HTML/JS page where you type "5/0" and get "∞₅"
 8. **Integration with Gravitationalism** — write up how IVNA notation expresses singularities in GDGM
 
 ### Medium-term (1-2 months)
 9. **Paper polished and submitted**
 10. **Lean4 proofs complete** — include as supplementary material
-11. **VEX Python package** on PyPI
+11. **VEA Python package** on PyPI
 12. **Blog post / explainer** for non-academic audience
 
 ---
@@ -115,7 +115,7 @@ ArXiv endorsement: You need one endorser in the category. Options:
 |---------|-----|-----|
 | **The American Mathematical Monthly** | Values pedagogy + accessibility. Accepts novel frameworks. Wide readership. | HIGH — IVNA's calculus simplification is a perfect fit |
 | **The Mathematical Intelligencer** | Ideas-oriented, opinion pieces, accessible math. Engaged with the grossone debate. | HIGH — the "complex number parallel" framing works here |
-| **Mathematics of Computation** | Computational math. If VEX angle is strong. | MEDIUM — needs more CS content |
+| **Mathematics of Computation** | Computational math. If VEA angle is strong. | MEDIUM — needs more CS content |
 | **Journal of Mathematical Analysis and Applications** | Rigorous analysis venue. | MEDIUM — needs stronger theorem content |
 
 **Do NOT submit to:**
@@ -128,7 +128,7 @@ These make an independent submission stand out:
 
 1. **Lean4 proofs on GitHub** — machine-checked consistency proof. This is rare and impressive from any researcher, let alone independent. Reviewers can verify the math without trusting the author.
 
-2. **Working VEX calculator** — link in the paper. Reviewers can try 5/0 = ∞₅ themselves. Interactive demos convert skeptics.
+2. **Working VEA calculator** — link in the paper. Reviewers can try 5/0 = ∞₅ themselves. Interactive demos convert skeptics.
 
 3. **Python test suite** — 28 tests, all passing. "We invite the reader to verify all claims by running `python ivna.py`."
 
@@ -186,4 +186,4 @@ The first publication is the hardest. After that, each subsequent one is easier.
 
 ---
 
-*This plan positions IVNA for maximum impact: ArXiv for priority and feedback, Monthly/Intelligencer for publication, Lean4 for credibility, VEX for tangibility, and honest framing for trust.*
+*This plan positions IVNA for maximum impact: ArXiv for priority and feedback, Monthly/Intelligencer for publication, Lean4 for credibility, VEA for tangibility, and honest framing for trust.*

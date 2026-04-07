@@ -411,7 +411,7 @@ In every case, IVNA's contribution is the same: *tracking provenance through ope
 
 This is not new mathematics --- it is (as established in Section 4) a structured interface to a specific fragment of NSA with explicit provenance tracking. But the interface is what makes the applications accessible. The Coulomb example is one line in IVNA; in NSA, it requires choosing an infinitesimal, dividing, and applying the standard part function. The L'Hopital examples are algebraic in IVNA; in standard calculus, they require recognizing forms and applying a separate rule.
 
-**The Bombelli parallel holds.** Complex numbers are "just" R^2 with a multiplication rule. But the notation a+bi made Euler's formula, the Fundamental Theorem of Algebra, and electrical engineering possible. IVNA is "just" a fragment of NSA with indexed notation. But the notation makes singularity classification, L'Hopital elimination, and VEX calculators possible.
+**The Bombelli parallel holds.** Complex numbers are "just" R^2 with a multiplication rule. But the notation a+bi made Euler's formula, the Fundamental Theorem of Algebra, and electrical engineering possible. IVNA is "just" a fragment of NSA with indexed notation. But the notation makes singularity classification, L'Hopital elimination, and VEA calculators possible.
 
 ---
 

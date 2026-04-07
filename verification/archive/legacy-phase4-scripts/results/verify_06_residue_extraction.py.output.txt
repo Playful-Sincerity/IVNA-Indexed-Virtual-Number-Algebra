@@ -1,0 +1,56 @@
+# Residue extraction
+# Run: 2026-04-01T23:11:58.454065
+# Exit code: 0
+
+============================================================
+VERIFY-06: Residue extraction via product rule A3
+============================================================
+
+  1/z at z=0
+    SymPy residue: 1
+    Expected: 1
+  [PASS] 1/z at z=0
+
+  e^z/z² at z=0
+    SymPy residue: 1
+    Expected: 1
+  [PASS] e^z/z² at z=0
+
+  1/(z(z-1)) at z=0
+    SymPy residue: -1
+    Expected: -1
+  [PASS] 1/(z(z-1)) at z=0
+
+  1/(z(z-1)) at z=1
+    SymPy residue: 1
+    Expected: 1
+  [PASS] 1/(z(z-1)) at z=1
+
+  z/(z²+1) at z=i
+    SymPy residue: 1/2
+    Expected: 1/2
+  [PASS] z/(z²+1) at z=i
+
+  z/(z²+1) at z=-i
+    SymPy residue: 1/2
+    Expected: 1/2
+  [PASS] z/(z²+1) at z=-i
+
+  sin(z)/z² at z=0
+    SymPy residue: 1
+    Expected: 1
+  [PASS] sin(z)/z² at z=0
+
+  (z+1)/(z²(z-1)) at z=0
+    SymPy residue: -2
+    Expected: -2
+  [PASS] (z+1)/(z²(z-1)) at z=0
+
+  (z+1)/(z²(z-1)) at z=1
+    SymPy residue: 2
+    Expected: 2
+  [PASS] (z+1)/(z²(z-1)) at z=1
+
+============================================================
+RESULT: 9/9 checks passed
+VERDICT: PASS

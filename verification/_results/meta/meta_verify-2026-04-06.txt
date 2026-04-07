@@ -1,0 +1,28 @@
+======================================================================
+IVNA META-VERIFICATION — Checking the Verification Suite
+======================================================================
+
+  [PASS] Meta: cat_a imports from ivna module
+  [PASS] Meta: cat_a uses Z() constructor
+  [PASS] Meta: cat_a uses I() constructor
+  [PASS] Meta: cat_a uses Virtual class
+  [PASS] Meta: cat_c does NOT import ivna (honest about being classical)
+  [PASS] Meta: cat_c imports sympy
+  [PASS] Meta: cat_a_ivna_native.py has no tautological check(name, True) calls
+  [PASS] Meta: cat_b_nsa_embedding.py has no tautological check(name, True) calls
+  [PASS] Meta: cat_c_classical_correspondence.py has no tautological check(name, True) calls
+  [PASS] Meta: cat_z3_real.py has no tautological check(name, True) calls
+  [PASS] Meta: Z3 file has no trivial tautologies (x*y == x*y)
+  [PASS] Meta: ivna_derivative() calls virtual_taylor()
+  [PASS] Meta: ivna_derivative() does division (A8)
+  [PASS] Meta: ivna_derivative() is not a passthrough
+  [PASS] Meta: cat_a_ivna_native.py uses sys.exit for pass/fail signaling
+  [PASS] Meta: cat_b_nsa_embedding.py uses sys.exit for pass/fail signaling
+  [PASS] Meta: cat_c_classical_correspondence.py uses sys.exit for pass/fail signaling
+  [PASS] Meta: cat_z3_real.py uses sys.exit for pass/fail signaling
+
+  PASSED: 18
+  FAILED: 0
+  TOTAL:  18
+
+  META-VERIFICATION PASSED — suite is structurally sound
