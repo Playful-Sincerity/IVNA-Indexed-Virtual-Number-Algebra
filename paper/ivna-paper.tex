@@ -568,16 +568,16 @@ mechanism. This covers essentially all functions encountered in single-variable
 calculus but excludes distributions, $L^p$ functions, and smooth non-analytic
 functions.
 
-The natural generalization is the full transfer principle of Non-Standard
-Analysis, which extends \emph{all} first-order definable functions to the
-hyperreals. An IVNA-native transfer axiom---stating that any first-order
-property of $\R$ holds for virtual numbers under the NSA
-embedding---would remove the analyticity restriction entirely. We defer
-this to future work: the transfer principle requires model-theoretic
-machinery (ultrafilters, {\L}o\'s's theorem) that would undermine
-IVNA's design goal of accessibility without model theory. The
-restriction to analytic functions is a deliberate trade-off between
-generality and usability.
+The natural generalization is the full transfer principle of
+Non-Standard Analysis, which extends \emph{all} first-order
+definable functions to the hyperreals. An IVNA-native transfer
+axiom---stating that any first-order property of~$\R$ holds for
+virtual numbers under the NSA embedding---would remove the
+analyticity restriction entirely. We defer this to future work:
+the transfer principle requires model-theoretic machinery
+(ultrafilters, {\L}o\'s's theorem) that would undermine IVNA's
+accessibility goal. The restriction to analytic functions is a
+deliberate trade-off between generality and usability.
 \end{remark}
 
 
@@ -920,6 +920,7 @@ indexed zeros and indexed infinities. The following table groups
 these by genuinely distinct mathematical territory.
 
 \begin{center}
+\small
 \begin{tabular}{lllll}
 \toprule
 \textbf{Territory} & \textbf{Instance} & \textbf{Standard form} & \textbf{IVNA form} & \textbf{Ref.} \\
@@ -989,7 +990,7 @@ Cauchy (no finite moments). All conditionals integrate to~1.
 The Cauchy case is the strongest test: a distribution with no
 mean or variance still produces correct conditional densities
 via Axiom~\ref{ax:zzdiv} (6 checks, 0 failures; see supplementary
-\texttt{verify-01-bayes-theorem.md}).
+\texttt{verify-01-bayes-\allowbreak{}theorem.md}).
 
 The closest prior work is Jacobs~\cite{jacobs2021}, who uses
 infinitesimal ratios for conditional densities within a
@@ -1109,8 +1110,7 @@ singularities in dimension $\geq 4$ remains open.
 No prior division-by-zero framework (meadows, wheels, transreal
 arithmetic, S-Extensions) has connected to blow-up theory; the
 correspondence appears to be new. Verification: 14 checks across
-polynomial and trigonometric examples (see supplementary
-\texttt{verify-08-blow-up.md}).
+polynomial and trigonometric examples (see supplementary materials).
 
 \subsection{A Structural Remark}
 
@@ -1294,7 +1294,8 @@ Six established frameworks address overlapping concerns:
   the pedagogical calculus curriculum. Division by zero remains undefined;
   $0 \times \infty$ is indeterminate.
 
-\item \textbf{Grossone} (Sergeyev, 2003)~\cite{sergeyev2003,sergeyev2017,sergeyev2019}:
+\item \textbf{Grossone}
+  (Sergeyev, 2003)~\cite{sergeyev2003,sergeyev2017,sergeyev2019}:
   a numeral for $|\mathbb{N}|$, with its reciprocal as infinitesimal.
   No division by zero; no general $0 \times \infty$ resolution.
   Subject to criticism~\cite{gutman2017}.
@@ -1587,11 +1588,12 @@ between zero and infinity.
   algebraic invariance property---defined at the point, not via limits---is
   a candidate for a formal theorem connecting IVNA's index algebra to
   classical singularity classification.
-\item \textbf{Measure-theoretic formalization}: rigorously establish
-  the connection between IVNA's indexed zero probabilities and the
-  Radon--Nikodym derivative, and determine whether the
-  Borel--Kolmogorov dissolution (Section~\ref{subsec:bayes}) holds
-  under weaker regularity conditions than joint density existence.
+\item \textbf{Measure-theoretic formalization}: establish the
+  connection between IVNA's indexed zero probabilities and the
+  Radon--Nikodym derivative. Determine whether the
+  Borel--Kolmogorov dissolution
+  (Section~\ref{subsec:bayes}) holds under weaker regularity
+  conditions than joint density existence.
 \item \textbf{Sub-first-order infinities}: extend the indexed
   notation to parameterize logarithmic and iterated-logarithmic
   infinities, which arise in the harmonic series
@@ -1883,9 +1885,10 @@ implementation and test harness. The 30 core tests cover:
 \item Derivatives of $x^n$ for $n = 2, 3, 4, 5$ at multiple evaluation points
 \item Transcendental derivatives: $\sin$, $\cos$, $e^x$, $\ln$, $1/x$
   (each exercising the A-VT $\to$ A8 pipeline, not a passthrough)
-\item Derivative machinery verification: confirms \texttt{ivna\_derivative()}
-  calls \texttt{virtual\_taylor()}, divides via Axiom~\ref{ax:zzdiv}, and
-  produces residuals that are higher-order virtual zeros
+\item Derivative machinery verification: confirms the derivative
+  function calls the Virtual Taylor constructor, divides via
+  Axiom~\ref{ax:zzdiv}, and produces higher-order virtual zero
+  residuals
 \item The exponential axiom: $(1 + \vz{x})^{\vi{y}} = e^{xy}$ for
   6 index pairs
 \end{itemize}
@@ -1904,13 +1907,12 @@ Two SymPy-based verification files cover distinct purposes:
   D-INDEX-ZERO, A-EXP, negation, and higher-order virtual behavior
   (orders 2--4) under the hyperreal mapping $\vz{x} = x\varepsilon_0$,
   $\vi{x} = x/\varepsilon_0$.
-\item \textbf{Category C: Classical correspondence} (93 checks,
-  \texttt{cat\_c\_classical\_correspondence.py}): confirms that IVNA
-  notation maps correctly onto known results across nine domains (Bayes,
-  Borel--Kolmogorov, Dirac delta, removable singularities, infinity
-  subtraction, residues, compound growth, blow-ups, KL divergence).
-  These are honestly labeled as correspondence checks---they verify
-  notation, not independent derivation.
+\item \textbf{Category C: Classical correspondence} (93 checks):
+  confirms that IVNA notation maps correctly onto known results
+  across nine domains (Bayes, Borel--Kolmogorov, Dirac delta,
+  removable singularities, infinity subtraction, residues,
+  compound growth, blow-ups, KL divergence). Honestly labeled
+  as correspondence checks---notation, not independent derivation.
 \end{itemize}
 
 \subsection{Wolfram Cross-Verification}
