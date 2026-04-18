@@ -1,0 +1,30 @@
+======================================================================
+IVNA — MULTIVARIATE LIMIT VERIFICATION
+(Prompted by Kiel Howe's feedback, 2026-04-13)
+======================================================================
+
+  [PASS] Multivar xy/(x²+y²) direction b/a=1/1: IVNA=1/2, classical=1/2
+  [PASS] Multivar xy/(x²+y²) direction b/a=2/1: IVNA=2/5, classical=2/5
+  [PASS] Multivar xy/(x²+y²) direction b/a=3/1: IVNA=3/10, classical=3/10
+  [PASS] Multivar xy/(x²+y²) direction b/a=3/2: IVNA=6/13, classical=6/13
+  [PASS] Multivar xy/(x²+y²) direction b/a=1/3: IVNA=3/10, classical=3/10
+  [PASS] Multivar xy/(x²+y²) direction b/a=5/1: IVNA=5/26, classical=5/26
+  [PASS] Multivar xy/(x²+y²) direction b/a=1/2: IVNA=2/5, classical=2/5
+  [PASS] Multivar (x²-y²)/(x²+y²) a=1,b=1: IVNA=0, classical=0
+  [PASS] Multivar (x²-y²)/(x²+y²) a=1,b=2: IVNA=-3/5, classical=-3/5
+  [PASS] Multivar (x²-y²)/(x²+y²) a=2,b=1: IVNA=3/5, classical=3/5
+  [PASS] Multivar (x²-y²)/(x²+y²) a=1,b=3: IVNA=-4/5, classical=-4/5
+  [PASS] Multivar (x²-y²)/(x²+y²) a=3,b=2: IVNA=5/13, classical=5/13
+  [PASS] Curved approach: x·y = 0₁·0²₁ = 0³₁
+  [PASS] Curved approach: x² = 0²₁
+  [PASS] Curved approach: xy/x² = 0³₁/0²₁ = 0₁ → collapses to 0
+  [PASS] Curved approach: 0₁ collapses to 0 under =;
+  [PASS] Multivar roundtrip: (0_2·0_3)/0_2 recovers 0_3
+  [PASS] Multivar roundtrip: (0_5·0_7)/0_5 recovers 0_7
+  [PASS] Multivar roundtrip: (0_1·0_4)/0_1 recovers 0_4
+
+  PASSED: 19
+  FAILED: 0
+  TOTAL:  19
+
+  ALL MULTIVARIATE CHECKS PASSED

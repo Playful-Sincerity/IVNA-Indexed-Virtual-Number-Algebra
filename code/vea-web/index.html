@@ -83,6 +83,7 @@
     letter-spacing: -1px;
   }
   .result.virtual { color: #30d158; }
+  .ceq { font-family: 'SF Mono', 'Menlo', monospace; letter-spacing: -1px; color: #ff9500; }
   .result.error { color: #ff453a; }
   .result sub {
     font-size: 0.45em;
@@ -344,6 +345,7 @@ class VNum {
     return sym + ord + '<sub>' + fmtNum(this.index) + '</sub>';
   }
   toRaw() {
+    if (this._sum) return this._sum.left.toRaw() + ' ' + this._sum.op + ' ' + this._sum.right.toRaw();
     if (this.type === 'real') return fmtNum(this.index);
     if (this.type === 'zero') return '0_' + fmtNum(this.index);
     return 'inf_' + fmtNum(this.index);
@@ -365,9 +367,23 @@ function vInf(x, o) { return new VNum('inf', x, o || 1); }
 // ── Arithmetic ──
 
 function vmul(a, b) {
+  // Distribute over irreducible sums: (x + y) * c = x*c + y*c
+  if (a._sum) {
+    var op = a._sum.op;
+    return (op === '+' ? vadd : vsub)(vmul(a._sum.left, b), vmul(a._sum.right, b));
+  }
+  if (b._sum) {
+    var op = b._sum.op;
+    return (op === '+' ? vadd : vsub)(vmul(a, b._sum.left), vmul(a, b._sum.right));
+  }
   if (a.type === 'real' && b.type === 'real') return vReal(a.index * b.index);
+  // VEA mode: real 0 meeting a virtual number → treat as 0₁
+  if (a.type === 'real' && a.index === 0 && (b.type === 'zero' || b.type === 'inf'))
+    return vmul(vZero(1), b);
   if (a.type === 'real' && b.type === 'zero') return vZero(a.index * b.index, b.order);
   if (a.type === 'real' && b.type === 'inf')  return vInf(a.index * b.index, b.order);
+  if ((a.type === 'zero' || a.type === 'inf') && b.type === 'real' && b.index === 0)
+    return vmul(a, vZero(1));
   if (a.type === 'zero' && b.type === 'real') return vmul(b, a);
   if (a.type === 'inf'  && b.type === 'real') return vmul(b, a);
   if (a.type === 'zero' && b.type === 'zero') return vZero(a.index * b.index, a.order + b.order);
@@ -381,8 +397,25 @@ function vmul(a, b) {
 }
 
 function vdiv(a, b) {
+  // Distribute numerator over sum: (x + y) / c = x/c + y/c
+  if (a._sum) {
+    var op = a._sum.op;
+    return (op === '+' ? vadd : vsub)(vdiv(a._sum.left, b), vdiv(a._sum.right, b));
+  }
+  // Dividing by a sum is not distributable — leave irreducible
+  if (b._sum) {
+    var r = new VNum('real', NaN);
+    r._display = a.toHTML() + ' / (' + b.toHTML() + ')';
+    return r;
+  }
   if (b.type === 'real' && b.index === 0) {
     if (a.type === 'real') return vInf(a.index, 1);
+    // VEA: virtual / 0 → treat 0 as 0₁
+    return vdiv(a, vZero(1));
+  }
+  // VEA: 0 / virtual → treat 0 as 0₁
+  if (a.type === 'real' && a.index === 0 && (b.type === 'zero' || b.type === 'inf')) {
+    return vdiv(vZero(1), b);
   }
   if (a.type === 'real' && b.type === 'real') return vReal(a.index / b.index);
   if (a.type === 'real' && b.type === 'zero') return vInf(a.index / b.index, b.order);
@@ -401,12 +434,10 @@ function vadd(a, b) {
     if (idx === 0) return vReal(0);
     return new VNum(a.type, idx, a.order);
   }
-  // real + virtual: virtual dominates
-  if (a.type === 'real') return b;
-  if (b.type === 'real') return a;
-  // mixed zero+inf or different orders: irreducible identity
+  // Irreducible: sum of different kinds (real+virtual, zero+inf, different orders)
   var r = new VNum('real', NaN);
   r._display = a.toHTML() + ' + ' + b.toHTML();
+  r._sum = { left: a, right: b, op: '+' };
   return r;
 }
 
@@ -417,10 +448,9 @@ function vsub(a, b) {
     if (idx === 0) return vReal(0);
     return new VNum(a.type, idx, a.order);
   }
-  if (a.type === 'real') return b;
-  if (b.type === 'real') return a;
   var r = new VNum('real', NaN);
   r._display = a.toHTML() + ' − ' + b.toHTML();
+  r._sum = { left: a, right: b, op: '-' };
   return r;
 }
 
@@ -589,7 +619,8 @@ function pressEquals() {
     } else {
       var val = Function('"use strict"; return (' + expression + ')')();
       lastResult = vReal(val);
-      if (!isFinite(val) || isNaN(val)) lastResult._err = true;
+      if (isNaN(val)) { lastResult._err = true; lastResult._display = 'Undefined'; }
+      else if (!isFinite(val)) { lastResult._err = true; lastResult._display = 'Error'; }
     }
     computed = true;
     activeOp = null;
@@ -618,18 +649,37 @@ function pressBackspace() {
   updateDisplay();
 }
 
-function pressCollapse() {
-  if (!computed || !lastResult || lastResult.type === 'real') return;
-  var original = lastResult.toHTML();
-  if (lastResult.type === 'inf') {
-    lastResult = vReal(Infinity);
-    lastResult._err = true;
-  } else if (lastResult.type === 'zero') {
-    lastResult = vReal(0);
+function collapseOne(v) {
+  if (v._sum) {
+    var L = collapseOne(v._sum.left);
+    var R = collapseOne(v._sum.right);
+    var val = v._sum.op === '+' ? L.index + R.index : L.index - R.index;
+    var r = vReal(val);
+    if (isNaN(val)) r._display = 'Undefined';
+    else if (val === Infinity) r._display = '∞';
+    else if (val === -Infinity) r._display = '−∞';
+    return r;
   }
+  if (v.type === 'zero') return vReal(0);
+  if (v.type === 'inf') {
+    var r = vReal(Infinity);
+    r._display = '∞';
+    return r;
+  }
+  return v;
+}
+
+function canCollapseVal(v) {
+  return v && (v._sum || v.type === 'zero' || v.type === 'inf');
+}
+
+function pressCollapse() {
+  if (!computed || !lastResult || !canCollapseVal(lastResult)) return;
+  var original = lastResult.toHTML();
+  lastResult = collapseOne(lastResult);
   computed = true;
   updateDisplay();
-  document.getElementById('expr').innerHTML = original + ' → collapse';
+  document.getElementById('expr').innerHTML = original + ' <span class="ceq">=;</span> ' + lastResult.toHTML();
 }
 
 function pressNegate() {
@@ -690,7 +740,7 @@ function updateDisplay() {
   // Result
   if (computed && lastResult) {
     resultEl.innerHTML = lastResult.toHTML();
-    resultEl.className = 'result' + (lastResult._err ? ' error' : lastResult.type !== 'real' ? ' virtual' : '');
+    resultEl.className = 'result' + (lastResult._err ? ' error' : (lastResult.type !== 'real' || lastResult._sum) ? ' virtual' : '');
   } else {
     var cv = getCurrentValue();
     resultEl.innerHTML = cv.html;
@@ -708,7 +758,7 @@ function updateDisplay() {
 
   // Collapse button
   var cb = document.getElementById('collapseBtn');
-  var canCollapse = computed && lastResult && lastResult.type !== 'real' && !lastResult._display;
+  var canCollapse = computed && canCollapseVal(lastResult);
   cb.classList.toggle('available', canCollapse);
 }
 
@@ -728,7 +778,7 @@ function renderHistory() {
   if (!historyItems.length) { sec.innerHTML = ''; return; }
   sec.innerHTML = '<div class="history-label">History</div><div class="history-list">' +
     historyItems.map(function(h) {
-      var cls = h.result._err ? ' error' : h.result.type !== 'real' ? ' virtual' : '';
+      var cls = h.result._err ? ' error' : (h.result.type !== 'real' || h.result._sum) ? ' virtual' : '';
       return '<div class="history-item">' +
         '<span class="hi-expr">' + renderExpr(h.expr) + '</span>' +
         '<span class="hi-eq">=</span>' +
